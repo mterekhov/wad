@@ -309,6 +309,7 @@ bool AWAD::awReadSFX(FILE* wadFile)
         if (lumpName.find("DS") == 0)
         {
             newSfx = new ASFX(*(*it));
+            newSfx->asReadData(wadFile);
             *it = newSfx;
         }
     }
@@ -330,6 +331,7 @@ bool AWAD::awReadPCSpeaker(FILE* wadFile)
         if (lumpName.find("DP") == 0)
         {
             newSpeaker = new APCSpeaker(*(*it));
+            newSpeaker->apReadData(wadFile);
             *it = newSpeaker;
         }
     }

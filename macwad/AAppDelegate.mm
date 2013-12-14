@@ -15,9 +15,15 @@
 {
     // Insert code here to initialize your application
     spcWAD::AWAD* wader = new spcWAD::AWAD("/Users/michael/Development/DOOMER/macwad/DOOM.WAD");
-    spcWAD::TSequence sfxList = wader->awFilteredLumps(spcWAD::LUMPTYPES_PCSPEAKER);
+    spcWAD::TSequence sfxList = wader->awFilteredLumps(spcWAD::LUMPTYPES_SFX);
     for (spcWAD::TSeqIter it = sfxList.begin(); it < sfxList.end(); it++)
     {
+        spcWAD::ASFX* sfx = static_cast<spcWAD::ASFX*>(*it);
+        
+        std::string path = "/Users/michael/Development/DOOMER/macwad/1/";
+        path.append(sfx->alName());
+        path.append(".midi");
+        wader->awIntoMidi(path, sfx);
         printf("sfx <%s>\n", (*it)->alName().c_str());
     }
     
