@@ -3,6 +3,7 @@
 #include "apalete.h"
 #include "apatch.h"
 #include "atexture.h"
+#include "apcspeaker.h"
 #include <stdio.h>
 
 //=============================================================================
@@ -39,7 +40,13 @@ AWAD::AWAD(const std::string& fileName) : m_type(WADTYPE_UNKNOWN), m_fileName(fi
 
     if (!awReadTextures(wadFile))
         throw;
-
+    
+    if (!awReadSFX(wadFile))
+        throw;
+    
+    if (!awReadPCSpeaker(wadFile))
+        throw;
+    
     awClose(wadFile);
 }
 
@@ -255,7 +262,7 @@ bool AWAD::awReadTextures(FILE* wadFile)
     int tCount = 0;
     if (fread(&tCount, 4, 1, wadFile) != 1)
         return false;
-
+    
     ATexture* newTexture = 0;
     int tOffset = 0;
     for (int i = 0; i < tCount; i++)
@@ -264,11 +271,11 @@ bool AWAD::awReadTextures(FILE* wadFile)
             return false;
         tOffset += (*pTex)->alOffset();
         int pushOffset = fseek(wadFile, tOffset, SEEK_SET);
-
+        
         unsigned char name[9] = {0};
         if (fread(name, 8, 1, wadFile) != 1)
             return false;
-
+        
         std::string stlstr = (char*)name;
         TSeqIter iter = awFindLump(stlstr);
         if (iter == m_lumps.end())
@@ -277,14 +284,56 @@ bool AWAD::awReadTextures(FILE* wadFile)
             sprintf(buffer2, "%i. %s was not found in lump directory\n", i, name);
             continue;
         }
-
+        
         newTexture = new ATexture(*(*iter));
         newTexture->atReadData(m_patchesIndexes, wadFile);
         *iter = newTexture;
-
+        
         fseek(wadFile, pushOffset, SEEK_SET);
     }
+    
+    return true;
+}
 
+//=============================================================================
+
+bool AWAD::awReadSFX(FILE* wadFile)
+{
+    TSeqIter it_begin = m_lumps.begin();
+    TSeqIter it_end = m_lumps.end();
+    
+    ASFX* newSfx = 0;
+    for (spcWAD::TSeqIter it = it_begin; it < it_end; it++)
+    {
+        std::string lumpName = (*it)->alName();
+        if (lumpName.find("DS") == 0)
+        {
+            newSfx = new ASFX(*(*it));
+            *it = newSfx;
+        }
+    }
+    
+    return true;
+}
+
+//=============================================================================
+
+bool AWAD::awReadPCSpeaker(FILE* wadFile)
+{
+    TSeqIter it_begin = m_lumps.begin();
+    TSeqIter it_end = m_lumps.end();
+    
+    APCSpeaker* newSpeaker = 0;
+    for (spcWAD::TSeqIter it = it_begin; it < it_end; it++)
+    {
+        std::string lumpName = (*it)->alName();
+        if (lumpName.find("DP") == 0)
+        {
+            newSpeaker = new APCSpeaker(*(*it));
+            *it = newSpeaker;
+        }
+    }
+    
     return true;
 }
 
@@ -292,6 +341,21 @@ bool AWAD::awReadTextures(FILE* wadFile)
 
 #pragma mark - Lump routine -
     
+//=============================================================================
+
+TSequence AWAD::awFilteredLumps(const ELumpTypes lumpType)
+{
+    TSequence finalVector;
+    for (spcWAD::TSeqIter it = m_lumps.begin(); it <m_lumps.end(); it++)
+    {
+        spcWAD::ELumpTypes type = (*it)->alType();
+        if (type == lumpType)
+            finalVector.push_back(*it);
+    }
+    
+    return finalVector;
+}
+
 //=============================================================================
 
 const TSequence& AWAD::awLumps() const
@@ -361,6 +425,24 @@ void AWAD::awDestroy()
     
 //=============================================================================
     
+bool AWAD::awIntoMidi(const std::string& fileName, ASFX* sfx)
+{
+    if (!sfx)
+        return false;
+    
+    FILE* filo = fopen(fileName.c_str(), "wb");
+    if (!filo)
+        return false;
+    
+    fwrite(sfx->asData(), sfx->alSize(), 1, filo); //  identity length
+
+    fclose(filo);
+    
+    return true;
+}
+
+//=============================================================================
+
 bool AWAD::awIntoTga(const std::string& fileName, const AFlat* flat)
 {
 	if (!flat)

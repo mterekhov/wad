@@ -8,11 +8,6 @@
 
 //=============================================================================
 
-#define FLAT_WIDTH 64
-#define FLAT_HEIGHT 64
-
-//=============================================================================
-
 namespace spcWAD
 {
 
@@ -24,7 +19,7 @@ public:
     APCSpeaker(const ALump& lump);
     virtual ~APCSpeaker();
 
-    bool apReadData(APalete& palete, FILE* wadFile);
+    bool apReadData(FILE* wadFile);
     const unsigned char* apData() const;
 
 protected:

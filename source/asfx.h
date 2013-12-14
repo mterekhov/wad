@@ -8,11 +8,6 @@
 
 //=============================================================================
 
-#define FLAT_WIDTH 64
-#define FLAT_HEIGHT 64
-
-//=============================================================================
-
 namespace spcWAD
 {
 
@@ -24,7 +19,7 @@ public:
     ASFX(const ALump& lump);
     virtual ~ASFX();
 
-    bool asReadData(APalete& palete, FILE* wadFile);
+    bool asReadData(FILE* wadFile);
     const unsigned char* asData() const;
 
 protected:

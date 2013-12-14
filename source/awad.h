@@ -11,6 +11,7 @@
 #include "types.h"
 #include "aflat.h"
 #include "apatch.h"
+#include "asfx.h"
 
 //=============================================================================
 
@@ -36,12 +37,15 @@ public:
 
     const TSequence& awLumps() const;
     TSequence& awLumps();
+    
+    TSequence awFilteredLumps(const ELumpTypes type);
 
     const ALump* awGetLump(const std::string& name);
     const unsigned int awLumpsCount() const;
     const std::string& awFileName() const;
     bool awIntoTga(const std::string& fileName, const AFlat* flat);
     bool awIntoTga(const std::string& fileName, const APatch* patch);
+    bool awIntoMidi(const std::string& fileName, ASFX* sfx);
 
 private:
     FILE* awOpen(const std::string& fileName);
@@ -62,6 +66,10 @@ private:
     bool awReadPatches(FILE* wadFile);
     //  read textures
     bool awReadTextures(FILE* wadFile);
+    //  read digital sounds
+    bool awReadSFX(FILE* wadFile);
+    //  read ps speaker sounds
+    bool awReadPCSpeaker(FILE* wadFile);
 
     TSeqIter awFindLump(const std::string& name);
 
