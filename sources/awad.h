@@ -48,6 +48,11 @@ public:
     bool awIntoMidi(const std::string& fileName, ASFX* sfx);
 
 private:
+    EWadType _type;
+    std::string _fileName;
+    TSequence _lumps;
+    std::map<int, APatch*> _patchesIndexes;
+
     void awDestroy();
 
 	bool checkLumpIfItIsMap(ALump* lump, FILE* wadFile);
@@ -88,10 +93,6 @@ private:
     bool RGB2BGR(unsigned char* data, int width, int height);
     bool FlipOver(unsigned char* data, int width, int height);
 
-    TSequence m_lumps;
-    std::map<int, APatch*> m_patchesIndexes;
-    EWadType m_type;
-    std::string m_fileName;
 };
 
 //=============================================================================
