@@ -8,7 +8,7 @@
 #include <vector>
 #include <map>
 
-#include "types.h"
+
 #include "aflat.h"
 #include "apatch.h"
 #include "asfx.h"
@@ -29,7 +29,7 @@ enum EWadType
 
 //=============================================================================
 
-class WAD_DLL AWAD
+class AWAD
 {
 public:
     AWAD(const std::string& fileName);
@@ -48,18 +48,24 @@ public:
     bool awIntoMidi(const std::string& fileName, ASFX* sfx);
 
 private:
-    FILE* awOpen(const std::string& fileName);
-    void awClose(FILE* wadFile);
     void awDestroy();
+
+	bool checkLumpIfItIsMap(ALump* lump, FILE* wadFile);
 
     //  Get wad file type
     bool awCheckSignature(FILE* wadFile);
 
+	//  read palete
+	bool awReadPalete(FILE* wadFile);
+	//	read colors map
+	bool awReadColorMap(FILE* wadFile);
+	//	read endoom texts
+	bool awReadEndDoom(FILE* wadFile);
+	//	read demos
+	bool awReadDemos(FILE* wadFile);
     //  read content
     bool awReadLumpsContent(FILE* wadFile);
-    //  read palete
-    bool awReadPalete(FILE* wadFile);
-    //  read flats
+	//  read flats
     bool awReadFlats(FILE* wadFile);
     bool awReadFlatRange(FILE* wadFile, TSeqIter iter, TSeqIter iter_end);
     //  read patches
@@ -69,8 +75,13 @@ private:
     //  read digital sounds
     bool awReadSFX(FILE* wadFile);
     //  read ps speaker sounds
-    bool awReadPCSpeaker(FILE* wadFile);
+	bool awReadPCSpeaker(FILE* wadFile);
+	
+	bool awReadMaps(FILE* wadFile);
 
+	void amDefineMapLumps(FILE *wadFile);
+	TSequence awFindZeroSizeLumps();
+	TSequence awFindLumpsList(const std::string& lumpsNameMask);
     TSeqIter awFindLump(const std::string& name);
 
     bool awIntoTga(const std::string& fileName, unsigned char* data, const int width, const int height);

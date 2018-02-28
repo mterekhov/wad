@@ -77,7 +77,7 @@ bool APatch::apReadData(const ALump& lump, APalete& palete, FILE* wadFile)
                 m_pData[index + 1] = palete.apGreen(data[j]);
                 m_pData[index + 2] = palete.apBlue(data[j]);
             }
-            delete data;
+            delete [] data;
 
             fseek(wadFile, 1, SEEK_CUR);    //  read reserved byte
 
@@ -101,7 +101,7 @@ bool APatch::apReadData(const ALump& lump, APalete& palete, FILE* wadFile)
         memcpy(&m_pData[3 * i * m_width], &m_pData[3 * (m_height - i - 1) * m_width], 3 * m_width);
         memcpy(&m_pData[3 * (m_height - i - 1) * m_width], tmp, 3 * m_width);
     }
-    delete tmp;
+    delete [] tmp;
 
     return true;
 }

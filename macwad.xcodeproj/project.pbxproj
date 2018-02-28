@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		4C2E177B185C596900DA4E84 /* asfx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E1779185C596900DA4E84 /* asfx.cpp */; };
 		4C4D0152185C75EF001A9573 /* apcspeaker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C4D0150185C75EF001A9573 /* apcspeaker.cpp */; };
+		4CAB6B8A2046F79600D23585 /* doom1.wad in Resources */ = {isa = PBXBuildFile; fileRef = 4CAB6B892046F79500D23585 /* doom1.wad */; };
+		4CAB6B952046F7A500D23585 /* aendoom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6B8C2046F7A400D23585 /* aendoom.cpp */; };
+		4CAB6B962046F7A500D23585 /* acolormap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6B8D2046F7A400D23585 /* acolormap.cpp */; };
+		4CAB6B972046F7A500D23585 /* ademo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6B902046F7A500D23585 /* ademo.cpp */; };
+		4CAB6B982046F7A500D23585 /* amap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6B912046F7A500D23585 /* amap.cpp */; };
+		4CAB6B992046F7A500D23585 /* athings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6B922046F7A500D23585 /* athings.cpp */; };
 		4CC0E851185BBDB4004E7F83 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC0E850185BBDB4004E7F83 /* Cocoa.framework */; };
 		4CC0E85B185BBDB4004E7F83 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CC0E859185BBDB4004E7F83 /* InfoPlist.strings */; };
 		4CC0E85D185BBDB4004E7F83 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0E85C185BBDB4004E7F83 /* main.m */; };
@@ -26,7 +32,6 @@
 		4CC0E895185BBDD6004E7F83 /* apatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0E88B185BBDD6004E7F83 /* apatch.cpp */; };
 		4CC0E896185BBDD6004E7F83 /* atexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0E88D185BBDD6004E7F83 /* atexture.cpp */; };
 		4CC0E897185BBDD6004E7F83 /* awad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CC0E88F185BBDD6004E7F83 /* awad.cpp */; };
-		4CC0E899185BBF9C004E7F83 /* DOOM.WAD in Resources */ = {isa = PBXBuildFile; fileRef = 4CC0E898185BBF9C004E7F83 /* DOOM.WAD */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +49,17 @@
 		4C2E177A185C596900DA4E84 /* asfx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asfx.h; sourceTree = "<group>"; };
 		4C4D0150185C75EF001A9573 /* apcspeaker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = apcspeaker.cpp; sourceTree = "<group>"; };
 		4C4D0151185C75EF001A9573 /* apcspeaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = apcspeaker.h; sourceTree = "<group>"; };
+		4CAB6B892046F79500D23585 /* doom1.wad */ = {isa = PBXFileReference; lastKnownFileType = file; path = doom1.wad; sourceTree = "<group>"; };
+		4CAB6B8B2046F7A400D23585 /* amap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = amap.h; sourceTree = "<group>"; };
+		4CAB6B8C2046F7A400D23585 /* aendoom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = aendoom.cpp; sourceTree = "<group>"; };
+		4CAB6B8D2046F7A400D23585 /* acolormap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = acolormap.cpp; sourceTree = "<group>"; };
+		4CAB6B8E2046F7A400D23585 /* aendoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aendoom.h; sourceTree = "<group>"; };
+		4CAB6B8F2046F7A500D23585 /* athings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = athings.h; sourceTree = "<group>"; };
+		4CAB6B902046F7A500D23585 /* ademo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ademo.cpp; sourceTree = "<group>"; };
+		4CAB6B912046F7A500D23585 /* amap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = amap.cpp; sourceTree = "<group>"; };
+		4CAB6B922046F7A500D23585 /* athings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = athings.cpp; sourceTree = "<group>"; };
+		4CAB6B932046F7A500D23585 /* acolormap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = acolormap.h; sourceTree = "<group>"; };
+		4CAB6B942046F7A500D23585 /* ademo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ademo.h; sourceTree = "<group>"; };
 		4CC0E84D185BBDB4004E7F83 /* macwad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macwad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CC0E850185BBDB4004E7F83 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4CC0E853185BBDB4004E7F83 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -76,7 +92,6 @@
 		4CC0E88F185BBDD6004E7F83 /* awad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = awad.cpp; sourceTree = "<group>"; };
 		4CC0E890185BBDD6004E7F83 /* awad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = awad.h; sourceTree = "<group>"; };
 		4CC0E891185BBDD6004E7F83 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
-		4CC0E898185BBF9C004E7F83 /* DOOM.WAD */ = {isa = PBXFileReference; lastKnownFileType = file; path = DOOM.WAD; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,7 +196,7 @@
 		4CC0E857185BBDB4004E7F83 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				4CC0E898185BBF9C004E7F83 /* DOOM.WAD */,
+				4CAB6B892046F79500D23585 /* doom1.wad */,
 				4CC0E865185BBDB4004E7F83 /* MainMenu.xib */,
 				4CC0E868185BBDB4004E7F83 /* Images.xcassets */,
 				4CC0E858185BBDB4004E7F83 /* macwad-Info.plist */,
@@ -213,6 +228,16 @@
 		4CC0E884185BBDD6004E7F83 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				4CAB6B8D2046F7A400D23585 /* acolormap.cpp */,
+				4CAB6B932046F7A500D23585 /* acolormap.h */,
+				4CAB6B902046F7A500D23585 /* ademo.cpp */,
+				4CAB6B942046F7A500D23585 /* ademo.h */,
+				4CAB6B8C2046F7A400D23585 /* aendoom.cpp */,
+				4CAB6B8E2046F7A400D23585 /* aendoom.h */,
+				4CAB6B912046F7A500D23585 /* amap.cpp */,
+				4CAB6B8B2046F7A400D23585 /* amap.h */,
+				4CAB6B922046F7A500D23585 /* athings.cpp */,
+				4CAB6B8F2046F7A500D23585 /* athings.h */,
 				4C4D0154185C76BD001A9573 /* sounds */,
 				4C4D0153185C76B6001A9573 /* images */,
 				4CC0E887185BBDD6004E7F83 /* alump.cpp */,
@@ -302,8 +327,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CC0E85B185BBDB4004E7F83 /* InfoPlist.strings in Resources */,
+				4CAB6B8A2046F79600D23585 /* doom1.wad in Resources */,
 				4CC0E869185BBDB4004E7F83 /* Images.xcassets in Resources */,
-				4CC0E899185BBF9C004E7F83 /* DOOM.WAD in Resources */,
 				4CC0E861185BBDB4004E7F83 /* Credits.rtf in Resources */,
 				4CC0E867185BBDB4004E7F83 /* MainMenu.xib in Resources */,
 			);
@@ -328,9 +353,14 @@
 				4CC0E864185BBDB4004E7F83 /* AAppDelegate.mm in Sources */,
 				4C2E177B185C596900DA4E84 /* asfx.cpp in Sources */,
 				4CC0E895185BBDD6004E7F83 /* apatch.cpp in Sources */,
+				4CAB6B962046F7A500D23585 /* acolormap.cpp in Sources */,
 				4CC0E896185BBDD6004E7F83 /* atexture.cpp in Sources */,
+				4CAB6B952046F7A500D23585 /* aendoom.cpp in Sources */,
+				4CAB6B972046F7A500D23585 /* ademo.cpp in Sources */,
+				4CAB6B982046F7A500D23585 /* amap.cpp in Sources */,
 				4CC0E893185BBDD6004E7F83 /* alump.cpp in Sources */,
 				4C4D0152185C75EF001A9573 /* apcspeaker.cpp in Sources */,
+				4CAB6B992046F7A500D23585 /* athings.cpp in Sources */,
 				4CC0E85D185BBDB4004E7F83 /* main.m in Sources */,
 				4CC0E897185BBDD6004E7F83 /* awad.cpp in Sources */,
 				4CC0E892185BBDD6004E7F83 /* aflat.cpp in Sources */,

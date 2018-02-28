@@ -14,7 +14,7 @@ namespace spcWAD
 
 //=============================================================================
 
-class WAD_DLL ATexture : public ALump
+class ATexture : public ALump
 {
 public:
     ATexture(const ALump& lump);

@@ -10,6 +10,10 @@ namespace spcWAD
 ALump::ALump(const int size, const int offset, const std::string& name, ELumpTypes type) :
                         m_size(size), m_offset(offset), m_name(name), m_type(type), m_used(false)
 {
+	if (m_size == 0)
+	{
+		m_type = LUMPTYPES_ZEROSIZE;
+	}
 }
 
 //=============================================================================

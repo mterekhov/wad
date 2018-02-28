@@ -16,7 +16,10 @@ namespace spcWAD
 
 //=============================================================================
 
-class WAD_DLL APalete : public ALump
+/**
+	This class operates with palette for all images in resources
+*/
+class APalete : public ALump
 {
 public:
     APalete(const ALump& lump);

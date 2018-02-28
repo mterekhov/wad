@@ -4,7 +4,7 @@
 //=============================================================================
 
 #include "apalete.h"
-#include "types.h"
+
 
 //=============================================================================
 
@@ -13,7 +13,7 @@ namespace spcWAD
 
 //=============================================================================
 
-class WAD_DLL APCSpeaker : public ALump
+class APCSpeaker : public ALump
 {
 public:
     APCSpeaker(const ALump& lump);
