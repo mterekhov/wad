@@ -48,7 +48,6 @@
 		4CAB6C0A2046F8EC00D23585 /* aflat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aflat.cpp; path = sources/aflat.cpp; sourceTree = "<group>"; };
 		4CAB6C0B2046F8EC00D23585 /* asfx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asfx.h; path = sources/asfx.h; sourceTree = "<group>"; };
 		4CAB6C0C2046F8EC00D23585 /* amap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = amap.cpp; path = sources/amap.cpp; sourceTree = "<group>"; };
-		4CAB6C0D2046F8EC00D23585 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = types.h; path = sources/types.h; sourceTree = "<group>"; };
 		4CAB6C0E2046F8EC00D23585 /* ademo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ademo.cpp; path = sources/ademo.cpp; sourceTree = "<group>"; };
 		4CAB6C0F2046F8EC00D23585 /* awad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = awad.h; path = sources/awad.h; sourceTree = "<group>"; };
 		4CAB6C102046F8EC00D23585 /* asfx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = asfx.cpp; path = sources/asfx.cpp; sourceTree = "<group>"; };
@@ -109,6 +108,10 @@
 		4CAB6BD92046F8D900D23585 /* sources */ = {
 			isa = PBXGroup;
 			children = (
+				4CAB6C052046F8EC00D23585 /* awad.cpp */,
+				4CAB6C0F2046F8EC00D23585 /* awad.h */,
+				4CAB6C332046FA8A00D23585 /* map */,
+				4CAB6C322046FA8500D23585 /* sounds */,
 				4CAB6C152046F8ED00D23585 /* acolormap.cpp */,
 				4CAB6C1D2046F8ED00D23585 /* acolormap.h */,
 				4CAB6C0E2046F8EC00D23585 /* ademo.cpp */,
@@ -119,26 +122,37 @@
 				4CAB6C192046F8ED00D23585 /* aflat.h */,
 				4CAB6C122046F8ED00D23585 /* alump.cpp */,
 				4CAB6C112046F8ED00D23585 /* alump.h */,
-				4CAB6C0C2046F8EC00D23585 /* amap.cpp */,
-				4CAB6C142046F8ED00D23585 /* amap.h */,
 				4CAB6C1A2046F8ED00D23585 /* apalete.cpp */,
 				4CAB6C132046F8ED00D23585 /* apalete.h */,
 				4CAB6C1C2046F8ED00D23585 /* apatch.cpp */,
 				4CAB6C182046F8ED00D23585 /* apatch.h */,
+				4CAB6C1F2046F8EE00D23585 /* atexture.cpp */,
+				4CAB6C042046F8EC00D23585 /* atexture.h */,
+				4CAB6C082046F8EC00D23585 /* main.m */,
+			);
+			name = sources;
+			sourceTree = "<group>";
+		};
+		4CAB6C322046FA8500D23585 /* sounds */ = {
+			isa = PBXGroup;
+			children = (
 				4CAB6C162046F8ED00D23585 /* apcspeaker.cpp */,
 				4CAB6C172046F8ED00D23585 /* apcspeaker.h */,
 				4CAB6C102046F8EC00D23585 /* asfx.cpp */,
 				4CAB6C0B2046F8EC00D23585 /* asfx.h */,
-				4CAB6C1F2046F8EE00D23585 /* atexture.cpp */,
-				4CAB6C042046F8EC00D23585 /* atexture.h */,
+			);
+			name = sounds;
+			sourceTree = "<group>";
+		};
+		4CAB6C332046FA8A00D23585 /* map */ = {
+			isa = PBXGroup;
+			children = (
+				4CAB6C0C2046F8EC00D23585 /* amap.cpp */,
+				4CAB6C142046F8ED00D23585 /* amap.h */,
 				4CAB6C1E2046F8ED00D23585 /* athings.cpp */,
 				4CAB6C072046F8EC00D23585 /* athings.h */,
-				4CAB6C052046F8EC00D23585 /* awad.cpp */,
-				4CAB6C0F2046F8EC00D23585 /* awad.h */,
-				4CAB6C082046F8EC00D23585 /* main.m */,
-				4CAB6C0D2046F8EC00D23585 /* types.h */,
 			);
-			name = sources;
+			name = map;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
