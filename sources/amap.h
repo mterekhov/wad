@@ -16,7 +16,7 @@ namespace spcWAD
 class AMap : public ALump
 {
 public:
-	static TSequence amFindMapLumps(FILE* wadFile);
+	static TLumpsList amFindMapLumps(FILE* wadFile);
     AMap(const ALump& lump);
     virtual ~AMap();
 

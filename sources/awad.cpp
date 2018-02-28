@@ -81,8 +81,8 @@ AWAD::~AWAD()
 
 void AWAD::destroy()
 {
-	TSeqIter iter = _tableOfContents.begin();
-	TSeqIter iter_end = _tableOfContents.end();
+	TLumpsListIter iter = _tableOfContents.begin();
+	TLumpsListIter iter_end = _tableOfContents.end();
 	
 	while(iter != iter_end)
 	{
@@ -176,7 +176,7 @@ const std::string& AWAD::awFileName() const
     
 bool AWAD::awReadPalete(FILE* wadFile)
 {
-	TSeqIter iter = awFindLump("PLAYPAL");
+	TLumpsListIter iter = awFindLump("PLAYPAL");
 	if (fseek(wadFile, (*iter)->alOffset(), SEEK_SET))
 		return false;
 	
@@ -193,7 +193,7 @@ bool AWAD::awReadPalete(FILE* wadFile)
 
 bool AWAD::awReadColorMap(FILE* wadFile)
 {
-	TSeqIter iter = awFindLump("COLORMAP");
+	TLumpsListIter iter = awFindLump("COLORMAP");
 	if (fseek(wadFile, (*iter)->alOffset(), SEEK_SET))
 		return false;
 	
@@ -210,7 +210,7 @@ bool AWAD::awReadColorMap(FILE* wadFile)
 
 bool AWAD::awReadEndDoom(FILE* wadFile)
 {
-	TSeqIter iter = awFindLump("ENDOOM");
+	TLumpsListIter iter = awFindLump("ENDOOM");
 	if (fseek(wadFile, (*iter)->alOffset(), SEEK_SET))
 		return false;
 	
@@ -227,10 +227,10 @@ bool AWAD::awReadEndDoom(FILE* wadFile)
 
 bool AWAD::awReadDemos(FILE* wadFile)
 {
-	TSequence demosList = awFindLumpsList("DEMO");
-	for (TSeqIter iter = demosList.begin(); iter < demosList.end(); iter++)
+	TLumpsList demosList = awFindLumpsList("DEMO");
+	for (TLumpsListIter iter = demosList.begin(); iter < demosList.end(); iter++)
 	{
-		TSeqIter demoLump = awFindLump((*iter)->alName());
+		TLumpsListIter demoLump = awFindLump((*iter)->alName());
 		if (fseek(wadFile, (*demoLump)->alOffset(), SEEK_SET))
 			continue;
 		
@@ -250,7 +250,7 @@ bool AWAD::awReadMaps(FILE* wadFile)
 {
 	amDefineMapLumps(wadFile);
 	int counter = 1;
-	for (TSequence::iterator iter = _tableOfContents.begin(); iter < _tableOfContents.end(); iter++)
+	for (TLumpsList::iterator iter = _tableOfContents.begin(); iter < _tableOfContents.end(); iter++)
 	{
 		ALump* lump = static_cast<ALump *>(*iter);
 		printf("%i. %s\t\t%i\n", counter, lump->alName().c_str(), lump->alType());
@@ -265,14 +265,14 @@ bool AWAD::awReadMaps(FILE* wadFile)
 bool AWAD::awReadFlats(FILE* wadFile)
 {
     //  read first part of flats
-    TSeqIter f1_start = awFindLump("F1_START");
-    TSeqIter f1_end = awFindLump("F1_END");
+    TLumpsListIter f1_start = awFindLump("F1_START");
+    TLumpsListIter f1_end = awFindLump("F1_END");
     if (!awReadFlatRange(wadFile, f1_start, f1_end))
         return false;
 
     //  read second part of flats
-    TSeqIter f2_start = awFindLump("F2_START");
-    TSeqIter f2_end = awFindLump("F2_END");
+    TLumpsListIter f2_start = awFindLump("F2_START");
+    TLumpsListIter f2_end = awFindLump("F2_END");
     if (!awReadFlatRange(wadFile, f2_start, f2_end))
         return false;
 
@@ -281,9 +281,9 @@ bool AWAD::awReadFlats(FILE* wadFile)
 
 //=============================================================================
 
-bool AWAD::awReadFlatRange(FILE* wadFile, TSeqIter iter, TSeqIter iter_end)
+bool AWAD::awReadFlatRange(FILE* wadFile, TLumpsListIter iter, TLumpsListIter iter_end)
 {
-    TSeqIter iter_err = _tableOfContents.end();
+    TLumpsListIter iter_err = _tableOfContents.end();
     if ((iter != iter_err) && (iter_end != iter_err))
     {
         APalete* palete = static_cast<APalete*>(*awFindLump("PLAYPAL"));
@@ -309,7 +309,7 @@ bool AWAD::awReadPatches(FILE* wadFile)
 {
     APalete* palete = static_cast<APalete*>(*awFindLump("PLAYPAL"));
 
-    TSeqIter pNames = awFindLump("PNAMES");
+    TLumpsListIter pNames = awFindLump("PNAMES");
     fseek(wadFile, (*pNames)->alOffset(), SEEK_SET);
     int pCount = 0;
     if (fread(&pCount, 4, 1, wadFile) != 1)
@@ -324,7 +324,7 @@ bool AWAD::awReadPatches(FILE* wadFile)
             return false;
 
         std::string stlstr = (char*)name;
-        TSeqIter iter = awFindLump(stlstr);
+        TLumpsListIter iter = awFindLump(stlstr);
         if (iter == _tableOfContents.end())
         {
             char buffer2[256] = {0};
@@ -345,7 +345,7 @@ bool AWAD::awReadPatches(FILE* wadFile)
 
 bool AWAD::awReadTextures(FILE* wadFile)
 {
-    TSeqIter pTex = awFindLump("TEXTURE1");
+    TLumpsListIter pTex = awFindLump("TEXTURE1");
     fseek(wadFile, (*pTex)->alOffset(), SEEK_SET);
     int tCount = 0;
     if (fread(&tCount, 4, 1, wadFile) != 1)
@@ -365,7 +365,7 @@ bool AWAD::awReadTextures(FILE* wadFile)
             return false;
         
         std::string stlstr = (char*)name;
-        TSeqIter iter = awFindLump(stlstr);
+        TLumpsListIter iter = awFindLump(stlstr);
         if (iter == _tableOfContents.end())
         {
             char buffer2[256] = {0};
@@ -387,11 +387,11 @@ bool AWAD::awReadTextures(FILE* wadFile)
 
 bool AWAD::awReadSFX(FILE* wadFile)
 {
-    TSeqIter it_begin = _tableOfContents.begin();
-    TSeqIter it_end = _tableOfContents.end();
+    TLumpsListIter it_begin = _tableOfContents.begin();
+    TLumpsListIter it_end = _tableOfContents.end();
     
     ASFX* newSfx = 0;
-    for (spcWAD::TSeqIter it = it_begin; it < it_end; it++)
+    for (spcWAD::TLumpsListIter it = it_begin; it < it_end; it++)
     {
         std::string lumpName = (*it)->alName();
         if (lumpName.find("DS") == 0)
@@ -409,11 +409,11 @@ bool AWAD::awReadSFX(FILE* wadFile)
 
 bool AWAD::awReadPCSpeaker(FILE* wadFile)
 {
-    TSeqIter it_begin = _tableOfContents.begin();
-    TSeqIter it_end = _tableOfContents.end();
+    TLumpsListIter it_begin = _tableOfContents.begin();
+    TLumpsListIter it_end = _tableOfContents.end();
     
     APCSpeaker* newSpeaker = 0;
-    for (spcWAD::TSeqIter it = it_begin; it < it_end; it++)
+    for (spcWAD::TLumpsListIter it = it_begin; it < it_end; it++)
     {
         std::string lumpName = (*it)->alName();
         if (lumpName.find("DP") == 0)
@@ -433,10 +433,10 @@ bool AWAD::awReadPCSpeaker(FILE* wadFile)
     
 //=============================================================================
 
-TSequence AWAD::awFilteredLumps(const ELumpTypes lumpType)
+TLumpsList AWAD::awFilteredLumps(const ELumpTypes lumpType)
 {
-    TSequence finalVector;
-    for (spcWAD::TSeqIter it = _tableOfContents.begin(); it <_tableOfContents.end(); it++)
+    TLumpsList finalVector;
+    for (spcWAD::TLumpsListIter it = _tableOfContents.begin(); it <_tableOfContents.end(); it++)
     {
         spcWAD::ELumpTypes type = (*it)->alType();
         if (type == lumpType)
@@ -448,7 +448,7 @@ TSequence AWAD::awFilteredLumps(const ELumpTypes lumpType)
 
 //=============================================================================
 
-TSequence& AWAD::awLumps()
+TLumpsList& AWAD::awLumps()
 {
     return _tableOfContents;
 }
@@ -457,8 +457,8 @@ TSequence& AWAD::awLumps()
 
 const ALump* AWAD::awGetLump(const std::string& name)
 {
-    TSeqIter iter = _tableOfContents.begin();
-    TSeqIter iter_end = _tableOfContents.end();
+    TLumpsListIter iter = _tableOfContents.begin();
+    TLumpsListIter iter_end = _tableOfContents.end();
     while(iter != iter_end)
     {
         if ((*iter)->alName() == name)
@@ -471,10 +471,10 @@ const ALump* AWAD::awGetLump(const std::string& name)
 
 //=============================================================================
 
-TSeqIter AWAD::awFindLump(const std::string& name)
+TLumpsListIter AWAD::awFindLump(const std::string& name)
 {
-	TSeqIter iter = _tableOfContents.begin();
-	TSeqIter iter_end = _tableOfContents.end();
+	TLumpsListIter iter = _tableOfContents.begin();
+	TLumpsListIter iter_end = _tableOfContents.end();
 	while(iter != iter_end)
 	{
 		if ((*iter)->alName() == name)
@@ -487,11 +487,11 @@ TSeqIter AWAD::awFindLump(const std::string& name)
 
 //=============================================================================
 
-TSequence AWAD::awFindZeroSizeLumps()
+TLumpsList AWAD::awFindZeroSizeLumps()
 {
-	TSequence founded;
-	TSeqIter iter = _tableOfContents.begin();
-	TSeqIter iter_end = _tableOfContents.end();
+	TLumpsList founded;
+	TLumpsListIter iter = _tableOfContents.begin();
+	TLumpsListIter iter_end = _tableOfContents.end();
 	while(iter != iter_end)
 	{
 		if ((*iter)->alType() == LUMPTYPES_ZEROSIZE)
@@ -509,7 +509,7 @@ TSequence AWAD::awFindZeroSizeLumps()
 
 void AWAD::amDefineMapLumps(FILE *wadFile)
 {
-	for (TSeqIter iter = _tableOfContents.begin(); iter < _tableOfContents.end(); iter++)
+	for (TLumpsListIter iter = _tableOfContents.begin(); iter < _tableOfContents.end(); iter++)
 	{
 		if ((*iter)->alSize())
 		{
@@ -518,7 +518,7 @@ void AWAD::amDefineMapLumps(FILE *wadFile)
 		
 		if (checkLumpIfItIsMap(*iter, wadFile) == true)
 		{
-			TSeqIter mapLump = awFindLump((*iter)->alName());
+			TLumpsListIter mapLump = awFindLump((*iter)->alName());
 //			(*iter) = new AMap(*mapLump);
 		}
 	}
@@ -554,11 +554,11 @@ bool AWAD::checkLumpIfItIsMap(ALump* lump, FILE* wadFile)
 	
 //=============================================================================
 
-TSequence AWAD::awFindLumpsList(const std::string& lumpsNameMask)
+TLumpsList AWAD::awFindLumpsList(const std::string& lumpsNameMask)
 {
-	TSequence founded;
-	TSeqIter iter = _tableOfContents.begin();
-	TSeqIter iter_end = _tableOfContents.end();
+	TLumpsList founded;
+	TLumpsListIter iter = _tableOfContents.begin();
+	TLumpsListIter iter_end = _tableOfContents.end();
 	while(iter != iter_end)
 	{
 		std::string lumpName = (*iter)->alName();

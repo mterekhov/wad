@@ -27,10 +27,10 @@ public:
     AWAD(const std::string& fileName);
     ~AWAD();
 
-    const TSequence& awLumps() const;
-    TSequence& awLumps();
+    const TLumpsList& awLumps() const;
+    TLumpsList& awLumps();
     
-    TSequence awFilteredLumps(const ELumpTypes type);
+    TLumpsList awFilteredLumps(const ELumpTypes type);
 
     const ALump* awGetLump(const std::string& name);
     const unsigned int awLumpsCount() const;
@@ -42,7 +42,7 @@ public:
 private:
     EWadType _type;
     std::string _fileName;
-    TSequence _tableOfContents;
+    TLumpsList _tableOfContents;
 
     void destroy();
     bool checkSignature(FILE* wadFile);
@@ -63,7 +63,7 @@ private:
 	bool awReadDemos(FILE* wadFile);
 	//  read flats
     bool awReadFlats(FILE* wadFile);
-    bool awReadFlatRange(FILE* wadFile, TSeqIter iter, TSeqIter iter_end);
+    bool awReadFlatRange(FILE* wadFile, TLumpsListIter iter, TLumpsListIter iter_end);
     //  read patches
     bool awReadPatches(FILE* wadFile);
     //  read textures
@@ -76,9 +76,9 @@ private:
 	bool awReadMaps(FILE* wadFile);
 
 	void amDefineMapLumps(FILE *wadFile);
-	TSequence awFindZeroSizeLumps();
-	TSequence awFindLumpsList(const std::string& lumpsNameMask);
-    TSeqIter awFindLump(const std::string& name);
+	TLumpsList awFindZeroSizeLumps();
+	TLumpsList awFindLumpsList(const std::string& lumpsNameMask);
+    TLumpsListIter awFindLump(const std::string& name);
 
     bool awIntoTga(const std::string& fileName, unsigned char* data, const int width, const int height);
     bool RGB2BGR(unsigned char* data, int width, int height);
