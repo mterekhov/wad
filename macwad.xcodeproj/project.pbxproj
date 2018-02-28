@@ -67,6 +67,8 @@
 		4CAB6C1E2046F8ED00D23585 /* athings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = athings.cpp; path = sources/athings.cpp; sourceTree = "<group>"; };
 		4CAB6C1F2046F8EE00D23585 /* atexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = atexture.cpp; path = sources/atexture.cpp; sourceTree = "<group>"; };
 		4CAB6C2E2046F8F600D23585 /* doom1.wad */ = {isa = PBXFileReference; lastKnownFileType = file; name = doom1.wad; path = resources/doom1.wad; sourceTree = "<group>"; };
+		4CAB6C342046FF1B00D23585 /* types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = types.h; path = sources/types.h; sourceTree = "<group>"; };
+		4CAB6C352047028600D23585 /* enums.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = enums.h; path = sources/enums.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,8 +110,12 @@
 		4CAB6BD92046F8D900D23585 /* sources */ = {
 			isa = PBXGroup;
 			children = (
+				4CAB6C342046FF1B00D23585 /* types.h */,
+				4CAB6C352047028600D23585 /* enums.h */,
 				4CAB6C0F2046F8EC00D23585 /* awad.h */,
 				4CAB6C052046F8EC00D23585 /* awad.cpp */,
+				4CAB6C112046F8ED00D23585 /* alump.h */,
+				4CAB6C122046F8ED00D23585 /* alump.cpp */,
 				4CAB6C332046FA8A00D23585 /* map */,
 				4CAB6C322046FA8500D23585 /* sounds */,
 				4CAB6C152046F8ED00D23585 /* acolormap.cpp */,
@@ -120,8 +126,6 @@
 				4CAB6C092046F8EC00D23585 /* aendoom.h */,
 				4CAB6C0A2046F8EC00D23585 /* aflat.cpp */,
 				4CAB6C192046F8ED00D23585 /* aflat.h */,
-				4CAB6C122046F8ED00D23585 /* alump.cpp */,
-				4CAB6C112046F8ED00D23585 /* alump.h */,
 				4CAB6C1A2046F8ED00D23585 /* apalete.cpp */,
 				4CAB6C132046F8ED00D23585 /* apalete.h */,
 				4CAB6C1C2046F8ED00D23585 /* apatch.cpp */,

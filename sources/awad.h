@@ -5,27 +5,19 @@
 
 #include <stdio.h>
 #include <string>
-#include <vector>
 #include <map>
 
-
-#include "aflat.h"
-#include "apatch.h"
-#include "asfx.h"
+#include "types.h"
+#include "enums.h"
 
 //=============================================================================
 
 namespace spcWAD
 {
 
-//=============================================================================
-
-enum EWadType
-{
-    WADTYPE_UNKNOWN,
-    WADTYPE_INTERNAL_WAD,
-    WADTYPE_PATCH_WAD
-};
+class AFlat;
+class APatch;
+class ASFX;
 
 //=============================================================================
 
@@ -50,16 +42,17 @@ public:
 private:
     EWadType _type;
     std::string _fileName;
-    TSequence _lumps;
+    TSequence _tableOfContents;
+
+    void destroy();
+    bool checkSignature(FILE* wadFile);
+	bool readTableOfContents(FILE* wadFile);
+//=========================================
     std::map<int, APatch*> _patchesIndexes;
 
-    void awDestroy();
-
+	
 	bool checkLumpIfItIsMap(ALump* lump, FILE* wadFile);
-
-    //  Get wad file type
-    bool awCheckSignature(FILE* wadFile);
-
+	
 	//  read palete
 	bool awReadPalete(FILE* wadFile);
 	//	read colors map
@@ -68,8 +61,6 @@ private:
 	bool awReadEndDoom(FILE* wadFile);
 	//	read demos
 	bool awReadDemos(FILE* wadFile);
-    //  read content
-    bool awReadLumpsContent(FILE* wadFile);
 	//  read flats
     bool awReadFlats(FILE* wadFile);
     bool awReadFlatRange(FILE* wadFile, TSeqIter iter, TSeqIter iter_end);
