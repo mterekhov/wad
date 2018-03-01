@@ -28,6 +28,12 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
     if (!readTableOfContents(wadFile))
         throw;
 
+	int counter = 1;
+	for (TLumpsListIter iter = _tableOfContents.begin(); iter < _tableOfContents.end(); iter++)
+	{
+		printf("%i. %s\n", counter++, (*iter).lumpName.c_str());
+	}
+
 	if (!readPalete(wadFile))
 		throw;
 	
@@ -230,7 +236,6 @@ ALump AWAD::findLump(const std::string& lumpNameToFind)
 	{
 		if ((*iter).lumpName == lumpNameToFind)
 			return (*iter);
-		++iter;
 	}
 
 	return ALump(0, 0, "");
@@ -241,17 +246,13 @@ ALump AWAD::findLump(const std::string& lumpNameToFind)
 TLumpsList AWAD::findLumpsList(const std::string& lumpsNameMask)
 {
 	TLumpsList founded;
-	TLumpsListIter iter = _tableOfContents.begin();
-	TLumpsListIter iter_end = _tableOfContents.end();
-	while(iter != iter_end)
+	for (TLumpsListIter iter = _tableOfContents.begin(); iter < _tableOfContents.end(); iter++)
 	{
 		std::string lumpName = iter->lumpName;
 		if (lumpName.compare(0, lumpsNameMask.length(), lumpsNameMask) == 0)
 		{
 			founded.push_back(*iter);
 		}
-
-		++iter;
 	}
 
 	return founded;
