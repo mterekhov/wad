@@ -7,29 +7,46 @@ namespace spcWAD
 
 //=============================================================================
 
-AColorMap::AColorMap(const ALump& lump) : ALump(lump.alSize(), lump.alOffset(), lump.alName(), LUMPTYPES_COLOR_MAP),
-                                      m_pData(0)
+AColorMap::AColorMap(unsigned char* incomingData, const int incomingSize) : _mapcolorData(0), _mapcolorSize(incomingSize)
 {
-    m_pData = new unsigned char[lump.alSize()];
-    memset(m_pData, 0, lump.alSize());
+	if (incomingSize)
+	{
+		_mapcolorData = new unsigned char[incomingSize];
+		memcpy(_mapcolorData, incomingData, incomingSize);
+    }
 }
 
 //=============================================================================
 
 AColorMap::~AColorMap()
 {
-    alDestroy(m_pData);
+	if (_mapcolorSize)
+	{
+		_mapcolorSize = 0;
+		delete [] _mapcolorData;
+	}
 }
 
 //=============================================================================
 
-bool AColorMap::acReadData(FILE* wadFile)
+AColorMap& AColorMap::operator=(const AColorMap& rv)
 {
-    //  read raw data from file
-    if (!alReadLump(wadFile, m_pData))
-        return false;
-
-    return true;
+	if (this == &rv)
+	{
+		return *this;
+	}
+	
+	if (_mapcolorData && _mapcolorSize)
+	{
+		delete [] _mapcolorData;
+		_mapcolorSize = 0;
+	}
+	
+	_mapcolorSize = rv._mapcolorSize;
+	_mapcolorData = new unsigned char[rv._mapcolorSize];
+	memcpy(_mapcolorData, rv._mapcolorData, rv._mapcolorSize);
+	
+	return *this;
 }
 
 //=============================================================================

@@ -15,16 +15,16 @@ namespace spcWAD
 /**
 	This class operates with colors maps which are used to color the entire screen. For example when you are wearing radiation suit it's all become in green
 */
-class AColorMap : public ALump
+class AColorMap
 {
 public:
-    AColorMap(const ALump& lump);
-    virtual ~AColorMap();
-
-    bool acReadData(FILE* wadFile);
+    AColorMap(unsigned char* data, const int size);
+    ~AColorMap();
+	AColorMap& operator=(const AColorMap& rv);
 
 protected:
-    unsigned char* m_pData;
+	int _mapcolorSize;
+    unsigned char* _mapcolorData;
 };
 
 //=============================================================================

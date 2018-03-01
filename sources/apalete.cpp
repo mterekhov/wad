@@ -11,7 +11,7 @@ APalete::APalete(unsigned char* incomingData, const int incomingSize) : _paleteD
 {
 	if (incomingSize)
 	{
-		_paleteData = new unsigned char[_paleteSize];
+		_paleteData = new unsigned char[incomingSize];
 		memcpy(_paleteData, incomingData, incomingSize);
     }
 }
@@ -45,7 +45,6 @@ APalete& APalete::operator=(const APalete& rv)
 	_paleteSize = rv._paleteSize;
 	_paleteData = new unsigned char[rv._paleteSize];
 	memcpy(_paleteData, rv._paleteData, rv._paleteSize);
-
 	
 	return *this;
 }

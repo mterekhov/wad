@@ -10,6 +10,7 @@
 #include "types.h"
 #include "enums.h"
 #include "apalete.h"
+#include "acolormap.h"
 
 //=============================================================================
 
@@ -30,6 +31,7 @@ public:
 
 private:
 	APalete _palete;
+	AColorMap _colorMap;
 	
     EWadType _type;
     std::string _fileName;
@@ -39,6 +41,7 @@ private:
     bool checkSignature(FILE* wadFile);
 	bool readTableOfContents(FILE* wadFile);
 	bool readPalete(FILE* wadFile);
+	bool readColorMap(FILE* wadFile);
 
 	void readLumpData(FILE* wadFile, ALump lumpToRead, unsigned char *lumpData);
 	ALump findLump(const std::string& lumpNameToFind);

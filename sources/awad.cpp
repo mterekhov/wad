@@ -15,7 +15,7 @@ namespace spcWAD
     
 //=============================================================================
 
-AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(fileName), _palete(0, 0)
+AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(fileName), _palete(0, 0), _colorMap(0, 0)
 {
 	FILE* wadFile = 0;
 	wadFile = fopen(fileName.c_str(), "rb");
@@ -31,9 +31,9 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 	if (!readPalete(wadFile))
 		throw;
 	
-//	if (!awReadColorMap(wadFile))
-//		throw;
-//
+	if (!readColorMap(wadFile))
+		throw;
+
 //	if (!awReadEndDoom(wadFile))
 //		throw;
 //
@@ -154,6 +154,22 @@ bool AWAD::readPalete(FILE* wadFile)
 
 //=============================================================================
 
+bool AWAD::readColorMap(FILE* wadFile)
+{
+	ALump colorMapLump = findLump("COLORMAP");
+
+	unsigned char *lumpData = new unsigned char [colorMapLump.lumpSize];
+    memset(lumpData, 0, colorMapLump.lumpSize);
+	
+	readLumpData(wadFile, colorMapLump, lumpData);
+
+	_colorMap = AColorMap(lumpData, colorMapLump.lumpSize);
+
+	return true;
+}
+
+//=============================================================================
+
 #pragma mark - Lump operations -
 
 //=============================================================================
@@ -203,23 +219,6 @@ ALump AWAD::findLump(const std::string& lumpNameToFind)
 //
 ////=============================================================================
 //
-//
-////=============================================================================
-//
-//bool AWAD::awReadColorMap(FILE* wadFile)
-//{
-//	TLumpsListIter iter = awFindLump("COLORMAP");
-//	if (fseek(wadFile, (*iter)->alOffset(), SEEK_SET))
-//		return false;
-//
-//	AColorMap* colorMap = new AColorMap(*(*iter));
-//	if (!colorMap->acReadData(wadFile))
-//		return false;
-//
-//	*iter = colorMap;
-//
-//	return true;
-//}
 //
 ////=============================================================================
 //
