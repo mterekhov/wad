@@ -3,13 +3,7 @@
 
 //=============================================================================
 
-#include "apalete.h"
-
-
-//=============================================================================
-
-#define FLAT_WIDTH 64
-#define FLAT_HEIGHT 64
+#include <string>
 
 //=============================================================================
 
@@ -18,19 +12,31 @@ namespace spcWAD
 
 //=============================================================================
 
-class AFlat : public ALump
+class APalete;
+
+//=============================================================================
+
+class AFlat
 {
 public:
-    AFlat(const ALump& lump);
-    virtual ~AFlat();
+	AFlat(unsigned char* incomingData, const int incomingSize, const std::string& incomingName, const APalete& palete);
+	AFlat(const AFlat& flat);
+    ~AFlat();
+	AFlat& operator=(const AFlat& rv);
 
-    bool afReadData(APalete& palete, FILE* wadFile);
-    const unsigned char* afData() const;
+	bool saveFlatIntoTga(const std::string& fileName);
+	std::string flatName();
 
-protected:
-    void afDestroy();
+private:
+	int _flatSize;
+    unsigned char* _flatData;
+    std::string _flatName;
 
-    unsigned char* m_pData;
+	unsigned char* convertData(unsigned char* incomingData, const int incomingSize, int* outgoindSize, const APalete& palete);
+	bool flipOver(unsigned char* data, int width, int height);
+	bool RGB2BGR(unsigned char* data, int width, int height);
+	int flatHeightSize();
+	int flatWidthSize();
 };
 
 //=============================================================================

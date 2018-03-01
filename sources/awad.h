@@ -36,7 +36,8 @@ private:
 	AColorMap _colorMap;
 	AEnDoom _enDoom;
 	TDemosList _demosList;
-	
+	TFlatsList _flatsList;
+
     EWadType _type;
     std::string _fileName;
     TLumpsList _tableOfContents;
@@ -49,8 +50,12 @@ private:
 	bool readEndDoom(FILE* wadFile);
 	bool readDemos(FILE* wadFile);
 
+	bool readFlats(FILE* wadFile);
+	bool readFlatsRange(FILE* wadFile, const std::string& beginLumpName, const std::string& endLumpName);
+
 	void readLumpData(FILE* wadFile, ALump lumpToRead, unsigned char *lumpData);
 	ALump findLump(const std::string& lumpNameToFind);
+	TLumpsListIter findLumpIter(const std::string& lumpNameToFind);
 	TLumpsList findLumpsList(const std::string& lumpsNameMask);
 //=========================================
 //    std::map<int, APatch*> _patchesIndexes;

@@ -1,4 +1,5 @@
 #include "aflat.h"
+#include "apalete.h"
 
 //=============================================================================
 
@@ -7,54 +8,197 @@ namespace spcWAD
 
 //=============================================================================
 
-AFlat::AFlat(const ALump& lump) : ALump(lump.alSize(), lump.alOffset(), lump.alName(), LUMPTYPES_FLATS),
-                                    m_pData(0)
+AFlat::AFlat(unsigned char* incomingData, const int incomingSize, const std::string& incomingName, const APalete& palete) : _flatData(0), _flatSize(0), _flatName(incomingName)
 {
-    m_pData = new unsigned char[lump.alSize()];
-    memset(m_pData, 0, lump.alSize());
+	if (incomingSize)
+	{
+		_flatData = convertData(incomingData, incomingSize, &_flatSize, palete);
+    }
+}
+
+//=============================================================================
+
+AFlat::AFlat(const AFlat& flat) : _flatData(0), _flatSize(flat._flatSize), _flatName(flat._flatName)
+{
+	if (flat._flatSize)
+	{
+		_flatData = new unsigned char[flat._flatSize];
+		memcpy(_flatData, flat._flatData, flat._flatSize);
+    }
 }
 
 //=============================================================================
 
 AFlat::~AFlat()
 {
-    alDestroy(m_pData);
+	if (_flatSize)
+	{
+		_flatSize = 0;
+		delete [] _flatData;
+	}
 }
 
 //=============================================================================
 
-bool AFlat::afReadData(APalete& palete, FILE* wadFile)
+AFlat& AFlat::operator=(const AFlat& rv)
 {
-    //  read raw data from file
-    if (!alReadLump(wadFile, m_pData))
-        return false;
+	if (this == &rv)
+	{
+		return *this;
+	}
+	
+	if (_flatData && _flatSize)
+	{
+		delete [] _flatData;
+		_flatSize = 0;
+	}
+	
+	_flatName = rv._flatName;
+	_flatSize = rv._flatSize;
+	_flatData = new unsigned char[rv._flatSize];
+	
+	memcpy(_flatData, rv._flatData, rv._flatSize);
+	
+	return *this;
+}
 
+//=============================================================================
+
+unsigned char* AFlat::convertData(unsigned char* incomingData, const int incomingSize, int* outgoindSize, const APalete& palete)
+{
+	const int flatWidth = flatWidthSize();
+	const int flatHeight = flatHeightSize();
+	
     //  convert paleted data into usual 24-bit image
-    unsigned char* final_data = new unsigned char[FLAT_WIDTH * FLAT_HEIGHT * 3];
-    memset(final_data, 0, FLAT_HEIGHT * FLAT_WIDTH * 3);
-    for (int i = 0; i < FLAT_HEIGHT; i++)
+    int size = flatWidth * flatHeight * 3;
+    unsigned char* outgoindData = new unsigned char[size];
+    memset(outgoindData, 0, size);
+	
+    for (int i = 0; i < flatHeight; i++)
     {
-        for (int j = 0; j < FLAT_WIDTH; j++)
+        for (int j = 0; j < flatWidth; j++)
         {
-            int index = m_pData[FLAT_WIDTH * i + j];
-            final_data[3 * FLAT_WIDTH * i + 3 * j] = palete.apRed(index);
-            final_data[3 * FLAT_WIDTH * i + 3 * j + 1] = palete.apGreen(index);
-            final_data[3 * FLAT_WIDTH * i + 3 * j + 2] = palete.apBlue(index);
+            int index = incomingData[flatWidth * i + j];
+            outgoindData[3 * flatWidth * i + 3 * j] = palete.red(index);
+            outgoindData[3 * flatWidth * i + 3 * j + 1] = palete.green(index);
+            outgoindData[3 * flatWidth * i + 3 * j + 2] = palete.blue(index);
         }
     }
 
-    alDestroy(m_pData);
-    m_pData = final_data;
-    m_used = true;
+	*outgoindSize = size;
+    return outgoindData;
+}
+
+//=============================================================================
+
+std::string AFlat::flatName()
+{
+	return _flatName;
+}
+
+//=============================================================================
+
+bool AFlat::saveFlatIntoTga(const std::string& fileName)
+{
+	if (!_flatData)
+	{
+		return false;
+	}
+
+	int width = flatWidthSize();
+	int height = flatHeightSize();
+    unsigned char byte_1 = 0;
+    unsigned short byte_2 = 0;
+    FILE* filo = fopen(fileName.c_str(), "wb");
+    if (!filo)
+        return false;
+
+    fwrite(&byte_1, 1, 1, filo); //  identity length
+    fwrite(&byte_1, 1, 1, filo); //  palete type
+    byte_1 = 2;
+    fwrite(&byte_1, 1, 1, filo); //  image type
+    byte_1 = 0;
+    fwrite(&byte_2, 2, 1, filo); //  palete offset
+    fwrite(&byte_2, 2, 1, filo); //  palete size
+    fwrite(&byte_1, 1, 1, filo); //  palete bpp
+    fwrite(&byte_2, 2, 1, filo); //  x coord
+    fwrite(&byte_2, 2, 1, filo); //  y coord
+
+    byte_2 = width;
+    fwrite(&byte_2, 2, 1, filo); //  image width
+    byte_2 = height;
+    fwrite(&byte_2, 2, 1, filo); //  image height
+
+    byte_1 = 24;
+    fwrite(&byte_1, 1, 1, filo); //  byte per pixel
+    byte_1 = 0;
+    fwrite(&byte_1, 1, 1, filo); //  image property
+
+    RGB2BGR(_flatData, width, height);
+    flipOver(_flatData, width, height);
+    if (fwrite(_flatData, 3 * width * height, 1, filo) != 1) //  image data
+        return false;
+    flipOver(_flatData, width, height);
+    RGB2BGR(_flatData, width, height);
+
+    fclose(filo);
+
+	return true;
+}
+
+//=============================================================================
+
+int AFlat::flatWidthSize()
+{
+	return 64;
+}
+
+//=============================================================================
+
+int AFlat::flatHeightSize()
+{
+	return 64;
+}
+
+//=============================================================================
+
+bool AFlat::RGB2BGR(unsigned char* data, int width, int height)
+{
+    if (!data)
+        return true;
+
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            int index = 3 * (i * width + j);
+            unsigned char tmp = data[index];
+            data[index] = data[index + 2];
+            data[index + 2] = tmp;
+        }
+    }
 
     return true;
 }
 
 //=============================================================================
 
-const unsigned char* AFlat::afData() const
+bool AFlat::flipOver(unsigned char* data, int width, int height)
 {
-    return m_pData;
+    if (!data)
+        return true;
+
+    unsigned char* tmp = new unsigned char[3 * width];
+    for (int i = 0; i < height / 2; i++)
+    {
+        memcpy(tmp, &data[3 * i * width], 3 * width);
+        memcpy(&data[3 * i * width], &data[3 * (height - i - 1) * width], 3 * width);
+        memcpy(&data[3 * (height - i - 1) * width], tmp, 3 * width);
+    }
+
+	delete [] tmp;
+
+    return true;
 }
 
 //=============================================================================

@@ -3,6 +3,7 @@
 #include "awad.h"
 #include "alump.h"
 #include "apalete.h"
+#import "aflat.h"
 
 //=============================================================================
 
@@ -46,9 +47,17 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 	if (!readDemos(wadFile))
 		throw;
 
-//    if (!awReadFlats(wadFile))
-//        throw;
-//
+    if (!readFlats(wadFile))
+        throw;
+
+	for (TFlatsListIter iter = _flatsList.begin(); iter < _flatsList.end(); iter++)
+	{
+		AFlat& flat = *iter;
+		std::string path = "/Users/michael/Pictures/";
+		path += flat.flatName();
+		path += ".tga";
+		flat.saveFlatIntoTga(path);
+	}
 //    if (!awReadPatches(wadFile))
 //        throw;
 //
@@ -210,6 +219,50 @@ bool AWAD::readDemos(FILE* wadFile)
 	return true;
 }
 
+//=============================================================================
+
+bool AWAD::readFlats(FILE* wadFile)
+{
+    //  read first part of flats
+    if (!readFlatsRange(wadFile, "F1_START", "F1_END"))
+        return false;
+
+    //  read second part of flats
+    if (!readFlatsRange(wadFile, "F2_START", "F2_END"))
+        return false;
+
+    return true;
+}
+
+//=============================================================================
+
+bool AWAD::readFlatsRange(FILE* wadFile, const std::string& beginLumpName, const std::string& endLumpName)
+{
+	TLumpsListIter beginLump = findLumpIter(beginLumpName);
+	TLumpsListIter endLump = findLumpIter(endLumpName);
+    TLumpsListIter lumpListEnd = _tableOfContents.end();
+	
+    if ((beginLump != lumpListEnd) && (endLump != lumpListEnd))
+    {
+        ++beginLump;
+		for (TLumpsListIter iter = beginLump; iter < endLump; iter++)
+		{
+			ALump flatLump = (*iter);
+			unsigned char *lumpData = new unsigned char [flatLump.lumpSize];
+			memset(lumpData, 0, flatLump.lumpSize);
+			
+			readLumpData(wadFile, flatLump, lumpData);
+			
+			AFlat newFlat(lumpData, flatLump.lumpSize, flatLump.lumpName, _palete);
+			_flatsList.push_back(newFlat);
+		}
+    }
+
+    return true;
+}
+
+//=============================================================================
+
 #pragma mark - Lump operations -
 
 //=============================================================================
@@ -232,13 +285,20 @@ void AWAD::readLumpData(FILE* wadFile, ALump lumpToRead, unsigned char *lumpData
 
 ALump AWAD::findLump(const std::string& lumpNameToFind)
 {
+	return *findLumpIter(lumpNameToFind);
+}
+
+//=============================================================================
+
+TLumpsListIter AWAD::findLumpIter(const std::string& lumpNameToFind)
+{
 	for (TLumpsListIter iter = _tableOfContents.begin(); iter < _tableOfContents.end(); iter++)
 	{
 		if ((*iter).lumpName == lumpNameToFind)
-			return (*iter);
+			return iter;
 	}
 
-	return ALump(0, 0, "");
+	return _tableOfContents.end();
 }
 
 //=============================================================================
@@ -297,46 +357,9 @@ TLumpsList AWAD::findLumpsList(const std::string& lumpsNameMask)
 //
 ////=============================================================================
 //
-//bool AWAD::awReadFlats(FILE* wadFile)
-//{
-//    //  read first part of flats
-//    TLumpsListIter f1_start = awFindLump("F1_START");
-//    TLumpsListIter f1_end = awFindLump("F1_END");
-//    if (!awReadFlatRange(wadFile, f1_start, f1_end))
-//        return false;
-//
-//    //  read second part of flats
-//    TLumpsListIter f2_start = awFindLump("F2_START");
-//    TLumpsListIter f2_end = awFindLump("F2_END");
-//    if (!awReadFlatRange(wadFile, f2_start, f2_end))
-//        return false;
-//
-//    return true;
-//}
 //
 ////=============================================================================
 //
-//bool AWAD::awReadFlatRange(FILE* wadFile, TLumpsListIter iter, TLumpsListIter iter_end)
-//{
-//    TLumpsListIter iter_err = _tableOfContents.end();
-//    if ((iter != iter_err) && (iter_end != iter_err))
-//    {
-//        APalete* palete = static_cast<APalete*>(*awFindLump("PLAYPAL"));
-//        ++iter;
-//        AFlat* newFlat = 0;
-//        while (iter != iter_end)
-//        {
-//            newFlat = new AFlat(*(*iter));
-//            if (!newFlat->afReadData(*palete, wadFile))
-//                return false;
-//
-//            *iter = newFlat;
-//            ++iter;
-//        }
-//    }
-//
-//    return true;
-//}
 //
 ////=============================================================================
 //
@@ -642,90 +665,6 @@ TLumpsList AWAD::findLumpsList(const std::string& lumpsNameMask)
 //
 ////=============================================================================
 //
-//bool AWAD::awIntoTga(const std::string& fileName, unsigned char* data, const int width, const int height)
-//{
-//	if (!data)
-//		return false;
-//
-//    unsigned char byte_1 = 0;
-//    unsigned short byte_2 = 0;
-//    FILE* filo = fopen(fileName.c_str(), "wb");
-//    if (!filo)
-//        return false;
-//
-//    fwrite(&byte_1, 1, 1, filo); //  identity length
-//    fwrite(&byte_1, 1, 1, filo); //  palete type
-//    byte_1 = 2;
-//    fwrite(&byte_1, 1, 1, filo); //  image type
-//    byte_1 = 0;
-//    fwrite(&byte_2, 2, 1, filo); //  palete offset
-//    fwrite(&byte_2, 2, 1, filo); //  palete size
-//    fwrite(&byte_1, 1, 1, filo); //  palete bpp
-//    fwrite(&byte_2, 2, 1, filo); //  x coord
-//    fwrite(&byte_2, 2, 1, filo); //  y coord
-//
-//    byte_2 = width;
-//    fwrite(&byte_2, 2, 1, filo); //  image width
-//    byte_2 = height;
-//    fwrite(&byte_2, 2, 1, filo); //  image height
-//
-//    byte_1 = 24;
-//    fwrite(&byte_1, 1, 1, filo); //  byte per pixel
-//    byte_1 = 0;
-//    fwrite(&byte_1, 1, 1, filo); //  image property
-//
-//    RGB2BGR(data, width, height);
-//    FlipOver(data, width, height);
-//    if (fwrite(data, 3 * width * height, 1, filo) != 1) //  image data
-//        return false;
-//    FlipOver(data, width, height);
-//    RGB2BGR(data, width, height);
-//
-//    fclose(filo);
-//
-//	return true;
-//}
-//
-////=============================================================================
-//
-//bool AWAD::RGB2BGR(unsigned char* data, int width, int height)
-//{
-//    if (!data)
-//        return true;
-//
-//    for (int i = 0; i < height; i++)
-//    {
-//        for (int j = 0; j < width; j++)
-//        {
-//            int index = 3 * (i * width + j);
-//            unsigned char tmp = data[index];
-//            data[index] = data[index + 2];
-//            data[index + 2] = tmp;
-//        }
-//    }
-//
-//    return true;
-//}
-//
-////=============================================================================
-//
-//bool AWAD::FlipOver(unsigned char* data, int width, int height)
-//{
-//    if (!data)
-//        return true;
-//
-//    unsigned char* tmp = new unsigned char[3 * width];
-//    for (int i = 0; i < height / 2; i++)
-//    {
-//        memcpy(tmp, &data[3 * i * width], 3 * width);
-//        memcpy(&data[3 * i * width], &data[3 * (height - i - 1) * width], 3 * width);
-//        memcpy(&data[3 * (height - i - 1) * width], tmp, 3 * width);
-//    }
-//
-//	delete [] tmp;
-//
-//    return true;
-//}
 //
 ////=============================================================================
 //
