@@ -18,6 +18,17 @@ ADemo::ADemo(unsigned char* incomingData, const int incomingSize, const std::str
 
 //=============================================================================
 
+ADemo::ADemo(const ADemo& demo) : _demoData(0), _demoSize(demo._demoSize), _demoName(demo._demoName)
+{
+	if (demo._demoSize)
+	{
+		_demoData = new unsigned char[demo._demoSize];
+		memcpy(_demoData, demo._demoData, demo._demoSize);
+    }
+}
+
+//=============================================================================
+
 ADemo::~ADemo()
 {
 	if (_demoSize)
