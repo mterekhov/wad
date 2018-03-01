@@ -7,12 +7,8 @@ namespace spcWAD
 
 //=============================================================================
 
-ALump::ALump(const int size, const int offset, const std::string& name, ELumpTypes type) : lumpSize(size), lumpOffset(offset), lumpName(name), lumpType(type)
+ALump::ALump(const int size, const int offset, const std::string& name) : lumpSize(size), lumpOffset(offset), lumpName(name)
 {
-	if (size == 0)
-	{
-		lumpType = LUMPTYPES_ZEROSIZE;
-	}
 }
 
 //=============================================================================

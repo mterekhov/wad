@@ -17,10 +17,9 @@ namespace spcWAD
 class ALump
 {
 public:
-	ALump(const int size, const int offset, const std::string& name, ELumpTypes type = LUMPTYPES_UNKNOWN);
+	ALump(const int size, const int offset, const std::string& name);
 	~ALump();
 
-    ELumpTypes lumpType;
     int lumpSize;
     int lumpOffset;
     std::string lumpName;
