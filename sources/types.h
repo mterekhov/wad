@@ -13,11 +13,14 @@ namespace spcWAD
 //=============================================================================
 
 class ALump;
+class ADemo;
 
 //=============================================================================
 
 typedef std::vector<ALump> TLumpsList;
 typedef TLumpsList::iterator TLumpsListIter;
+typedef std::vector<ADemo> TDemosList;
+typedef TDemosList::iterator TDemosListIter;
 
 //=============================================================================
 

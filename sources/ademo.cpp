@@ -7,29 +7,48 @@ namespace spcWAD
 
 //=============================================================================
 
-ADemo::ADemo(const ALump& lump) : ALump(lump.alSize(), lump.alOffset(), lump.alName(), LUMPTYPES_DEMO),
-                                      m_pData(0)
+ADemo::ADemo(unsigned char* incomingData, const int incomingSize, const std::string& incomingName) : _demoData(0), _demoSize(incomingSize), _demoName(incomingName)
 {
-    m_pData = new unsigned char[lump.alSize()];
-    memset(m_pData, 0, lump.alSize());
+	if (incomingSize)
+	{
+		_demoData = new unsigned char[incomingSize];
+		memcpy(_demoData, incomingData, incomingSize);
+    }
 }
 
 //=============================================================================
 
 ADemo::~ADemo()
 {
-    alDestroy(m_pData);
+	if (_demoSize)
+	{
+		_demoSize = 0;
+		delete [] _demoData;
+	}
 }
 
 //=============================================================================
 
-bool ADemo::adReadData(FILE* wadFile)
+ADemo& ADemo::operator=(const ADemo& rv)
 {
-    //  read raw data from file
-    if (!alReadLump(wadFile, m_pData))
-        return false;
-
-    return true;
+	if (this == &rv)
+	{
+		return *this;
+	}
+	
+	if (_demoData && _demoSize)
+	{
+		delete [] _demoData;
+		_demoSize = 0;
+	}
+	
+	_demoName = rv._demoName;
+	_demoSize = rv._demoSize;
+	_demoData = new unsigned char[rv._demoSize];
+	
+	memcpy(_demoData, rv._demoData, rv._demoSize);
+	
+	return *this;
 }
 
 //=============================================================================

@@ -11,7 +11,8 @@
 #include "enums.h"
 #include "apalete.h"
 #include "acolormap.h"
-#import "aendoom.h"
+#include "aendoom.h"
+#include "ademo.h"
 
 //=============================================================================
 
@@ -34,6 +35,7 @@ private:
 	APalete _palete;
 	AColorMap _colorMap;
 	AEnDoom _enDoom;
+	TDemosList _demosList;
 	
     EWadType _type;
     std::string _fileName;
@@ -45,23 +47,17 @@ private:
 	bool readPalete(FILE* wadFile);
 	bool readColorMap(FILE* wadFile);
 	bool readEndDoom(FILE* wadFile);
+	bool readDemos(FILE* wadFile);
 
 	void readLumpData(FILE* wadFile, ALump lumpToRead, unsigned char *lumpData);
 	ALump findLump(const std::string& lumpNameToFind);
+	TLumpsList findLumpsList(const std::string& lumpsNameMask);
 //=========================================
 //    std::map<int, APatch*> _patchesIndexes;
 //
 //
 //	bool checkLumpIfItIsMap(ALump* lump, FILE* wadFile);
 //
-//	//  read palete
-//	bool awReadPalete(FILE* wadFile);
-//	//	read colors map
-//	bool awReadColorMap(FILE* wadFile);
-//	//	read endoom texts
-//	bool awReadEndDoom(FILE* wadFile);
-//	//	read demos
-//	bool awReadDemos(FILE* wadFile);
 //	//  read flats
 //    bool awReadFlats(FILE* wadFile);
 //    bool awReadFlatRange(FILE* wadFile, TLumpsListIter iter, TLumpsListIter iter_end);

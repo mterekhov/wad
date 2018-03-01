@@ -37,12 +37,9 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 	if (!readEndDoom(wadFile))
 		throw;
 
-//	if (!awReadEndDoom(wadFile))
-//		throw;
-//
-//	if (!awReadDemos(wadFile))
-//		throw;
-//
+	if (!readDemos(wadFile))
+		throw;
+
 //    if (!awReadFlats(wadFile))
 //        throw;
 //
@@ -189,6 +186,24 @@ bool AWAD::readEndDoom(FILE* wadFile)
 
 //=============================================================================
 
+bool AWAD::readDemos(FILE* wadFile)
+{
+	TLumpsList demosList = findLumpsList("DEMO");
+	for (TLumpsListIter iter = demosList.begin(); iter < demosList.end(); iter++)
+	{
+		ALump demoLump = findLump(iter->lumpName);
+		unsigned char *lumpData = new unsigned char [demoLump.lumpSize];
+		memset(lumpData, 0, demoLump.lumpSize);
+		
+		readLumpData(wadFile, demoLump, lumpData);
+
+		ADemo newDemo(lumpData, demoLump.lumpSize, demoLump.lumpName);
+		_demosList.push_back(newDemo);
+	}
+
+	return true;
+}
+
 #pragma mark - Lump operations -
 
 //=============================================================================
@@ -223,6 +238,27 @@ ALump AWAD::findLump(const std::string& lumpNameToFind)
 
 //=============================================================================
 
+TLumpsList AWAD::findLumpsList(const std::string& lumpsNameMask)
+{
+	TLumpsList founded;
+	TLumpsListIter iter = _tableOfContents.begin();
+	TLumpsListIter iter_end = _tableOfContents.end();
+	while(iter != iter_end)
+	{
+		std::string lumpName = iter->lumpName;
+		if (lumpName.compare(0, lumpsNameMask.length(), lumpsNameMask) == 0)
+		{
+			founded.push_back(*iter);
+		}
+
+		++iter;
+	}
+
+	return founded;
+}
+
+//=============================================================================
+
 #pragma mark - TRASH -
 
 ////=============================================================================
@@ -241,24 +277,6 @@ ALump AWAD::findLump(const std::string& lumpNameToFind)
 //
 ////=============================================================================
 //
-//bool AWAD::awReadDemos(FILE* wadFile)
-//{
-//	TLumpsList demosList = awFindLumpsList("DEMO");
-//	for (TLumpsListIter iter = demosList.begin(); iter < demosList.end(); iter++)
-//	{
-//		TLumpsListIter demoLump = awFindLump((*iter)->alName());
-//		if (fseek(wadFile, (*demoLump)->alOffset(), SEEK_SET))
-//			continue;
-//
-//		ADemo* demo = new ADemo(*(*demoLump));
-//		if (!demo->adReadData(wadFile))
-//			return false;
-//
-//		*demoLump = demo;
-//	}
-//
-//	return true;
-//}
 //
 ////=============================================================================
 //
@@ -570,24 +588,6 @@ ALump AWAD::findLump(const std::string& lumpNameToFind)
 //
 ////=============================================================================
 //
-//TLumpsList AWAD::awFindLumpsList(const std::string& lumpsNameMask)
-//{
-//	TLumpsList founded;
-//	TLumpsListIter iter = _tableOfContents.begin();
-//	TLumpsListIter iter_end = _tableOfContents.end();
-//	while(iter != iter_end)
-//	{
-//		std::string lumpName = (*iter)->alName();
-//		if (lumpName.compare(0, lumpsNameMask.length(), lumpsNameMask) == 0)
-//		{
-//			founded.push_back(*iter);
-//		}
-//
-//		++iter;
-//	}
-//
-//	return founded;
-//}
 //
 ////=============================================================================
 //

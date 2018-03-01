@@ -15,16 +15,17 @@ namespace spcWAD
 /**
 	This class operates with data for demos at the begining of the game
 */
-class ADemo : public ALump
+class ADemo
 {
 public:
-    ADemo(const ALump& lump);
-    virtual ~ADemo();
+    ADemo(unsigned char* incomingData, const int incomingSize, const std::string& incomingName);
+    ~ADemo();
+	ADemo& operator=(const ADemo& rv);
 
-    bool adReadData(FILE* wadFile);
-
-protected:
-    unsigned char* m_pData;
+private:
+	int _demoSize;
+    unsigned char* _demoData;
+    std::string _demoName;
 };
 
 //=============================================================================
