@@ -11,6 +11,7 @@
 #include "enums.h"
 #include "apalete.h"
 #include "acolormap.h"
+#import "aendoom.h"
 
 //=============================================================================
 
@@ -32,6 +33,7 @@ public:
 private:
 	APalete _palete;
 	AColorMap _colorMap;
+	AEnDoom _enDoom;
 	
     EWadType _type;
     std::string _fileName;
@@ -42,6 +44,7 @@ private:
 	bool readTableOfContents(FILE* wadFile);
 	bool readPalete(FILE* wadFile);
 	bool readColorMap(FILE* wadFile);
+	bool readEndDoom(FILE* wadFile);
 
 	void readLumpData(FILE* wadFile, ALump lumpToRead, unsigned char *lumpData);
 	ALump findLump(const std::string& lumpNameToFind);

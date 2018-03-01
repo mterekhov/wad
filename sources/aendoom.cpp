@@ -7,29 +7,46 @@ namespace spcWAD
 
 //=============================================================================
 
-AEnDoom::AEnDoom(const ALump& lump) : ALump(lump.alSize(), lump.alOffset(), lump.alName(), LUMPTYPES_ENDOOM),
-                                      m_pData(0)
+AEnDoom::AEnDoom(unsigned char* incomingData, const int incomingSize) : _endoomData(0), _endoomSize(incomingSize)
 {
-    m_pData = new unsigned char[lump.alSize()];
-    memset(m_pData, 0, lump.alSize());
+	if (incomingSize)
+	{
+		_endoomData = new unsigned char[incomingSize];
+		memcpy(_endoomData, incomingData, incomingSize);
+    }
 }
 
 //=============================================================================
 
 AEnDoom::~AEnDoom()
 {
-    alDestroy(m_pData);
+	if (_endoomSize)
+	{
+		_endoomSize = 0;
+		delete [] _endoomData;
+	}
 }
 
 //=============================================================================
 
-bool AEnDoom::aeReadData(FILE* wadFile)
+AEnDoom& AEnDoom::operator=(const AEnDoom& rv)
 {
-    //  read raw data from file
-    if (!alReadLump(wadFile, m_pData))
-        return false;
-
-    return true;
+	if (this == &rv)
+	{
+		return *this;
+	}
+	
+	if (_endoomData && _endoomSize)
+	{
+		delete [] _endoomData;
+		_endoomSize = 0;
+	}
+	
+	_endoomSize = rv._endoomSize;
+	_endoomData = new unsigned char[rv._endoomSize];
+	memcpy(_endoomData, rv._endoomData, rv._endoomSize);
+	
+	return *this;
 }
 
 //=============================================================================

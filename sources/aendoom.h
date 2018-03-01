@@ -15,16 +15,16 @@ namespace spcWAD
 /**
  This class operates with colored texts which you can see in console when quit the game
  */
-class AEnDoom : public ALump
+class AEnDoom
 {
 public:
-    AEnDoom(const ALump& lump);
-    virtual ~AEnDoom();
+    AEnDoom(unsigned char* incomingData, const int incomingSize);
+    ~AEnDoom();
+	AEnDoom& operator=(const AEnDoom& rv);
 
-    bool aeReadData(FILE* wadFile);
-
-protected:
-    unsigned char* m_pData;
+private:
+	int _endoomSize;
+    unsigned char* _endoomData;
 };
 
 //=============================================================================

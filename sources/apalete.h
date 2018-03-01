@@ -18,7 +18,7 @@ namespace spcWAD
 class APalete
 {
 public:
-    APalete(unsigned char* data, const int size);
+    APalete(unsigned char* incomingData, const int incomingSize);
     ~APalete();
 	APalete& operator=(const APalete& rv);
 

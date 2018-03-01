@@ -13,6 +13,7 @@
 		4CAB6C2F2046F92000D23585 /* doom1.wad in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4CAB6C2E2046F8F600D23585 /* doom1.wad */; };
 		4CAB6C36204706AB00D23585 /* apalete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6C1A2046F8ED00D23585 /* apalete.cpp */; };
 		4CAB6C372047F5E900D23585 /* acolormap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6C152046F8ED00D23585 /* acolormap.cpp */; };
+		4CAB6C382047F6CF00D23585 /* aendoom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6C1B2046F8ED00D23585 /* aendoom.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -111,12 +112,12 @@
 				4CAB6C1A2046F8ED00D23585 /* apalete.cpp */,
 				4CAB6C1D2046F8ED00D23585 /* acolormap.h */,
 				4CAB6C152046F8ED00D23585 /* acolormap.cpp */,
+				4CAB6C092046F8EC00D23585 /* aendoom.h */,
+				4CAB6C1B2046F8ED00D23585 /* aendoom.cpp */,
 				4CAB6C332046FA8A00D23585 /* map */,
 				4CAB6C322046FA8500D23585 /* sounds */,
 				4CAB6C0E2046F8EC00D23585 /* ademo.cpp */,
 				4CAB6C062046F8EC00D23585 /* ademo.h */,
-				4CAB6C1B2046F8ED00D23585 /* aendoom.cpp */,
-				4CAB6C092046F8EC00D23585 /* aendoom.h */,
 				4CAB6C0A2046F8EC00D23585 /* aflat.cpp */,
 				4CAB6C192046F8ED00D23585 /* aflat.h */,
 				4CAB6C1C2046F8ED00D23585 /* apatch.cpp */,
@@ -212,6 +213,7 @@
 				4CAB6C212046F8EE00D23585 /* main.m in Sources */,
 				4CAB6C372047F5E900D23585 /* acolormap.cpp in Sources */,
 				4CAB6C202046F8EE00D23585 /* awad.cpp in Sources */,
+				4CAB6C382047F6CF00D23585 /* aendoom.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

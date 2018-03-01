@@ -15,7 +15,7 @@ namespace spcWAD
     
 //=============================================================================
 
-AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(fileName), _palete(0, 0), _colorMap(0, 0)
+AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(fileName), _palete(0, 0), _colorMap(0, 0), _enDoom(0, 0)
 {
 	FILE* wadFile = 0;
 	wadFile = fopen(fileName.c_str(), "rb");
@@ -32,6 +32,9 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 		throw;
 	
 	if (!readColorMap(wadFile))
+		throw;
+	
+	if (!readEndDoom(wadFile))
 		throw;
 
 //	if (!awReadEndDoom(wadFile))
@@ -170,6 +173,22 @@ bool AWAD::readColorMap(FILE* wadFile)
 
 //=============================================================================
 
+bool AWAD::readEndDoom(FILE* wadFile)
+{
+	ALump endoomLump = findLump("ENDOOM");
+
+	unsigned char *lumpData = new unsigned char [endoomLump.lumpSize];
+    memset(lumpData, 0, endoomLump.lumpSize);
+	
+	readLumpData(wadFile, endoomLump, lumpData);
+
+	_enDoom = AEnDoom(lumpData, endoomLump.lumpSize);
+
+	return true;
+}
+
+//=============================================================================
+
 #pragma mark - Lump operations -
 
 //=============================================================================
@@ -219,23 +238,6 @@ ALump AWAD::findLump(const std::string& lumpNameToFind)
 //
 ////=============================================================================
 //
-//
-////=============================================================================
-//
-//bool AWAD::awReadEndDoom(FILE* wadFile)
-//{
-//	TLumpsListIter iter = awFindLump("ENDOOM");
-//	if (fseek(wadFile, (*iter)->alOffset(), SEEK_SET))
-//		return false;
-//
-//	AEnDoom* endoom = new AEnDoom(*(*iter));
-//	if (!endoom->aeReadData(wadFile))
-//		return false;
-//
-//	*iter = endoom;
-//
-//	return true;
-//}
 //
 ////=============================================================================
 //

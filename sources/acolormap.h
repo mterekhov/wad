@@ -18,11 +18,11 @@ namespace spcWAD
 class AColorMap
 {
 public:
-    AColorMap(unsigned char* data, const int size);
+    AColorMap(unsigned char* incomingData, const int incomingSize);
     ~AColorMap();
 	AColorMap& operator=(const AColorMap& rv);
 
-protected:
+private:
 	int _mapcolorSize;
     unsigned char* _mapcolorData;
 };
