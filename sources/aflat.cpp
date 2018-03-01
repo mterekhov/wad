@@ -64,6 +64,69 @@ AFlat& AFlat::operator=(const AFlat& rv)
 
 //=============================================================================
 
+std::string AFlat::flatName()
+{
+	return _flatName;
+}
+
+//=============================================================================
+
+bool AFlat::saveFlatIntoTga(const std::string& fileName)
+{
+	if (!_flatData)
+	{
+		return false;
+	}
+
+	int width = flatWidthSize();
+	int height = flatHeightSize();
+    unsigned char byte_1 = 0;
+    unsigned short byte_2 = 0;
+    FILE* tgaFile = fopen(fileName.c_str(), "wb");
+    if (!tgaFile)
+        return false;
+
+    fwrite(&byte_1, 1, 1, tgaFile); //  identity length
+    fwrite(&byte_1, 1, 1, tgaFile); //  palete type
+    byte_1 = 2;
+    fwrite(&byte_1, 1, 1, tgaFile); //  image type
+    byte_1 = 0;
+    fwrite(&byte_2, 2, 1, tgaFile); //  palete offset
+    fwrite(&byte_2, 2, 1, tgaFile); //  palete size
+    fwrite(&byte_1, 1, 1, tgaFile); //  palete bpp
+    fwrite(&byte_2, 2, 1, tgaFile); //  x coord
+    fwrite(&byte_2, 2, 1, tgaFile); //  y coord
+
+    byte_2 = width;
+    fwrite(&byte_2, 2, 1, tgaFile); //  image width
+    byte_2 = height;
+    fwrite(&byte_2, 2, 1, tgaFile); //  image height
+
+    byte_1 = 24;
+    fwrite(&byte_1, 1, 1, tgaFile); //  byte per pixel
+    byte_1 = 0;
+    fwrite(&byte_1, 1, 1, tgaFile); //  image property
+
+    RGB2BGR(_flatData, width, height);
+    flipOver(_flatData, width, height);
+    if (fwrite(_flatData, 3 * width * height, 1, tgaFile) != 1) //  image data
+    {
+        return false;
+	}
+    flipOver(_flatData, width, height);
+    RGB2BGR(_flatData, width, height);
+
+    fclose(tgaFile);
+
+	return true;
+}
+
+//=============================================================================
+
+#pragma mark - Private -
+
+//=============================================================================
+
 unsigned char* AFlat::convertData(unsigned char* incomingData, const int incomingSize, int* outgoindSize, const APalete& palete)
 {
 	const int flatWidth = flatWidthSize();
@@ -87,63 +150,6 @@ unsigned char* AFlat::convertData(unsigned char* incomingData, const int incomin
 
 	*outgoindSize = size;
     return outgoindData;
-}
-
-//=============================================================================
-
-std::string AFlat::flatName()
-{
-	return _flatName;
-}
-
-//=============================================================================
-
-bool AFlat::saveFlatIntoTga(const std::string& fileName)
-{
-	if (!_flatData)
-	{
-		return false;
-	}
-
-	int width = flatWidthSize();
-	int height = flatHeightSize();
-    unsigned char byte_1 = 0;
-    unsigned short byte_2 = 0;
-    FILE* filo = fopen(fileName.c_str(), "wb");
-    if (!filo)
-        return false;
-
-    fwrite(&byte_1, 1, 1, filo); //  identity length
-    fwrite(&byte_1, 1, 1, filo); //  palete type
-    byte_1 = 2;
-    fwrite(&byte_1, 1, 1, filo); //  image type
-    byte_1 = 0;
-    fwrite(&byte_2, 2, 1, filo); //  palete offset
-    fwrite(&byte_2, 2, 1, filo); //  palete size
-    fwrite(&byte_1, 1, 1, filo); //  palete bpp
-    fwrite(&byte_2, 2, 1, filo); //  x coord
-    fwrite(&byte_2, 2, 1, filo); //  y coord
-
-    byte_2 = width;
-    fwrite(&byte_2, 2, 1, filo); //  image width
-    byte_2 = height;
-    fwrite(&byte_2, 2, 1, filo); //  image height
-
-    byte_1 = 24;
-    fwrite(&byte_1, 1, 1, filo); //  byte per pixel
-    byte_1 = 0;
-    fwrite(&byte_1, 1, 1, filo); //  image property
-
-    RGB2BGR(_flatData, width, height);
-    flipOver(_flatData, width, height);
-    if (fwrite(_flatData, 3 * width * height, 1, filo) != 1) //  image data
-        return false;
-    flipOver(_flatData, width, height);
-    RGB2BGR(_flatData, width, height);
-
-    fclose(filo);
-
-	return true;
 }
 
 //=============================================================================
