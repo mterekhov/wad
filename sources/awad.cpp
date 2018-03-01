@@ -50,17 +50,19 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
     if (!readFlats(wadFile))
         throw;
 
+    if (!readPatches(wadFile))
+        throw;
+
+	//	export flats into tga
 	for (TFlatsListIter iter = _flatsList.begin(); iter < _flatsList.end(); iter++)
 	{
 		AFlat& flat = *iter;
-		std::string path = "/Users/michael/Pictures/";
+		std::string path = "/Users/michael/Pictures/saved/";
 		path += flat.flatName();
 		path += ".tga";
 		flat.saveFlatIntoTga(path);
 	}
-//    if (!awReadPatches(wadFile))
-//        throw;
-//
+
 //    if (!awReadTextures(wadFile))
 //        throw;
 //
@@ -79,13 +81,6 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 //=============================================================================
 
 AWAD::~AWAD()
-{
-    destroy();
-}
-
-//=============================================================================
-
-void AWAD::destroy()
 {
 }
 
@@ -263,6 +258,56 @@ bool AWAD::readFlatsRange(FILE* wadFile, const std::string& beginLumpName, const
 
 //=============================================================================
 
+bool AWAD::readPatches(FILE* wadFile)
+{
+    ALump pNamesLump = findLump("PNAMES");
+    fseek(wadFile, pNamesLump.lumpOffset, SEEK_SET);
+    int patchesCount = 0;
+    if (fread(&patchesCount, 4, 1, wadFile) != 1)
+    {
+        return false;
+	}
+
+    //  read the names of lumps which are patches
+    for (int i = 0; i < patchesCount; i++)
+    {
+        char flatName[9] = {0};
+        if (fread(flatName, 8, 1, wadFile) != 1)
+        {
+            return false;
+		}
+		AFlat flatForPatch = findFlat(flatName);
+		
+		int patchWidth;
+		int patchHeight;
+		int patchXOffest;
+		int patchYOffset;
+		if (fread(&patchWidth, 2, 1, wadFile) != 1)
+		{
+			return false;
+		}
+		if (fread(&patchHeight, 2, 1, wadFile) != 1)
+		{
+			return false;
+		}
+		if (fread(&patchXOffest, 2, 1, wadFile) != 1)
+		{
+			return false;
+		}
+		if (fread(&patchYOffset, 2, 1, wadFile) != 1)
+		{
+			return false;
+		}
+		
+		APatch newPatch(flatForPatch, patchWidth, patchHeight, patchXOffest, patchYOffset);
+		_patchesList.push_back(newPatch);
+    }
+
+    return true;
+}
+
+//=============================================================================
+
 #pragma mark - Lump operations -
 
 //=============================================================================
@@ -279,6 +324,21 @@ void AWAD::readLumpData(FILE* wadFile, ALump lumpToRead, unsigned char *lumpData
 	{
 		return;
 	}
+}
+
+//=============================================================================
+
+AFlat AWAD::findFlat(const std::string& flatNameToFind)
+{
+	for (TFlatsListIter iter = _flatsList.begin(); iter < _flatsList.end(); iter++)
+	{
+		if (iter->flatName() == flatNameToFind)
+		{
+			return (*iter);
+		}
+	}
+
+	return AFlat(0, 0, "", _palete);
 }
 
 //=============================================================================
@@ -363,41 +423,6 @@ TLumpsList AWAD::findLumpsList(const std::string& lumpsNameMask)
 //
 ////=============================================================================
 //
-//bool AWAD::awReadPatches(FILE* wadFile)
-//{
-//    APalete* palete = static_cast<APalete*>(*awFindLump("PLAYPAL"));
-//
-//    TLumpsListIter pNames = awFindLump("PNAMES");
-//    fseek(wadFile, (*pNames)->alOffset(), SEEK_SET);
-//    int pCount = 0;
-//    if (fread(&pCount, 4, 1, wadFile) != 1)
-//        return false;
-//
-//    //  read the names of lumps which are patches
-//    APatch* newPatch = 0;
-//    for (int i = 0; i < pCount; i++)
-//    {
-//        unsigned char name[9] = {0};
-//        if (fread(name, 8, 1, wadFile) != 1)
-//            return false;
-//
-//        std::string stlstr = (char*)name;
-//        TLumpsListIter iter = awFindLump(stlstr);
-//        if (iter == _tableOfContents.end())
-//        {
-//            char buffer2[256] = {0};
-//            sprintf(buffer2, "%i. %s was not found in lump directory\n", i, name);
-//            continue;
-//        }
-//
-//        newPatch = new APatch(*(*iter));
-//        newPatch->apReadData(*newPatch, *palete, wadFile);
-//        *iter = newPatch;
-//        _patchesIndexes[i] = newPatch;
-//    }
-//
-//    return true;
-//}
 //
 ////=============================================================================
 //

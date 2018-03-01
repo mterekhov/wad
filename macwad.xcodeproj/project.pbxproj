@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C21659420484ADA00DBF275 /* apatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6C1C2046F8ED00D23585 /* apatch.cpp */; };
+		4C21659720485F3E00DBF275 /* atgaexporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C21659520485F3E00DBF275 /* atgaexporter.cpp */; };
 		4CAB6C202046F8EE00D23585 /* awad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6C052046F8EC00D23585 /* awad.cpp */; };
 		4CAB6C212046F8EE00D23585 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6C082046F8EC00D23585 /* main.m */; };
 		4CAB6C262046F8EE00D23585 /* alump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6C122046F8ED00D23585 /* alump.cpp */; };
@@ -32,6 +34,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4C21659520485F3E00DBF275 /* atgaexporter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = atgaexporter.cpp; path = sources/atgaexporter.cpp; sourceTree = "<group>"; };
+		4C21659620485F3E00DBF275 /* atgaexporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = atgaexporter.h; path = sources/atgaexporter.h; sourceTree = "<group>"; };
 		4CAB6BA32046F87B00D23585 /* macwad */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = macwad; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CAB6C042046F8EC00D23585 /* atexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = atexture.h; path = sources/atexture.h; sourceTree = "<group>"; };
 		4CAB6C052046F8EC00D23585 /* awad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = awad.cpp; path = sources/awad.cpp; sourceTree = "<group>"; };
@@ -104,6 +108,8 @@
 		4CAB6BD92046F8D900D23585 /* sources */ = {
 			isa = PBXGroup;
 			children = (
+				4C21659620485F3E00DBF275 /* atgaexporter.h */,
+				4C21659520485F3E00DBF275 /* atgaexporter.cpp */,
 				4CAB6C342046FF1B00D23585 /* types.h */,
 				4CAB6C352047028600D23585 /* enums.h */,
 				4CAB6C0F2046F8EC00D23585 /* awad.h */,
@@ -112,37 +118,27 @@
 				4CAB6C122046F8ED00D23585 /* alump.cpp */,
 				4CCB4DA420483D7400F660F0 /* images */,
 				4CCB4DA520483D8000F660F0 /* common */,
-				4CAB6C332046FA8A00D23585 /* map */,
-				4CAB6C322046FA8500D23585 /* sounds */,
-				4CAB6C1C2046F8ED00D23585 /* apatch.cpp */,
-				4CAB6C182046F8ED00D23585 /* apatch.h */,
-				4CAB6C1F2046F8EE00D23585 /* atexture.cpp */,
-				4CAB6C042046F8EC00D23585 /* atexture.h */,
+				4CAB6C332046FA8A00D23585 /* not_refactored */,
 				4CAB6C082046F8EC00D23585 /* main.m */,
 			);
 			name = sources;
 			sourceTree = "<group>";
 		};
-		4CAB6C322046FA8500D23585 /* sounds */ = {
+		4CAB6C332046FA8A00D23585 /* not_refactored */ = {
 			isa = PBXGroup;
 			children = (
+				4CAB6C1F2046F8EE00D23585 /* atexture.cpp */,
+				4CAB6C042046F8EC00D23585 /* atexture.h */,
 				4CAB6C162046F8ED00D23585 /* apcspeaker.cpp */,
 				4CAB6C172046F8ED00D23585 /* apcspeaker.h */,
 				4CAB6C102046F8EC00D23585 /* asfx.cpp */,
 				4CAB6C0B2046F8EC00D23585 /* asfx.h */,
-			);
-			name = sounds;
-			sourceTree = "<group>";
-		};
-		4CAB6C332046FA8A00D23585 /* map */ = {
-			isa = PBXGroup;
-			children = (
 				4CAB6C0C2046F8EC00D23585 /* amap.cpp */,
 				4CAB6C142046F8ED00D23585 /* amap.h */,
 				4CAB6C1E2046F8ED00D23585 /* athings.cpp */,
 				4CAB6C072046F8EC00D23585 /* athings.h */,
 			);
-			name = map;
+			name = not_refactored;
 			sourceTree = "<group>";
 		};
 		4CCB4DA420483D7400F660F0 /* images */ = {
@@ -150,6 +146,8 @@
 			children = (
 				4CAB6C192046F8ED00D23585 /* aflat.h */,
 				4CAB6C0A2046F8EC00D23585 /* aflat.cpp */,
+				4CAB6C182046F8ED00D23585 /* apatch.h */,
+				4CAB6C1C2046F8ED00D23585 /* apatch.cpp */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -228,11 +226,13 @@
 			files = (
 				4CAB6C36204706AB00D23585 /* apalete.cpp in Sources */,
 				4CAB6C262046F8EE00D23585 /* alump.cpp in Sources */,
+				4C21659420484ADA00DBF275 /* apatch.cpp in Sources */,
 				4CCB4DA6204841CB00F660F0 /* aflat.cpp in Sources */,
 				4CAB6C212046F8EE00D23585 /* main.m in Sources */,
 				4CAB6C392047FA7900D23585 /* ademo.cpp in Sources */,
 				4CAB6C372047F5E900D23585 /* acolormap.cpp in Sources */,
 				4CAB6C202046F8EE00D23585 /* awad.cpp in Sources */,
+				4C21659720485F3E00DBF275 /* atgaexporter.cpp in Sources */,
 				4CAB6C382047F6CF00D23585 /* aendoom.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

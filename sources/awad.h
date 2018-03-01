@@ -13,15 +13,12 @@
 #include "acolormap.h"
 #include "aendoom.h"
 #include "ademo.h"
+#include "apatch.h"
 
 //=============================================================================
 
 namespace spcWAD
 {
-
-//=============================================================================
-
-
 
 //=============================================================================
 
@@ -37,6 +34,7 @@ private:
 	AEnDoom _enDoom;
 	TDemosList _demosList;
 	TFlatsList _flatsList;
+	TPatchesList _patchesList;
 
     EWadType _type;
     std::string _fileName;
@@ -53,10 +51,13 @@ private:
 	bool readFlats(FILE* wadFile);
 	bool readFlatsRange(FILE* wadFile, const std::string& beginLumpName, const std::string& endLumpName);
 
+	bool readPatches(FILE* wadFile);
+
 	void readLumpData(FILE* wadFile, ALump lumpToRead, unsigned char *lumpData);
 	ALump findLump(const std::string& lumpNameToFind);
 	TLumpsListIter findLumpIter(const std::string& lumpNameToFind);
 	TLumpsList findLumpsList(const std::string& lumpsNameMask);
+	AFlat findFlat(const std::string& flatNameToFind);
 //=========================================
 //    std::map<int, APatch*> _patchesIndexes;
 //

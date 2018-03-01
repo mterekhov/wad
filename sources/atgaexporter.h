@@ -1,9 +1,9 @@
-#ifndef SPCWAD_APATCH_H
-#define SPCWAD_APATCH_H
+#ifndef SPCWAD_ATGAEXPORTER_H
+#define SPCWAD_ATGAEXPORTER_H
 
 //=============================================================================
 
-#include "aflat.h"
+#include <string>
 
 //=============================================================================
 
@@ -12,17 +12,14 @@ namespace spcWAD
 
 //=============================================================================
 
-class APatch
+class ATGAExporter
 {
 public:
-	APatch(const AFlat& flat, const int width, const int height, const int x_offset, const int y_offset);
-	APatch(const APatch& patch);
-    ~APatch();
-	APatch& operator=(const APatch& rv);
+	bool exportData(const std::string& fileName, unsigned char *data, const int width, const int height);
 
 private:
-	int _patchSize;
-    unsigned char* _patchData;
+	bool RGB2BGR(unsigned char* data, int width, int height);
+	bool flipOver(unsigned char* data, int width, int height);
 };
 
 //=============================================================================
@@ -31,4 +28,4 @@ private:
 
 //=============================================================================
 
-#endif  //  SPCWAD_APATCH_H
+#endif  //  SPCWAD_ATGAEXPORTER_H

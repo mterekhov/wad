@@ -25,7 +25,8 @@ public:
 	AFlat& operator=(const AFlat& rv);
 
 	bool saveFlatIntoTga(const std::string& fileName);
-	std::string flatName();
+	std::string flatName() const;
+	unsigned char* flatData() const;
 
 private:
 	int _flatSize;

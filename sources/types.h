@@ -15,6 +15,7 @@ namespace spcWAD
 class ALump;
 class ADemo;
 class AFlat;
+class APatch;
 
 //=============================================================================
 
@@ -24,6 +25,8 @@ typedef std::vector<ADemo> TDemosList;
 typedef TDemosList::iterator TDemosListIter;
 typedef std::vector<AFlat> TFlatsList;
 typedef TFlatsList::iterator TFlatsListIter;
+typedef std::vector<APatch> TPatchesList;
+typedef TPatchesList::iterator TPatchesListIter;
 
 //=============================================================================
 
