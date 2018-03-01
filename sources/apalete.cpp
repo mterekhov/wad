@@ -7,59 +7,83 @@ namespace spcWAD
 
 //=============================================================================
 
-APalete::APalete(const ALump& lump) : ALump(lump.alSize(), lump.alOffset(), lump.alName(), LUMPTYPES_PALETE),
-                                      m_pData(0)
+APalete::APalete(unsigned char* incomingData, const int incomingSize) : _paleteData(0), _paleteSize(incomingSize)
 {
-    m_pData = new unsigned char[lump.alSize()];
-    memset(m_pData, 0, lump.alSize());
+	if (incomingSize)
+	{
+		_paleteData = new unsigned char[_paleteSize];
+		memcpy(_paleteData, incomingData, incomingSize);
+    }
 }
 
 //=============================================================================
 
 APalete::~APalete()
 {
-    alDestroy(m_pData);
+	if (_paleteSize)
+	{
+		_paleteSize = 0;
+		delete [] _paleteData;
+	}
 }
 
 //=============================================================================
 
-bool APalete::apReadData(FILE* wadFile)
+APalete& APalete::operator=(const APalete& rv)
 {
-    //  read raw data from file
-    if (!alReadLump(wadFile, m_pData))
-        return false;
+	if (this == &rv)
+	{
+		return *this;
+	}
+	
+	if (_paleteData && _paleteSize)
+	{
+		delete [] _paleteData;
+		_paleteSize = 0;
+	}
+	
+	_paleteSize = rv._paleteSize;
+	_paleteData = new unsigned char[rv._paleteSize];
+	memcpy(_paleteData, rv._paleteData, rv._paleteSize);
 
-    return true;
+	
+	return *this;
 }
 
 //=============================================================================
 
-const unsigned char APalete::apRed(const int index) const
+const unsigned char APalete::red(const int index) const
 {
-    if (!m_pData)
+    if (!_paleteData)
+    {
         return 0;
+	}
 
-    return m_pData[3 * index];
+    return _paleteData[3 * index];
 }
 
 //=============================================================================
 
-const unsigned char APalete::apGreen(const int index) const
+const unsigned char APalete::green(const int index) const
 {
-    if (!m_pData)
+    if (!_paleteData)
+    {
         return 0;
+	}
 
-    return m_pData[3 * index + 1];
+    return _paleteData[3 * index + 1];
 }
 
 //=============================================================================
 
-const unsigned char APalete::apBlue(const int index) const
+const unsigned char APalete::blue(const int index) const
 {
-    if (!m_pData)
+    if (!_paleteData)
+    {
         return 0;
+	}
 
-    return m_pData[3 * index + 2];
+    return _paleteData[3 * index + 2];
 }
 
 //=============================================================================

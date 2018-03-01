@@ -16,8 +16,8 @@ class ALump;
 
 //=============================================================================
 
-typedef std::vector<ALump*> TLumpsList;
-typedef std::vector<ALump*>::iterator TLumpsListIter;
+typedef std::vector<ALump> TLumpsList;
+typedef TLumpsList::iterator TLumpsListIter;
 
 //=============================================================================
 

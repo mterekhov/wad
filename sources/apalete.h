@@ -12,26 +12,23 @@ namespace spcWAD
 
 //=============================================================================
 
-#define PALETE_NUMBER 42
-
-//=============================================================================
-
 /**
 	This class operates with palette for all images in resources
 */
-class APalete : public ALump
+class APalete
 {
 public:
-    APalete(const ALump& lump);
-    virtual ~APalete();
+    APalete(unsigned char* data, const int size);
+    ~APalete();
+	APalete& operator=(const APalete& rv);
 
-    bool apReadData(FILE* wadFile);
-    const unsigned char apRed(const int index) const;
-    const unsigned char apGreen(const int index) const;
-    const unsigned char apBlue(const int index) const;
+    const unsigned char red(const int index) const;
+    const unsigned char green(const int index) const;
+    const unsigned char blue(const int index) const;
 
-protected:
-    unsigned char* m_pData;
+private:
+	int _paleteSize;
+    unsigned char* _paleteData;
 };
 
 //=============================================================================
