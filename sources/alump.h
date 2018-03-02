@@ -14,6 +14,9 @@ namespace spcWAD
 
 //=============================================================================
 
+/**
+	This class is the description of everything in wad file
+*/
 class ALump
 {
 public:

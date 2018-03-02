@@ -16,6 +16,9 @@ class APalete;
 
 //=============================================================================
 
+/**
+	This class is the base image
+*/
 class AFlat
 {
 public:

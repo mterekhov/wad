@@ -7,7 +7,7 @@ namespace spcWAD
 
 //=============================================================================
 
-APatch::APatch(const std::string& name, const int index) : _patchName(name), _patchIndex(index)
+APatch::APatch(const std::string& name, const int index) : patchName(name), _patchIndex(index)
 {
 }
 

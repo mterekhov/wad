@@ -12,14 +12,18 @@ namespace spcWAD
 
 //=============================================================================
 
+/**
+	This class is the name and the index of part of a texture
+*/
 class APatch
 {
 public:
 	APatch(const std::string& name, const int index);
     ~APatch();
 
+	std::string patchName;
+
 private:
-	std::string _patchName;
 	int _patchIndex;
 };
 

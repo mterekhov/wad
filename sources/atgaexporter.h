@@ -12,6 +12,9 @@ namespace spcWAD
 
 //=============================================================================
 
+/**
+	This class saves the images into tga file
+*/
 class ATGAExporter
 {
 public:

@@ -22,6 +22,9 @@ namespace spcWAD
 
 //=============================================================================
 
+/**
+	This class reads all the content from the wad file format
+*/
 class AWAD
 {
 public:
@@ -52,6 +55,7 @@ private:
 	bool readFlatsRange(FILE* wadFile, const std::string& beginLumpName, const std::string& endLumpName);
 
 	bool readPatches(FILE* wadFile);
+	bool readTextures(FILE* wadFile);
 
 	void readLumpData(FILE* wadFile, ALump lumpToRead, unsigned char *lumpData);
 	ALump findLump(const std::string& lumpNameToFind);

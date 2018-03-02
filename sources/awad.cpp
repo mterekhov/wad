@@ -29,12 +29,6 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
     if (!readTableOfContents(wadFile))
         throw;
 
-//	int counter = 1;
-//	for (TLumpsListIter iter = _tableOfContents.begin(); iter < _tableOfContents.end(); iter++)
-//	{
-//		printf("%i. %s\n", counter++, (*iter).lumpName.c_str());
-//	}
-
 	if (!readPalete(wadFile))
 		throw;
 	
@@ -53,15 +47,18 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
     if (!readPatches(wadFile))
         throw;
 
+    if (!readTextures(wadFile))
+        throw;
+
 	//	export flats into tga
-	for (TFlatsListIter iter = _flatsList.begin(); iter < _flatsList.end(); iter++)
-	{
-		AFlat& flat = *iter;
-		std::string path = "/Users/michael/Pictures/saved/";
-		path += flat.flatName();
-		path += ".tga";
-		flat.saveFlatIntoTga(path);
-	}
+//	for (TFlatsListIter iter = _flatsList.begin(); iter < _flatsList.end(); iter++)
+//	{
+//		AFlat& flat = *iter;
+//		std::string path = "/Users/michael/Pictures/saved/";
+//		path += flat.flatName();
+//		path += ".tga";
+//		flat.saveFlatIntoTga(path);
+//	}
 
 //    if (!awReadTextures(wadFile))
 //        throw;
@@ -75,6 +72,18 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 //	if (!awReadMaps(wadFile))
 //		throw;
 	
+	int counter = 1;
+	for (TLumpsListIter iter = _tableOfContents.begin(); iter < _tableOfContents.end(); iter++)
+	{
+		printf("%i. %s\t%x\n", counter++, (*iter).lumpName.c_str(), (*iter).lumpOffset);
+	}
+
+	counter = 1;
+	for (TPatchesListIter iter = _patchesList.begin(); iter < _patchesList.end(); iter++)
+	{
+		printf("%i. %s\n", counter++, (*iter).patchName.c_str());
+	}
+
 	fclose(wadFile);
 }
 
@@ -285,6 +294,110 @@ bool AWAD::readPatches(FILE* wadFile)
 
 //=============================================================================
 
+bool AWAD::readTextures(FILE* wadFile)
+{
+    ALump textureLump = findLump("TEXTURE1");
+    fseek(wadFile, textureLump.lumpOffset, SEEK_SET);
+    int texturesCount = 0;
+    if (fread(&texturesCount, 4, 1, wadFile) != 1)
+    {
+        return false;
+	}
+
+	std::vector<int> texturesOffsetsList;
+    for (int i = 0; i < texturesCount; i++)
+    {
+	    int textureOffset = 0;
+        if (fread(&textureOffset, 4, 1, wadFile) != 1)
+        {
+            return false;
+		}
+        textureOffset += textureLump.lumpOffset;
+		texturesOffsetsList.push_back(textureOffset);
+    }
+
+	int counter = 1;
+	for (std::vector<int>::iterator iter = texturesOffsetsList.begin(); iter < texturesOffsetsList.end(); iter++)
+	{
+		fseek(wadFile, (*iter), SEEK_SET);
+		unsigned char name[9] = {0};
+		if (fread(name, 8, 1, wadFile) != 1)
+		{
+			return false;
+		}
+		
+		int buffer1 = 0;
+		if (fread(&buffer1, 2, 1, wadFile) != 1)
+		{
+			return false;
+		}
+		int buffer2 = 0;
+		if (fread(&buffer2, 2, 1, wadFile) != 1)
+		{
+			return false;
+		}
+		int width = 0;
+		if (fread(&width, 2, 1, wadFile) != 1)
+		{
+			return false;
+		}
+		int height = 0;
+		if (fread(&height, 2, 1, wadFile) != 1)
+		{
+			return false;
+		}
+		int buffer3 = 0;
+		if (fread(&buffer3, 2, 1, wadFile) != 1)
+		{
+			return false;
+		}
+		int buffer4 = 0;
+		if (fread(&buffer4, 2, 1, wadFile) != 1)
+		{
+			return false;
+		}
+		int patchNumbers = 0;
+		if (fread(&patchNumbers, 2, 1, wadFile) != 1)
+		{
+			return false;
+		}
+		printf("%i. <%s> size %ix%i patch numbers %i\n", counter++, name, width, height, patchNumbers);
+		for (int patchIndex = 0; patchIndex < patchNumbers; patchIndex++)
+		{
+			int xOffset = 0;
+			if (fread(&xOffset, 2, 1, wadFile) != 1)
+			{
+				return false;
+			}
+			int yOffset = 0;
+			if (fread(&yOffset, 2, 1, wadFile) != 1)
+			{
+				return false;
+			}
+			int patchIndexInPatchDirectory = 0;
+			if (fread(&patchIndexInPatchDirectory, 2, 1, wadFile) != 1)
+			{
+				return false;
+			}
+			int buffer5 = 0;
+			if (fread(&buffer5, 2, 1, wadFile) != 1)
+			{
+				return false;
+			}
+			int buffer6 = 0;
+			if (fread(&buffer6, 2, 1, wadFile) != 1)
+			{
+				return false;
+			}
+			printf("\t\t\tx_offset = %i, y_offset = %i, patchIndex = %i\n", xOffset, yOffset, patchIndexInPatchDirectory);
+		}
+	}
+	
+    return true;
+}
+
+//=============================================================================
+
 #pragma mark - Lump operations -
 
 //=============================================================================
@@ -359,24 +472,6 @@ TLumpsList AWAD::findLumpsList(const std::string& lumpsNameMask)
 
 #pragma mark - TRASH -
 
-////=============================================================================
-//
-//const std::string& AWAD::awFileName() const
-//{
-//    return _fileName;
-//}
-//
-////=============================================================================
-//
-//#pragma mark - Readers -
-//
-////=============================================================================
-//
-//
-////=============================================================================
-//
-//
-////=============================================================================
 //
 //bool AWAD::awReadMaps(FILE* wadFile)
 //{
@@ -390,57 +485,6 @@ TLumpsList AWAD::findLumpsList(const std::string& lumpsNameMask)
 //	}
 //
 //	return true;
-//}
-//
-////=============================================================================
-//
-//
-////=============================================================================
-//
-//
-////=============================================================================
-//
-//
-////=============================================================================
-//
-//bool AWAD::awReadTextures(FILE* wadFile)
-//{
-//    TLumpsListIter pTex = awFindLump("TEXTURE1");
-//    fseek(wadFile, (*pTex)->alOffset(), SEEK_SET);
-//    int tCount = 0;
-//    if (fread(&tCount, 4, 1, wadFile) != 1)
-//        return false;
-//
-//    ATexture* newTexture = 0;
-//    int tOffset = 0;
-//    for (int i = 0; i < tCount; i++)
-//    {
-//        if (fread(&tOffset, 4, 1, wadFile) != 1)
-//            return false;
-//        tOffset += (*pTex)->alOffset();
-//        int pushOffset = fseek(wadFile, tOffset, SEEK_SET);
-//
-//        unsigned char name[9] = {0};
-//        if (fread(name, 8, 1, wadFile) != 1)
-//            return false;
-//
-//        std::string stlstr = (char*)name;
-//        TLumpsListIter iter = awFindLump(stlstr);
-//        if (iter == _tableOfContents.end())
-//        {
-//            char buffer2[256] = {0};
-//            sprintf(buffer2, "%i. %s was not found in lump directory\n", i, name);
-//            continue;
-//        }
-//
-//        newTexture = new ATexture(*(*iter));
-//        newTexture->atReadData(_patchesIndexes, wadFile);
-//        *iter = newTexture;
-//
-//        fseek(wadFile, pushOffset, SEEK_SET);
-//    }
-//
-//    return true;
 //}
 //
 ////=============================================================================
