@@ -29,11 +29,11 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
     if (!readTableOfContents(wadFile))
         throw;
 
-	int counter = 1;
-	for (TLumpsListIter iter = _tableOfContents.begin(); iter < _tableOfContents.end(); iter++)
-	{
-		printf("%i. %s\n", counter++, (*iter).lumpName.c_str());
-	}
+//	int counter = 1;
+//	for (TLumpsListIter iter = _tableOfContents.begin(); iter < _tableOfContents.end(); iter++)
+//	{
+//		printf("%i. %s\n", counter++, (*iter).lumpName.c_str());
+//	}
 
 	if (!readPalete(wadFile))
 		throw;
@@ -268,38 +268,15 @@ bool AWAD::readPatches(FILE* wadFile)
         return false;
 	}
 
-    //  read the names of lumps which are patches
     for (int i = 0; i < patchesCount; i++)
     {
-        char flatName[9] = {0};
-        if (fread(flatName, 8, 1, wadFile) != 1)
+        char patchName[9] = {0};
+        if (fread(patchName, 8, 1, wadFile) != 1)
         {
             return false;
 		}
-		AFlat flatForPatch = findFlat(flatName);
 		
-		int patchWidth;
-		int patchHeight;
-		int patchXOffest;
-		int patchYOffset;
-		if (fread(&patchWidth, 2, 1, wadFile) != 1)
-		{
-			return false;
-		}
-		if (fread(&patchHeight, 2, 1, wadFile) != 1)
-		{
-			return false;
-		}
-		if (fread(&patchXOffest, 2, 1, wadFile) != 1)
-		{
-			return false;
-		}
-		if (fread(&patchYOffset, 2, 1, wadFile) != 1)
-		{
-			return false;
-		}
-		
-		APatch newPatch(flatForPatch, patchWidth, patchHeight, patchXOffest, patchYOffset);
+		APatch newPatch(patchName, i);
 		_patchesList.push_back(newPatch);
     }
 

@@ -3,7 +3,7 @@
 
 //=============================================================================
 
-#include "aflat.h"
+#include <string>
 
 //=============================================================================
 
@@ -15,14 +15,12 @@ namespace spcWAD
 class APatch
 {
 public:
-	APatch(const AFlat& flat, const int width, const int height, const int x_offset, const int y_offset);
-	APatch(const APatch& patch);
+	APatch(const std::string& name, const int index);
     ~APatch();
-	APatch& operator=(const APatch& rv);
 
 private:
-	int _patchSize;
-    unsigned char* _patchData;
+	std::string _patchName;
+	int _patchIndex;
 };
 
 //=============================================================================
