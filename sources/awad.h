@@ -14,6 +14,7 @@
 #include "aendoom.h"
 #include "ademo.h"
 #include "apatch.h"
+#include "atexture.h"
 
 //=============================================================================
 
@@ -38,6 +39,7 @@ private:
 	TDemosList _demosList;
 	TFlatsList _flatsList;
 	TPatchesList _patchesList;
+	TTexturesList _texturesList;
 
     EWadType _type;
     std::string _fileName;
@@ -55,7 +57,9 @@ private:
 	bool readFlatsRange(FILE* wadFile, const std::string& beginLumpName, const std::string& endLumpName);
 
 	bool readPatches(FILE* wadFile);
+	
 	bool readTextures(FILE* wadFile);
+	ATexture generateSingleTexture(FILE* wadFile, const int textureOffset);
 
 	void readLumpData(FILE* wadFile, ALump lumpToRead, unsigned char *lumpData);
 	ALump findLump(const std::string& lumpNameToFind);

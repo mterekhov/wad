@@ -36,11 +36,9 @@ private:
     unsigned char* _flatData;
     std::string _flatName;
 
-	unsigned char* convertData(unsigned char* incomingData, const int incomingSize, int* outgoindSize, const APalete& palete);
-	bool flipOver(unsigned char* data, int width, int height);
-	bool RGB2BGR(unsigned char* data, int width, int height);
 	int flatHeightSize();
 	int flatWidthSize();
+	unsigned char* convertData(unsigned char* incomingData, const int incomingSize, int* outgoindSize, const APalete& palete);
 };
 
 //=============================================================================

@@ -5,8 +5,9 @@
 
 #include <map>
 #include <vector>
+#include <string>
 
-#include "apatch.h"
+#include "types.h"
 
 //=============================================================================
 
@@ -15,24 +16,25 @@ namespace spcWAD
 
 //=============================================================================
 
-class ATexture : public ALump
+class ATexture
 {
 public:
-    ATexture(const ALump& lump);
-    virtual ~ATexture();
+    ATexture(const TPatchesList& patchesList, const TLumpsList& lumpsList, const std::string& incomingName, const int incomingWidth, const int incomingHeight, const TPatchesDescriptionList& patchesDescriptionList);
+	ATexture(const ATexture& texture);
+    ~ATexture();
+	ATexture& operator=(const ATexture& rv);
 
-    bool atReadData(const std::map<int, APatch*>& patches, FILE* wadFile);
-    const unsigned char* atData() const;
-    const int atWidth() const;
-    const int atHeight() const;
+	bool saveTextureIntoTga(const std::string& fileName);
+	std::string textureName() const;
 
-protected:
-    void atDestroy();
-
-    int m_width;
-    int m_height;
-    unsigned char* m_pData;
-    std::vector<APatch*> m_patches;
+private:
+    unsigned char* _textureData;
+    std::string _textureName;
+    int _textureWidth;
+    int _textureHeight;
+	
+	unsigned char* generateTexture(const TPatchesList& patchesList, const TLumpsList& lumpsList, const int incomingWidth, const int incomingHeight);
+	int textureDataSize() const;
 };
 
 //=============================================================================

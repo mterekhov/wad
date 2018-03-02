@@ -3,7 +3,8 @@
 #include "awad.h"
 #include "alump.h"
 #include "apalete.h"
-#import "aflat.h"
+#include "aflat.h"
+#include "atexture.h"
 
 //=============================================================================
 
@@ -316,84 +317,50 @@ bool AWAD::readTextures(FILE* wadFile)
 		texturesOffsetsList.push_back(textureOffset);
     }
 
-	int counter = 1;
 	for (std::vector<int>::iterator iter = texturesOffsetsList.begin(); iter < texturesOffsetsList.end(); iter++)
 	{
-		fseek(wadFile, (*iter), SEEK_SET);
-		unsigned char name[9] = {0};
-		if (fread(name, 8, 1, wadFile) != 1)
-		{
-			return false;
-		}
-		
-		int buffer1 = 0;
-		if (fread(&buffer1, 2, 1, wadFile) != 1)
-		{
-			return false;
-		}
-		int buffer2 = 0;
-		if (fread(&buffer2, 2, 1, wadFile) != 1)
-		{
-			return false;
-		}
-		int width = 0;
-		if (fread(&width, 2, 1, wadFile) != 1)
-		{
-			return false;
-		}
-		int height = 0;
-		if (fread(&height, 2, 1, wadFile) != 1)
-		{
-			return false;
-		}
-		int buffer3 = 0;
-		if (fread(&buffer3, 2, 1, wadFile) != 1)
-		{
-			return false;
-		}
-		int buffer4 = 0;
-		if (fread(&buffer4, 2, 1, wadFile) != 1)
-		{
-			return false;
-		}
-		int patchNumbers = 0;
-		if (fread(&patchNumbers, 2, 1, wadFile) != 1)
-		{
-			return false;
-		}
-		printf("%i. <%s> size %ix%i patch numbers %i\n", counter++, name, width, height, patchNumbers);
-		for (int patchIndex = 0; patchIndex < patchNumbers; patchIndex++)
-		{
-			int xOffset = 0;
-			if (fread(&xOffset, 2, 1, wadFile) != 1)
-			{
-				return false;
-			}
-			int yOffset = 0;
-			if (fread(&yOffset, 2, 1, wadFile) != 1)
-			{
-				return false;
-			}
-			int patchIndexInPatchDirectory = 0;
-			if (fread(&patchIndexInPatchDirectory, 2, 1, wadFile) != 1)
-			{
-				return false;
-			}
-			int buffer5 = 0;
-			if (fread(&buffer5, 2, 1, wadFile) != 1)
-			{
-				return false;
-			}
-			int buffer6 = 0;
-			if (fread(&buffer6, 2, 1, wadFile) != 1)
-			{
-				return false;
-			}
-			printf("\t\t\tx_offset = %i, y_offset = %i, patchIndex = %i\n", xOffset, yOffset, patchIndexInPatchDirectory);
-		}
+		_texturesList.push_back(generateSingleTexture(wadFile, (*iter)));
 	}
 	
     return true;
+}
+
+//=============================================================================
+
+ATexture AWAD::generateSingleTexture(FILE* wadFile, const int textureOffset)
+{
+	fseek(wadFile, textureOffset, SEEK_SET);
+	char textureName[9] = {0};
+	fread(textureName, 8, 1, wadFile);
+	int buffer = 0;
+	fread(&buffer, 4, 1, wadFile);
+	int width = 0;
+	fread(&width, 2, 1, wadFile);
+	int height = 0;
+	fread(&height, 2, 1, wadFile);
+	fread(&buffer, 4, 1, wadFile);
+	int patchNumbers = 0;
+	fread(&patchNumbers, 2, 1, wadFile);
+	printf("<%s> size %ix%i patch numbers %i\n", textureName, width, height, patchNumbers);
+
+	TPatchesDescriptionList patchesDescriptionList;
+	for (int patchIndex = 0; patchIndex < patchNumbers; patchIndex++)
+	{
+		int xOffset = 0;
+		fread(&xOffset, 2, 1, wadFile);
+		int yOffset = 0;
+		fread(&yOffset, 2, 1, wadFile);
+		int patchIndexInPatchDirectory = 0;
+		fread(&patchIndexInPatchDirectory, 2, 1, wadFile);
+		fread(&buffer, 4, 1, wadFile);
+
+		SPatchDescription newDescription = {xOffset, yOffset, patchIndexInPatchDirectory};
+		patchesDescriptionList.push_back(newDescription);
+		printf("\t\t\tx_offset = %i, y_offset = %i, patchIndex = %i\n", xOffset, yOffset, patchIndexInPatchDirectory);
+	}
+	
+	ATexture newTexture(_patchesList, _tableOfContents, textureName, width, height, patchesDescriptionList);
+	return newTexture;
 }
 
 //=============================================================================
