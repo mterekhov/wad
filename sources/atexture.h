@@ -18,7 +18,7 @@ namespace spcWAD
 class ATexture
 {
 public:
-    ATexture(const TPatchesList& patchesList, const TLumpsList& lumpsList, const std::string& incomingName, const int incomingWidth, const int incomingHeight, const TPatchesDescriptionList& patchesDescriptionList);
+    ATexture(const TPatchesList& patchesList, const TFlatsList& flatsList, const std::string& incomingName, const int incomingWidth, const int incomingHeight, const TPatchesDescriptionList& patchesDescriptionList);
 	ATexture(const ATexture& texture);
     ~ATexture();
 	ATexture& operator=(const ATexture& rv);
@@ -32,7 +32,7 @@ private:
     int _textureWidth;
     int _textureHeight;
 	
-	unsigned char* generateTexture(const TPatchesList& patchesList, const TLumpsList& lumpsList, const int incomingWidth, const int incomingHeight, const TPatchesDescriptionList& patchesDescriptionList);
+	unsigned char* generateTexture(const TPatchesList& patchesList, const TFlatsList& flatsList, const int incomingWidth, const int incomingHeight, const TPatchesDescriptionList& patchesDescriptionList);
 	int textureDataSize() const;
 };
 

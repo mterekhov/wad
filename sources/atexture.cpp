@@ -1,5 +1,7 @@
 #include "atexture.h"
 #include "apatch.h"
+#include "afindhelper.h"
+#include "aflat.h"
 
 #include <stdlib.h>
 
@@ -10,9 +12,9 @@ namespace spcWAD
 
 //=============================================================================
 
-ATexture::ATexture(const TPatchesList& patchesList, const TLumpsList& lumpsList, const std::string& incomingName, const int incomingWidth, const int incomingHeight, const TPatchesDescriptionList& patchesDescriptionList) : _textureData(0), _textureWidth(incomingWidth), _textureHeight(incomingHeight), _textureName(incomingName)
+ATexture::ATexture(const TPatchesList& patchesList, const TFlatsList& flatsList, const std::string& incomingName, const int incomingWidth, const int incomingHeight, const TPatchesDescriptionList& patchesDescriptionList) : _textureData(0), _textureWidth(incomingWidth), _textureHeight(incomingHeight), _textureName(incomingName)
 {
-	_textureData = generateTexture(patchesList, lumpsList, incomingWidth, incomingHeight, patchesDescriptionList);
+	_textureData = generateTexture(patchesList, flatsList, incomingWidth, incomingHeight, patchesDescriptionList);
 }
 
 //=============================================================================
@@ -71,7 +73,7 @@ int ATexture::textureDataSize() const
 
 //=============================================================================
 
-unsigned char* ATexture::generateTexture(const TPatchesList& patchesList, const TLumpsList& lumpsList, const int incomingWidth, const int incomingHeight, const TPatchesDescriptionList& patchesDescriptionList)
+unsigned char* ATexture::generateTexture(const TPatchesList& patchesList, const TFlatsList& flatsList, const int incomingWidth, const int incomingHeight, const TPatchesDescriptionList& patchesDescriptionList)
 {
 	int textureSize = incomingHeight * incomingWidth * 3;
 	if (textureSize == 0)
@@ -80,11 +82,19 @@ unsigned char* ATexture::generateTexture(const TPatchesList& patchesList, const 
 	}
 	
 	unsigned char* textureData = new unsigned char[textureSize];
+    memset(textureData, 0, textureSize);
 	for (TPatchesDescriptionListConstIter iter = patchesDescriptionList.begin(); iter < patchesDescriptionList.end(); iter++)
 	{
 		const SPatchDescription& patchDescription = *iter;
 		const APatch& patch = patchesList[patchDescription.index];
-		
+		const AFlat& patchFlat = AFindHelper::findFlat(patch.patchName, flatsList);
+		for (int y = patchDescription.y_offset; y < patchFlat.flatHeightSize(); y++)
+		{
+			for (int x = patchDescription.x_offset; x < patchFlat.flatWidthSize(); x++)
+			{
+				
+			}
+		}
 	}
 	
 	return textureData;

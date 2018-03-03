@@ -63,7 +63,6 @@ private:
 
 	void readLumpData(FILE* wadFile, ALump lumpToRead, unsigned char *lumpData);
 	TLumpsList findLumpsList(const std::string& lumpsNameMask);
-	AFlat findFlat(const std::string& flatNameToFind);
 //=========================================
 //    std::map<int, APatch*> _patchesIndexes;
 //

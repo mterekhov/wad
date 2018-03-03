@@ -5,7 +5,7 @@
 #include "apalete.h"
 #include "aflat.h"
 #include "atexture.h"
-#include "alumphelper.h"
+#include "afindhelper.h"
 
 //=============================================================================
 
@@ -160,7 +160,7 @@ bool AWAD::readTableOfContents(FILE* wadFile)
 
 bool AWAD::readPalete(FILE* wadFile)
 {
-	const ALump& playpalLump = ALumpHelper::findLump("PLAYPAL", _tableOfContents);
+	const ALump& playpalLump = AFindHelper::findLump("PLAYPAL", _tableOfContents);
 
 	unsigned char *lumpData = new unsigned char [playpalLump.lumpSize];
     memset(lumpData, 0, playpalLump.lumpSize);
@@ -177,7 +177,7 @@ bool AWAD::readPalete(FILE* wadFile)
 
 bool AWAD::readColorMap(FILE* wadFile)
 {
-	const ALump& colorMapLump = ALumpHelper::findLump("COLORMAP", _tableOfContents);
+	const ALump& colorMapLump = AFindHelper::findLump("COLORMAP", _tableOfContents);
 
 	unsigned char *lumpData = new unsigned char [colorMapLump.lumpSize];
     memset(lumpData, 0, colorMapLump.lumpSize);
@@ -193,7 +193,7 @@ bool AWAD::readColorMap(FILE* wadFile)
 
 bool AWAD::readEndDoom(FILE* wadFile)
 {
-	const ALump& endoomLump = ALumpHelper::findLump("ENDOOM", _tableOfContents);
+	const ALump& endoomLump = AFindHelper::findLump("ENDOOM", _tableOfContents);
 
 	unsigned char *lumpData = new unsigned char [endoomLump.lumpSize];
     memset(lumpData, 0, endoomLump.lumpSize);
@@ -212,7 +212,7 @@ bool AWAD::readDemos(FILE* wadFile)
 	TLumpsList demosList = findLumpsList("DEMO");
 	for (TLumpsListIter iter = demosList.begin(); iter < demosList.end(); iter++)
 	{
-		const ALump& demoLump = ALumpHelper::findLump(iter->lumpName, _tableOfContents);
+		const ALump& demoLump = AFindHelper::findLump(iter->lumpName, _tableOfContents);
 		unsigned char *lumpData = new unsigned char [demoLump.lumpSize];
 		memset(lumpData, 0, demoLump.lumpSize);
 		
@@ -244,8 +244,8 @@ bool AWAD::readFlats(FILE* wadFile)
 
 bool AWAD::readFlatsRange(FILE* wadFile, const std::string& beginLumpName, const std::string& endLumpName)
 {
-	TLumpsListConstIter beginLump = ALumpHelper::findLumpIter(beginLumpName, _tableOfContents);
-	TLumpsListConstIter endLump = ALumpHelper::findLumpIter(endLumpName, _tableOfContents);
+	TLumpsListConstIter beginLump = AFindHelper::findLumpIter(beginLumpName, _tableOfContents);
+	TLumpsListConstIter endLump = AFindHelper::findLumpIter(endLumpName, _tableOfContents);
     TLumpsListIter lumpListEnd = _tableOfContents.end();
 	
     if ((beginLump != lumpListEnd) && (endLump != lumpListEnd))
@@ -271,7 +271,7 @@ bool AWAD::readFlatsRange(FILE* wadFile, const std::string& beginLumpName, const
 
 bool AWAD::readPatches(FILE* wadFile)
 {
-	const ALump& pNamesLump = ALumpHelper::findLump("PNAMES", _tableOfContents);
+	const ALump& pNamesLump = AFindHelper::findLump("PNAMES", _tableOfContents);
     fseek(wadFile, pNamesLump.lumpOffset, SEEK_SET);
     int patchesCount = 0;
     if (fread(&patchesCount, 4, 1, wadFile) != 1)
@@ -298,7 +298,7 @@ bool AWAD::readPatches(FILE* wadFile)
 
 bool AWAD::readTextures(FILE* wadFile)
 {
-	const ALump& textureLump = ALumpHelper::findLump("TEXTURE1", _tableOfContents);
+	const ALump& textureLump = AFindHelper::findLump("TEXTURE1", _tableOfContents);
     fseek(wadFile, textureLump.lumpOffset, SEEK_SET);
     int texturesCount = 0;
     if (fread(&texturesCount, 4, 1, wadFile) != 1)
@@ -360,7 +360,7 @@ ATexture AWAD::generateSingleTexture(FILE* wadFile, const int textureOffset)
 		printf("\t\t\tx_offset = %i, y_offset = %i, patchIndex = %i\n", xOffset, yOffset, patchIndexInPatchDirectory);
 	}
 	
-	ATexture newTexture(_patchesList, _tableOfContents, textureName, width, height, patchesDescriptionList);
+	ATexture newTexture(_patchesList, _flatsList, textureName, width, height, patchesDescriptionList);
 	return newTexture;
 }
 
@@ -382,21 +382,6 @@ void AWAD::readLumpData(FILE* wadFile, ALump lumpToRead, unsigned char *lumpData
 	{
 		return;
 	}
-}
-
-//=============================================================================
-
-AFlat AWAD::findFlat(const std::string& flatNameToFind)
-{
-	for (TFlatsListIter iter = _flatsList.begin(); iter < _flatsList.end(); iter++)
-	{
-		if (iter->flatName() == flatNameToFind)
-		{
-			return (*iter);
-		}
-	}
-
-	return AFlat(0, 0, "", _palete);
 }
 
 //=============================================================================

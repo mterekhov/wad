@@ -30,14 +30,14 @@ public:
 	bool saveFlatIntoTga(const std::string& fileName);
 	std::string flatName() const;
 	unsigned char* flatData() const;
+	int flatHeightSize() const;
+	int flatWidthSize() const;
 
 private:
 	int _flatSize;
     unsigned char* _flatData;
     std::string _flatName;
 
-	int flatHeightSize();
-	int flatWidthSize();
 	unsigned char* convertData(unsigned char* incomingData, const int incomingSize, int* outgoindSize, const APalete& palete);
 };
 

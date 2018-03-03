@@ -116,14 +116,14 @@ unsigned char* AFlat::convertData(unsigned char* incomingData, const int incomin
 
 //=============================================================================
 
-int AFlat::flatWidthSize()
+int AFlat::flatWidthSize() const
 {
 	return 64;
 }
 
 //=============================================================================
 
-int AFlat::flatHeightSize()
+int AFlat::flatHeightSize() const
 {
 	return 64;
 }

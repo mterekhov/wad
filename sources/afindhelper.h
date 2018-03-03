@@ -1,5 +1,5 @@
-#ifndef SPCWAD_ALUMPHELPER_H
-#define SPCWAD_ALUMPHELPER_H
+#ifndef SPCWAD_AFINDHELPER_H
+#define SPCWAD_AFINDHELPER_H
 
 //=============================================================================
 
@@ -18,9 +18,10 @@ namespace spcWAD
 /**
 	This class saves the images into tga file
 */
-class ALumpHelper
+class AFindHelper
 {
 public:
+	static const AFlat& findFlat(const std::string& flatNameToFind, const TFlatsList& flatList);
 	static const ALump& findLump(const std::string& lumpNameToFind, const TLumpsList& lumpsList);
 	static TLumpsListConstIter findLumpIter(const std::string& lumpNameToFind, const TLumpsList& lumpsList);
 };
@@ -31,4 +32,4 @@ public:
 
 //=============================================================================
 
-#endif  //  SPCWAD_ALUMPHELPER_H
+#endif  //  SPCWAD_AFINDHELPER_H

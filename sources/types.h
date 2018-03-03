@@ -36,6 +36,7 @@ typedef std::vector<ADemo> TDemosList;
 typedef TDemosList::iterator TDemosListIter;
 typedef std::vector<AFlat> TFlatsList;
 typedef TFlatsList::iterator TFlatsListIter;
+typedef TFlatsList::const_iterator TFlatsListConstIter;
 typedef std::vector<APatch> TPatchesList;
 typedef TPatchesList::iterator TPatchesListIter;
 typedef std::vector<ATexture> TTexturesList;
