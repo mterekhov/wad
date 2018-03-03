@@ -49,42 +49,38 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
     if (!readPatches(wadFile))
         throw;
 
-    if (!readTextures(wadFile))
-        throw;
+//    if (!readTextures(wadFile))
+//        throw;
 
-	//	export flats into tga
-	for (TTexturesListIter iter = _texturesList.begin(); iter < _texturesList.end(); iter++)
+
+	for (TFlatsListIter iter = _flatsList.begin(); iter < _flatsList.end(); iter++)
 	{
-		ATexture& texture = *iter;
+		AFlat& flat = *iter;
 		std::string path = "/Users/michael/Pictures/saved/";
-		path += texture.textureName();
+		path += flat.flatName();
 		path += ".tga";
-		texture.saveTextureIntoTga(path);
+		flat.saveFlatIntoTga(path);
 	}
+//	for (TTexturesListIter iter = _texturesList.begin(); iter < _texturesList.end(); iter++)
+//	{
+//		ATexture& texture = *iter;
+//		std::string path = "/Users/michael/Pictures/saved/";
+//		path += texture.textureName();
+//		path += ".tga";
+//		texture.saveTextureIntoTga(path);
+//	}
 
-//    if (!awReadTextures(wadFile))
-//        throw;
+//	int counter = 1;
+//	for (TLumpsListIter iter = _tableOfContents.begin(); iter < _tableOfContents.end(); iter++)
+//	{
+//		printf("%i. %s\t%x\n", counter++, (*iter).lumpName.c_str(), (*iter).lumpOffset);
+//	}
 //
-//    if (!awReadSFX(wadFile))
-//        throw;
-//
-//	if (!awReadPCSpeaker(wadFile))
-//		throw;
-//
-//	if (!awReadMaps(wadFile))
-//		throw;
-	
-	int counter = 1;
-	for (TLumpsListIter iter = _tableOfContents.begin(); iter < _tableOfContents.end(); iter++)
-	{
-		printf("%i. %s\t%x\n", counter++, (*iter).lumpName.c_str(), (*iter).lumpOffset);
-	}
-
-	counter = 1;
-	for (TPatchesListIter iter = _patchesList.begin(); iter < _patchesList.end(); iter++)
-	{
-		printf("%i. %s\n", counter++, (*iter).patchName.c_str());
-	}
+//	counter = 1;
+//	for (TPatchesListIter iter = _patchesList.begin(); iter < _patchesList.end(); iter++)
+//	{
+//		printf("%i. %s\n", counter++, (*iter).patchName.c_str());
+//	}
 
 	fclose(wadFile);
 }
@@ -229,12 +225,12 @@ bool AWAD::readDemos(FILE* wadFile)
 
 bool AWAD::readFlats(FILE* wadFile)
 {
-    //  read first part of flats
-    if (!readFlatsRange(wadFile, "F1_START", "F1_END"))
-        return false;
+//    //  read first part of flats
+//    if (!readFlatsRange(wadFile, "F1_START", "F1_END"))
+//        return false;
 
     //  read second part of flats
-    if (!readFlatsRange(wadFile, "F2_START", "F2_END"))
+    if (!readFlatsRange(wadFile, "F_START", "F_END"))
         return false;
 
     return true;
@@ -259,7 +255,7 @@ bool AWAD::readFlatsRange(FILE* wadFile, const std::string& beginLumpName, const
 			
 			readLumpData(wadFile, flatLump, lumpData);
 			
-			AFlat newFlat(lumpData, flatLump.lumpSize, flatLump.lumpName, _palete);
+			AFlat newFlat(lumpData, flatLump.lumpName, _palete);
 			_flatsList.push_back(newFlat);
 		}
     }
@@ -281,14 +277,15 @@ bool AWAD::readPatches(FILE* wadFile)
 
     for (int i = 0; i < patchesCount; i++)
     {
-        char patchName[9] = {0};
-        if (fread(patchName, 8, 1, wadFile) != 1)
+        char patchLumpName[9] = {0};
+        if (fread(patchLumpName, 8, 1, wadFile) != 1)
         {
             return false;
 		}
-		
-		APatch newPatch(patchName, i);
-		_patchesList.push_back(newPatch);
+
+//		const ALump& patchLump = AFindHelper::findLump(patchLumpName, _tableOfContents);
+//		APatch newPatch(patchLump, i);
+//		_patchesList.push_back(newPatch);
     }
 
     return true;
@@ -321,6 +318,7 @@ bool AWAD::readTextures(FILE* wadFile)
 	for (std::vector<int>::iterator iter = texturesOffsetsList.begin(); iter < texturesOffsetsList.end(); iter++)
 	{
 		_texturesList.push_back(generateSingleTexture(wadFile, (*iter)));
+		break;
 	}
 	
     return true;
@@ -355,12 +353,13 @@ ATexture AWAD::generateSingleTexture(FILE* wadFile, const int textureOffset)
 		fread(&patchIndexInPatchDirectory, 2, 1, wadFile);
 		fread(&buffer, 4, 1, wadFile);
 
-		SPatchDescription newDescription = {xOffset, yOffset, patchIndexInPatchDirectory};
+		APatch& patch = AFindHelper::findPatch(patchIndexInPatchDirectory, _patchesList);
+		SPatchDescription newDescription = {xOffset, yOffset, patch};
 		patchesDescriptionList.push_back(newDescription);
 		printf("\t\t\tx_offset = %i, y_offset = %i, patchIndex = %i\n", xOffset, yOffset, patchIndexInPatchDirectory);
 	}
 	
-	ATexture newTexture(_patchesList, _flatsList, textureName, width, height, patchesDescriptionList);
+	ATexture newTexture(patchesDescriptionList, textureName, width, height);
 	return newTexture;
 }
 

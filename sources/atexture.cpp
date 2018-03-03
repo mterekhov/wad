@@ -13,9 +13,32 @@ namespace spcWAD
 
 //=============================================================================
 
-ATexture::ATexture(const TPatchesList& patchesList, const TFlatsList& flatsList, const std::string& incomingName, const int incomingWidth, const int incomingHeight, const TPatchesDescriptionList& patchesDescriptionList) : _textureData(0), _textureWidth(incomingWidth), _textureHeight(incomingHeight), _textureName(incomingName)
+ATexture::ATexture(const TPatchesDescriptionList& patchesDescriptionList, const std::string& incomingName, const int incomingWidth, const int incomingHeight) : _textureData(0), _textureWidth(incomingWidth), _textureHeight(incomingHeight), _textureName(incomingName)
 {
-	_textureData = generateTexture(patchesList, flatsList, incomingWidth, incomingHeight, patchesDescriptionList);
+//	int textureSize = incomingHeight * incomingWidth * 3;
+//	if (textureSize == 0)
+//	{
+//		return;
+//	}
+//	
+//	_textureData = new unsigned char[textureSize];
+//    memset(_textureData, 0, textureSize);
+//	for (TPatchesDescriptionListConstIter iter = patchesDescriptionList.begin(); iter < patchesDescriptionList.end(); iter++)
+//	{
+//		const SPatchDescription& patchDescription = *iter;
+//		ALump& lump = patchDescription.patch.patchLump;
+//		
+//		const unsigned char* flatData = flatData();
+//		for (int y = patchDescription.y_offset; y < incomingHeight; y++)
+//		{
+//			for (int x = patchDescription.x_offset; x < incomingWidth; x++)
+//			{
+//				_textureData[3 * (incomingHeight * y + x)] = flatData[3 * (y - patchDescription.y_offset + x - patchDescription.x_offset)];
+//				_textureData[3 * (incomingHeight * y + x) + 1] = flatData[3 * (y - patchDescription.y_offset + x - patchDescription.x_offset) + 1];
+//				_textureData[3 * (incomingHeight * y + x) + 2] = flatData[3 * (y - patchDescription.y_offset + x - patchDescription.x_offset) + 2];
+//			}
+//		}
+//	}
 }
 
 //=============================================================================
@@ -86,38 +109,6 @@ bool ATexture::saveTextureIntoTga(const std::string& fileName)
 int ATexture::textureDataSize() const
 {
 	return 3 * _textureHeight * _textureWidth;
-}
-
-//=============================================================================
-
-unsigned char* ATexture::generateTexture(const TPatchesList& patchesList, const TFlatsList& flatsList, const int incomingWidth, const int incomingHeight, const TPatchesDescriptionList& patchesDescriptionList)
-{
-	int textureSize = incomingHeight * incomingWidth * 3;
-	if (textureSize == 0)
-	{
-		return 0;
-	}
-	
-	unsigned char* textureData = new unsigned char[textureSize];
-    memset(textureData, 0, textureSize);
-	for (TPatchesDescriptionListConstIter iter = patchesDescriptionList.begin(); iter < patchesDescriptionList.end(); iter++)
-	{
-		const SPatchDescription& patchDescription = *iter;
-		const APatch& patch = patchesList[patchDescription.index];
-		const AFlat& patchFlat = AFindHelper::findFlat(patch.patchName, flatsList);
-		const unsigned char* flatData = patchFlat.flatData();
-		for (int y = patchDescription.y_offset; y < patchFlat.flatHeightSize(); y++)
-		{
-			for (int x = patchDescription.x_offset; x < patchFlat.flatWidthSize(); x++)
-			{
-				textureData[3 * (incomingHeight * y + x)] = flatData[3 * (y - patchDescription.y_offset + x - patchDescription.x_offset)];
-				textureData[3 * (incomingHeight * y + x) + 1] = flatData[3 * (y - patchDescription.y_offset + x - patchDescription.x_offset) + 1];
-				textureData[3 * (incomingHeight * y + x) + 2] = flatData[3 * (y - patchDescription.y_offset + x - patchDescription.x_offset) + 2];
-			}
-		}
-	}
-	
-	return textureData;
 }
 
 //=============================================================================

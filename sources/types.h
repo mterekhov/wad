@@ -24,7 +24,8 @@ struct SPatchDescription
 {
 	int x_offset;
 	int y_offset;
-	int index;
+
+	APatch& patch;
 };
 
 //=============================================================================
@@ -32,13 +33,18 @@ struct SPatchDescription
 typedef std::vector<ALump> TLumpsList;
 typedef TLumpsList::iterator TLumpsListIter;
 typedef TLumpsList::const_iterator TLumpsListConstIter;
+
 typedef std::vector<ADemo> TDemosList;
 typedef TDemosList::iterator TDemosListIter;
+
 typedef std::vector<AFlat> TFlatsList;
 typedef TFlatsList::iterator TFlatsListIter;
 typedef TFlatsList::const_iterator TFlatsListConstIter;
+
 typedef std::vector<APatch> TPatchesList;
 typedef TPatchesList::iterator TPatchesListIter;
+typedef TPatchesList::const_iterator TPatchesListConstIter;
+
 typedef std::vector<ATexture> TTexturesList;
 typedef TTexturesList::iterator TTexturesListIter;
 

@@ -5,6 +5,13 @@
 
 #include <string>
 
+#include "alump.h"
+#include "apalete.h"
+
+//=============================================================================
+
+class ALump;
+
 //=============================================================================
 
 namespace spcWAD
@@ -18,13 +25,19 @@ namespace spcWAD
 class APatch
 {
 public:
-	APatch(const std::string& name, const int index);
+	APatch(unsigned char* incomingData, const int incomingWidth, const int incomingHeight, const std::string& incomingName, const APalete& palete);
+	APatch(const APatch& patch);
     ~APatch();
+	APatch& operator=(const APatch& rv);
 
-	std::string patchName;
+	int patchDataSize() const;
 
 private:
-	int _patchIndex;
+
+    unsigned char* _patchData;
+	int _patchWidth;
+	int _patchHeight;
+    std::string _patchName;
 };
 
 //=============================================================================

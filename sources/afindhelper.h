@@ -21,6 +21,8 @@ namespace spcWAD
 class AFindHelper
 {
 public:
+	static APatch& findPatch(const int patchIndex, TPatchesList& patchesList);
+	static const APatch& findPatch(const int patchIndex, const TPatchesList& patchesList);
 	static const AFlat& findFlat(const std::string& flatNameToFind, const TFlatsList& flatList);
 	static const ALump& findLump(const std::string& lumpNameToFind, const TLumpsList& lumpsList);
 	static TLumpsListConstIter findLumpIter(const std::string& lumpNameToFind, const TLumpsList& lumpsList);

@@ -22,23 +22,24 @@ class APalete;
 class AFlat
 {
 public:
-	AFlat(unsigned char* incomingData, const int incomingSize, const std::string& incomingName, const APalete& palete);
+	AFlat(unsigned char* incomingData, const std::string& incomingName, const APalete& palete);
 	AFlat(const AFlat& flat);
     ~AFlat();
 	AFlat& operator=(const AFlat& rv);
 
 	bool saveFlatIntoTga(const std::string& fileName);
-	std::string flatName() const;
+	const std::string& flatName() const;
 	const unsigned char* flatData() const;
 	int flatHeightSize() const;
 	int flatWidthSize() const;
+	int flatDataSize() const;
 
 private:
-	int _flatSize;
     unsigned char* _flatData;
     std::string _flatName;
 
-	unsigned char* convertData(unsigned char* incomingData, const int incomingSize, int* outgoindSize, const APalete& palete);
+	void destroy();
+	unsigned char* convertData(unsigned char* incomingData, const APalete& palete);
 };
 
 //=============================================================================

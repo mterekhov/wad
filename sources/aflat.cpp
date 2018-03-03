@@ -9,22 +9,22 @@ namespace spcWAD
 
 //=============================================================================
 
-AFlat::AFlat(unsigned char* incomingData, const int incomingSize, const std::string& incomingName, const APalete& palete) : _flatData(0), _flatSize(0), _flatName(incomingName)
+AFlat::AFlat(unsigned char* incomingData, const std::string& incomingName, const APalete& palete) : _flatData(0), _flatName(incomingName)
 {
-	if (incomingSize)
+	if (incomingData)
 	{
-		_flatData = convertData(incomingData, incomingSize, &_flatSize, palete);
+		_flatData = convertData(incomingData, palete);
     }
 }
 
 //=============================================================================
 
-AFlat::AFlat(const AFlat& flat) : _flatData(0), _flatSize(flat._flatSize), _flatName(flat._flatName)
+AFlat::AFlat(const AFlat& flat) : _flatData(0), _flatName(flat._flatName)
 {
-	if (flat._flatSize)
+	if (flat.flatDataSize())
 	{
-		_flatData = new unsigned char[flat._flatSize];
-		memcpy(_flatData, flat._flatData, flat._flatSize);
+		_flatData = new unsigned char[flat.flatDataSize()];
+		memcpy(_flatData, flat._flatData, flat.flatDataSize());
     }
 }
 
@@ -32,9 +32,15 @@ AFlat::AFlat(const AFlat& flat) : _flatData(0), _flatSize(flat._flatSize), _flat
 
 AFlat::~AFlat()
 {
-	if (_flatSize)
+	destroy();
+}
+
+//=============================================================================
+
+void AFlat::destroy()
+{
+	if (_flatData)
 	{
-		_flatSize = 0;
 		delete [] _flatData;
 	}
 }
@@ -48,24 +54,18 @@ AFlat& AFlat::operator=(const AFlat& rv)
 		return *this;
 	}
 	
-	if (_flatData && _flatSize)
-	{
-		delete [] _flatData;
-		_flatSize = 0;
-	}
-	
+	destroy();
+
 	_flatName = rv._flatName;
-	_flatSize = rv._flatSize;
-	_flatData = new unsigned char[rv._flatSize];
-	
-	memcpy(_flatData, rv._flatData, rv._flatSize);
+	_flatData = new unsigned char[rv.flatDataSize()];
+	memcpy(_flatData, rv._flatData, rv.flatDataSize());
 	
 	return *this;
 }
 
 //=============================================================================
 
-std::string AFlat::flatName() const
+const std::string& AFlat::flatName() const
 {
 	return _flatName;
 }
@@ -91,7 +91,7 @@ bool AFlat::saveFlatIntoTga(const std::string& fileName)
 
 //=============================================================================
 
-unsigned char* AFlat::convertData(unsigned char* incomingData, const int incomingSize, int* outgoindSize, const APalete& palete)
+unsigned char* AFlat::convertData(unsigned char* incomingData, const APalete& palete)
 {
 	const int flatWidth = flatWidthSize();
 	const int flatHeight = flatHeightSize();
@@ -112,8 +112,14 @@ unsigned char* AFlat::convertData(unsigned char* incomingData, const int incomin
         }
     }
 
-	*outgoindSize = size;
     return outgoindData;
+}
+
+//=============================================================================
+
+int AFlat::flatDataSize() const
+{
+	return 3 * flatWidthSize() * flatHeightSize();
 }
 
 //=============================================================================
