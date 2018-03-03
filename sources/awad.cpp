@@ -53,14 +53,14 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
         throw;
 
 	//	export flats into tga
-//	for (TFlatsListIter iter = _flatsList.begin(); iter < _flatsList.end(); iter++)
-//	{
-//		AFlat& flat = *iter;
-//		std::string path = "/Users/michael/Pictures/saved/";
-//		path += flat.flatName();
-//		path += ".tga";
-//		flat.saveFlatIntoTga(path);
-//	}
+	for (TTexturesListIter iter = _texturesList.begin(); iter < _texturesList.end(); iter++)
+	{
+		ATexture& texture = *iter;
+		std::string path = "/Users/michael/Pictures/saved/";
+		path += texture.textureName();
+		path += ".tga";
+		texture.saveTextureIntoTga(path);
+	}
 
 //    if (!awReadTextures(wadFile))
 //        throw;

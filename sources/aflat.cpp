@@ -70,7 +70,9 @@ std::string AFlat::flatName() const
 	return _flatName;
 }
 
-unsigned char* AFlat::flatData() const
+//=============================================================================
+
+const unsigned char* AFlat::flatData() const
 {
 	return _flatData;
 }

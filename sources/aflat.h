@@ -29,7 +29,7 @@ public:
 
 	bool saveFlatIntoTga(const std::string& fileName);
 	std::string flatName() const;
-	unsigned char* flatData() const;
+	const unsigned char* flatData() const;
 	int flatHeightSize() const;
 	int flatWidthSize() const;
 
