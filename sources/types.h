@@ -31,6 +31,7 @@ struct SPatchDescription
 
 typedef std::vector<ALump> TLumpsList;
 typedef TLumpsList::iterator TLumpsListIter;
+typedef TLumpsList::const_iterator TLumpsListConstIter;
 typedef std::vector<ADemo> TDemosList;
 typedef TDemosList::iterator TDemosListIter;
 typedef std::vector<AFlat> TFlatsList;
@@ -42,6 +43,8 @@ typedef TTexturesList::iterator TTexturesListIter;
 
 typedef std::vector<SPatchDescription> TPatchesDescriptionList;
 typedef TPatchesDescriptionList::iterator TPatchesDescriptionListIter;
+typedef TPatchesDescriptionList::const_iterator TPatchesDescriptionListConstIter;
+
 //=============================================================================
 
 };  //  namespace spcWAD

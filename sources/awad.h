@@ -62,8 +62,6 @@ private:
 	ATexture generateSingleTexture(FILE* wadFile, const int textureOffset);
 
 	void readLumpData(FILE* wadFile, ALump lumpToRead, unsigned char *lumpData);
-	ALump findLump(const std::string& lumpNameToFind);
-	TLumpsListIter findLumpIter(const std::string& lumpNameToFind);
 	TLumpsList findLumpsList(const std::string& lumpsNameMask);
 	AFlat findFlat(const std::string& flatNameToFind);
 //=========================================

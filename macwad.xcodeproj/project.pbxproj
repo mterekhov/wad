@@ -11,6 +11,7 @@
 		4C21659720485F3E00DBF275 /* atgaexporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C21659520485F3E00DBF275 /* atgaexporter.cpp */; };
 		4C216599204958D900DBF275 /* doom.wad in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4C216598204958C700DBF275 /* doom.wad */; };
 		4C21659A204991AD00DBF275 /* atexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6C1F2046F8EE00D23585 /* atexture.cpp */; };
+		4C21659D204AAE8F00DBF275 /* alumphelper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4C21659C204AAE8F00DBF275 /* alumphelper.cpp */; };
 		4CAB6C202046F8EE00D23585 /* awad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6C052046F8EC00D23585 /* awad.cpp */; };
 		4CAB6C212046F8EE00D23585 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6C082046F8EC00D23585 /* main.m */; };
 		4CAB6C262046F8EE00D23585 /* alump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6C122046F8ED00D23585 /* alump.cpp */; };
@@ -40,6 +41,8 @@
 		4C21659520485F3E00DBF275 /* atgaexporter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = atgaexporter.cpp; path = sources/atgaexporter.cpp; sourceTree = "<group>"; };
 		4C21659620485F3E00DBF275 /* atgaexporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = atgaexporter.h; path = sources/atgaexporter.h; sourceTree = "<group>"; };
 		4C216598204958C700DBF275 /* doom.wad */ = {isa = PBXFileReference; lastKnownFileType = file; name = doom.wad; path = resources/doom.wad; sourceTree = "<group>"; };
+		4C21659B204AAE8F00DBF275 /* alumphelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = alumphelper.h; path = sources/alumphelper.h; sourceTree = "<group>"; };
+		4C21659C204AAE8F00DBF275 /* alumphelper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = alumphelper.cpp; path = sources/alumphelper.cpp; sourceTree = "<group>"; };
 		4CAB6BA32046F87B00D23585 /* macwad */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = macwad; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CAB6C042046F8EC00D23585 /* atexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = atexture.h; path = sources/atexture.h; sourceTree = "<group>"; };
 		4CAB6C052046F8EC00D23585 /* awad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = awad.cpp; path = sources/awad.cpp; sourceTree = "<group>"; };
@@ -113,6 +116,8 @@
 		4CAB6BD92046F8D900D23585 /* sources */ = {
 			isa = PBXGroup;
 			children = (
+				4C21659B204AAE8F00DBF275 /* alumphelper.h */,
+				4C21659C204AAE8F00DBF275 /* alumphelper.cpp */,
 				4C21659620485F3E00DBF275 /* atgaexporter.h */,
 				4C21659520485F3E00DBF275 /* atgaexporter.cpp */,
 				4CAB6C342046FF1B00D23585 /* types.h */,
@@ -232,6 +237,7 @@
 				4CAB6C36204706AB00D23585 /* apalete.cpp in Sources */,
 				4CAB6C262046F8EE00D23585 /* alump.cpp in Sources */,
 				4C21659420484ADA00DBF275 /* apatch.cpp in Sources */,
+				4C21659D204AAE8F00DBF275 /* alumphelper.cpp in Sources */,
 				4CCB4DA6204841CB00F660F0 /* aflat.cpp in Sources */,
 				4CAB6C212046F8EE00D23585 /* main.m in Sources */,
 				4C21659A204991AD00DBF275 /* atexture.cpp in Sources */,

@@ -3,7 +3,6 @@
 
 //=============================================================================
 
-#include <map>
 #include <vector>
 #include <string>
 
@@ -33,7 +32,7 @@ private:
     int _textureWidth;
     int _textureHeight;
 	
-	unsigned char* generateTexture(const TPatchesList& patchesList, const TLumpsList& lumpsList, const int incomingWidth, const int incomingHeight);
+	unsigned char* generateTexture(const TPatchesList& patchesList, const TLumpsList& lumpsList, const int incomingWidth, const int incomingHeight, const TPatchesDescriptionList& patchesDescriptionList);
 	int textureDataSize() const;
 };
 

@@ -1,4 +1,6 @@
 #include "atexture.h"
+#include "apatch.h"
+
 #include <stdlib.h>
 
 //=============================================================================
@@ -10,7 +12,7 @@ namespace spcWAD
 
 ATexture::ATexture(const TPatchesList& patchesList, const TLumpsList& lumpsList, const std::string& incomingName, const int incomingWidth, const int incomingHeight, const TPatchesDescriptionList& patchesDescriptionList) : _textureData(0), _textureWidth(incomingWidth), _textureHeight(incomingHeight), _textureName(incomingName)
 {
-	_textureData = generateTexture(patchesList, lumpsList, incomingWidth, incomingHeight);
+	_textureData = generateTexture(patchesList, lumpsList, incomingWidth, incomingHeight, patchesDescriptionList);
 }
 
 //=============================================================================
@@ -69,9 +71,23 @@ int ATexture::textureDataSize() const
 
 //=============================================================================
 
-unsigned char* ATexture::generateTexture(const TPatchesList& patchesList, const TLumpsList& lumpsList, const int incomingWidth, const int incomingHeight)
+unsigned char* ATexture::generateTexture(const TPatchesList& patchesList, const TLumpsList& lumpsList, const int incomingWidth, const int incomingHeight, const TPatchesDescriptionList& patchesDescriptionList)
 {
-	return 0;
+	int textureSize = incomingHeight * incomingWidth * 3;
+	if (textureSize == 0)
+	{
+		return 0;
+	}
+	
+	unsigned char* textureData = new unsigned char[textureSize];
+	for (TPatchesDescriptionListConstIter iter = patchesDescriptionList.begin(); iter < patchesDescriptionList.end(); iter++)
+	{
+		const SPatchDescription& patchDescription = *iter;
+		const APatch& patch = patchesList[patchDescription.index];
+		
+	}
+	
+	return textureData;
 }
 
 //=============================================================================
