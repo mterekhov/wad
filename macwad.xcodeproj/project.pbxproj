@@ -152,10 +152,10 @@
 		4CCB4DA420483D7400F660F0 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				4CAB6C182046F8ED00D23585 /* apatch.h */,
-				4CAB6C1C2046F8ED00D23585 /* apatch.cpp */,
 				4CAB6C042046F8EC00D23585 /* atexture.h */,
 				4CAB6C1F2046F8EE00D23585 /* atexture.cpp */,
+				4CAB6C182046F8ED00D23585 /* apatch.h */,
+				4CAB6C1C2046F8ED00D23585 /* apatch.cpp */,
 				4CAB6C192046F8ED00D23585 /* aflat.h */,
 				4CAB6C0A2046F8EC00D23585 /* aflat.cpp */,
 			);

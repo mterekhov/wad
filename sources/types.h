@@ -4,6 +4,7 @@
 //=============================================================================
 
 #include <vector>
+#include <list>
 
 //=============================================================================
 
@@ -30,25 +31,25 @@ struct SPatchDescription
 
 //=============================================================================
 
-typedef std::vector<ALump> TLumpsList;
+typedef std::list<ALump> TLumpsList;
 typedef TLumpsList::iterator TLumpsListIter;
 typedef TLumpsList::const_iterator TLumpsListConstIter;
 
-typedef std::vector<ADemo> TDemosList;
+typedef std::list<ADemo> TDemosList;
 typedef TDemosList::iterator TDemosListIter;
 
-typedef std::vector<AFlat> TFlatsList;
+typedef std::list<AFlat> TFlatsList;
 typedef TFlatsList::iterator TFlatsListIter;
 typedef TFlatsList::const_iterator TFlatsListConstIter;
 
-typedef std::vector<APatch> TPatchesList;
+typedef std::list<APatch> TPatchesList;
 typedef TPatchesList::iterator TPatchesListIter;
 typedef TPatchesList::const_iterator TPatchesListConstIter;
 
-typedef std::vector<ATexture> TTexturesList;
+typedef std::list<ATexture> TTexturesList;
 typedef TTexturesList::iterator TTexturesListIter;
 
-typedef std::vector<SPatchDescription> TPatchesDescriptionList;
+typedef std::list<SPatchDescription> TPatchesDescriptionList;
 typedef TPatchesDescriptionList::iterator TPatchesDescriptionListIter;
 typedef TPatchesDescriptionList::const_iterator TPatchesDescriptionListConstIter;
 

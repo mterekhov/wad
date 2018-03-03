@@ -18,7 +18,7 @@ const ALump& AFindHelper::findLump(const std::string& lumpNameToFind, const TLum
 
 TLumpsListConstIter AFindHelper::findLumpIter(const std::string& lumpNameToFind, const TLumpsList& lumpsList)
 {
-	for (TLumpsListConstIter iter = lumpsList.begin(); iter < lumpsList.end(); iter++)
+	for (TLumpsListConstIter iter = lumpsList.begin(); iter != lumpsList.end(); iter++)
 	{
 	    if (!strncmp(iter->lumpName.c_str(), lumpNameToFind.c_str(), iter->lumpName.length()))
 		{
@@ -33,7 +33,7 @@ TLumpsListConstIter AFindHelper::findLumpIter(const std::string& lumpNameToFind,
 
 const AFlat& AFindHelper::findFlat(const std::string& flatNameToFind, const TFlatsList& flatList)
 {
-	for (TFlatsListConstIter iter = flatList.begin(); iter < flatList.end(); iter++)
+	for (TFlatsListConstIter iter = flatList.begin(); iter != flatList.end(); iter++)
 	{
 		printf("<%s>\n", iter->flatName().c_str());
 	    if (!strncmp(iter->flatName().c_str(), flatNameToFind.c_str(), iter->flatName().length()))

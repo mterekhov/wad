@@ -42,6 +42,7 @@ void AFlat::destroy()
 	if (_flatData)
 	{
 		delete [] _flatData;
+		_flatName = "";
 	}
 }
 
