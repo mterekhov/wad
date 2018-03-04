@@ -25,6 +25,8 @@ public:
 private:
 	int _mapcolorSize;
     unsigned char* _mapcolorData;
+	
+    void destroy();
 };
 
 //=============================================================================

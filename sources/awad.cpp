@@ -292,6 +292,7 @@ bool AWAD::readPatches(FILE* wadFile)
         return false;
 	}
 
+	unsigned char *patchData = 0;
     for (int i = 0; i < patchesCount; i++)
     {
         char patchLumpName[9] = {0};
@@ -301,7 +302,7 @@ bool AWAD::readPatches(FILE* wadFile)
 		}
 
 		const ALump& patchLump = AFindHelper::findLump(patchLumpName, _tableOfContents);
-		unsigned char *patchData = new unsigned char[patchLump.lumpSize];
+		patchData = new unsigned char[patchLump.lumpSize];
 		memset(patchData, 0, patchLump.lumpSize);
 		long patchesPosition = ftell(wadFile);
 		readLumpData(wadFile, patchLump, patchData);
@@ -311,6 +312,7 @@ bool AWAD::readPatches(FILE* wadFile)
 		_patchesList.push_back(newPatch);
 
 		delete [] patchData;
+		patchData = 0;
     }
 
     return true;

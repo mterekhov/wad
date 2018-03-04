@@ -29,6 +29,8 @@ public:
 private:
 	int _paleteSize;
     unsigned char* _paleteData;
+	
+    void destroy();
 };
 
 //=============================================================================

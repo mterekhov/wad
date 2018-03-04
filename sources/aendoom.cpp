@@ -20,10 +20,18 @@ AEnDoom::AEnDoom(unsigned char* incomingData, const int incomingSize) : _endoomD
 
 AEnDoom::~AEnDoom()
 {
+	destroy();
+}
+
+//=============================================================================
+
+void AEnDoom::destroy()
+{
 	if (_endoomSize)
 	{
 		_endoomSize = 0;
 		delete [] _endoomData;
+		_endoomData = 0;
 	}
 }
 
@@ -36,12 +44,8 @@ AEnDoom& AEnDoom::operator=(const AEnDoom& rv)
 		return *this;
 	}
 	
-	if (_endoomData && _endoomSize)
-	{
-		delete [] _endoomData;
-		_endoomSize = 0;
-	}
-	
+	destroy();
+
 	_endoomSize = rv._endoomSize;
 	_endoomData = new unsigned char[rv._endoomSize];
 	memcpy(_endoomData, rv._endoomData, rv._endoomSize);

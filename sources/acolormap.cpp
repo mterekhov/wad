@@ -20,10 +20,18 @@ AColorMap::AColorMap(unsigned char* incomingData, const int incomingSize) : _map
 
 AColorMap::~AColorMap()
 {
+	destroy();
+}
+
+//=============================================================================
+
+void AColorMap::destroy()
+{
 	if (_mapcolorSize)
 	{
 		_mapcolorSize = 0;
 		delete [] _mapcolorData;
+		_mapcolorData = 0;
 	}
 }
 

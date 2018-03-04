@@ -71,6 +71,7 @@ void APatch::destroy()
 	if (_patchData)
 	{
 		delete [] _patchData;
+		_patchData = 0;
 		_patchHeight = 0;
 		_patchWidth = 0;
 		_patchName = "";

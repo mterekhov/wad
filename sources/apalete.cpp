@@ -20,10 +20,18 @@ APalete::APalete(unsigned char* incomingData, const int incomingSize) : _paleteD
 
 APalete::~APalete()
 {
+	destroy();
+}
+
+//=============================================================================
+
+void APalete::destroy()
+{
 	if (_paleteSize)
 	{
 		_paleteSize = 0;
 		delete [] _paleteData;
+		_paleteData = 0;
 	}
 }
 
@@ -36,12 +44,8 @@ APalete& APalete::operator=(const APalete& rv)
 		return *this;
 	}
 	
-	if (_paleteData && _paleteSize)
-	{
-		delete [] _paleteData;
-		_paleteSize = 0;
-	}
-	
+	destroy();
+
 	_paleteSize = rv._paleteSize;
 	_paleteData = new unsigned char[rv._paleteSize];
 	memcpy(_paleteData, rv._paleteData, rv._paleteSize);

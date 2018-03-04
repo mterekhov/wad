@@ -25,6 +25,8 @@ public:
 private:
 	int _endoomSize;
     unsigned char* _endoomData;
+	
+    void destroy();
 };
 
 //=============================================================================

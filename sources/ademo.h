@@ -27,6 +27,8 @@ private:
 	int _demoSize;
     unsigned char* _demoData;
     std::string _demoName;
+	
+    void destroy();
 };
 
 //=============================================================================

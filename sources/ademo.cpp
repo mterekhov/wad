@@ -31,10 +31,18 @@ ADemo::ADemo(const ADemo& demo) : _demoData(0), _demoSize(demo._demoSize), _demo
 
 ADemo::~ADemo()
 {
+	destroy();
+}
+
+//=============================================================================
+
+void ADemo::destroy()
+{
 	if (_demoSize)
 	{
 		_demoSize = 0;
 		delete [] _demoData;
+		_demoData = 0;
 	}
 }
 
@@ -46,12 +54,8 @@ ADemo& ADemo::operator=(const ADemo& rv)
 	{
 		return *this;
 	}
-	
-	if (_demoData && _demoSize)
-	{
-		delete [] _demoData;
-		_demoSize = 0;
-	}
+
+	destroy();
 	
 	_demoName = rv._demoName;
 	_demoSize = rv._demoSize;
