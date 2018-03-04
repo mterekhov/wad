@@ -191,6 +191,8 @@ bool AWAD::readColorMap(FILE* wadFile)
 
 	_colorMap = AColorMap(lumpData, colorMapLump.lumpSize);
 
+	delete [] lumpData;
+
 	return true;
 }
 
@@ -206,6 +208,8 @@ bool AWAD::readEndDoom(FILE* wadFile)
 	readLumpData(wadFile, endoomLump, lumpData);
 
 	_enDoom = AEnDoom(lumpData, endoomLump.lumpSize);
+
+	delete [] lumpData;
 
 	return true;
 }
@@ -225,6 +229,8 @@ bool AWAD::readDemos(FILE* wadFile)
 
 		ADemo newDemo(lumpData, demoLump.lumpSize, demoLump.lumpName);
 		_demosList.push_back(newDemo);
+		
+		delete [] lumpData;
 	}
 
 	return true;
@@ -266,6 +272,8 @@ bool AWAD::readFlatsRange(FILE* wadFile, const std::string& beginLumpName, const
 			
 			AFlat newFlat(lumpData, flatLump.lumpName, _palete);
 			_flatsList.push_back(newFlat);
+			
+			delete [] lumpData;
 		}
     }
 
@@ -293,7 +301,6 @@ bool AWAD::readPatches(FILE* wadFile)
 		}
 
 		const ALump& patchLump = AFindHelper::findLump(patchLumpName, _tableOfContents);
-//		printf("should be founded <%s> founded <%s>\n", patchLumpName, patchLump.lumpName.c_str());
 		unsigned char *patchData = new unsigned char[patchLump.lumpSize];
 		memset(patchData, 0, patchLump.lumpSize);
 		long patchesPosition = ftell(wadFile);
@@ -301,9 +308,8 @@ bool AWAD::readPatches(FILE* wadFile)
 		fseek(wadFile, patchesPosition, SEEK_SET);
 
 		APatch newPatch(patchData, patchLumpName, _palete);
-		printf("allocating %x\n", newPatch.patchData());
 		_patchesList.push_back(newPatch);
-		
+
 		delete [] patchData;
     }
 
@@ -388,7 +394,7 @@ ATexture AWAD::generateSingleTexture(FILE* wadFile, const int textureOffset)
 
 //=============================================================================
 
-bool AWAD::readLumpData(FILE* wadFile, ALump lumpToRead, unsigned char *lumpData)
+bool AWAD::readLumpData(FILE* wadFile, const ALump& lumpToRead, unsigned char *lumpData)
 {
 	if (fseek(wadFile, lumpToRead.lumpOffset, SEEK_SET))
 	{

@@ -9,7 +9,7 @@ namespace spcWAD
 
 //=============================================================================
 
-APatch::APatch(unsigned char* incomingData, const std::string& incomingName, const APalete& palete) : _patchData(0), _patchName(incomingName), _patchHeight(0), _patchWidth(0)
+APatch::APatch(const unsigned char* incomingData, const std::string& incomingName, const APalete& palete) : _patchData(0), _patchName(incomingName), _patchHeight(0), _patchWidth(0)
 {
 	if (incomingData)
 	{
@@ -19,8 +19,9 @@ APatch::APatch(unsigned char* incomingData, const std::string& incomingName, con
 		memcpy(&_patchHeight, &incomingData[bytesOffset], 2);
 		bytesOffset += 2;
 
-		bytesOffset += 4;	//	skiping offset
+		bytesOffset += 4;	//	skiping offsets
 		_patchData = convertData(incomingData, palete, bytesOffset);
+		printf("%i x %i\n", _patchWidth, _patchHeight);
     }
 }
 
@@ -32,7 +33,6 @@ APatch::APatch(const APatch& patch) : _patchData(0), _patchWidth(patch._patchWid
 	{
 		_patchData = new unsigned char[patch.patchDataSize()];
 		memcpy(_patchData, patch._patchData, patch.patchDataSize());
-		printf("creating %x size %i\n", _patchData, patch.patchDataSize());
     }
 }
 
@@ -70,7 +70,6 @@ void APatch::destroy()
 {
 	if (_patchData)
 	{
-		printf("killing %x\n", _patchData);
 		delete [] _patchData;
 		_patchHeight = 0;
 		_patchWidth = 0;
@@ -109,7 +108,7 @@ int APatch::patchDataSize() const
 
 //=============================================================================
 
-unsigned char* APatch::convertData(unsigned char* incomingData, const APalete& palete, const int bytesOffset)
+unsigned char* APatch::convertData(const unsigned char* incomingData, const APalete& palete, const int bytesOffset)
 {
     int size = patchDataSize();
 	unsigned char* convertedData = new unsigned char[size];
@@ -129,7 +128,7 @@ unsigned char* APatch::convertData(unsigned char* incomingData, const APalete& p
     unsigned char terminator = 0;
     for (int i = 0; i < _patchWidth; i++)
     {
-        while(true)
+        while(terminator != 0xFF)
         {
             int rowNumber = 0;
 			memcpy(&rowNumber, &incomingData[bytesOffsetPointer], 1);
@@ -160,8 +159,10 @@ unsigned char* APatch::convertData(unsigned char* incomingData, const APalete& p
 
 			memcpy(&terminator, &incomingData[bytesOffsetPointer], 1);
 			bytesOffsetPointer += 1;
-            if (terminator == 0xFF)
-                break;
+//            if (terminator == 0xFF)
+//            {
+//                break;
+//			}
 			
 			bytesOffsetPointer--;
         }

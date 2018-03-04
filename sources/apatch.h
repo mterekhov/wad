@@ -25,7 +25,7 @@ namespace spcWAD
 class APatch
 {
 public:
-	APatch(unsigned char* incomingData, const std::string& incomingName, const APalete& palete);
+	APatch(const unsigned char* incomingData, const std::string& incomingName, const APalete& palete);
 	APatch(const APatch& patch);
     ~APatch();
 	APatch& operator=(const APatch& rv);
@@ -37,7 +37,7 @@ public:
 
 private:
 	void destroy();
-	unsigned char* convertData(unsigned char* incomingData, const APalete& palete, const int bytesOffset);
+	unsigned char* convertData(const unsigned char* incomingData, const APalete& palete, const int bytesOffset);
 
     unsigned char* _patchData;
 	int _patchWidth;
