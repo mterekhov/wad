@@ -14,14 +14,14 @@ APatch::APatch(const unsigned char* incomingData, const std::string& incomingNam
 	if (incomingData)
 	{
 		int bytesOffset = 0;
-		memcpy(&_patchWidth, incomingData, 2);
+		memcpy(&_patchWidth, &incomingData[bytesOffset], 2);
 		bytesOffset += 2;
 		memcpy(&_patchHeight, &incomingData[bytesOffset], 2);
 		bytesOffset += 2;
 
 		bytesOffset += 4;	//	skiping offsets
 		_patchData = convertData(incomingData, palete, bytesOffset);
-		printf("%i x %i\n", _patchWidth, _patchHeight);
+//		printf("%i x %i\n", _patchWidth, _patchHeight);
     }
 }
 
@@ -111,41 +111,45 @@ int APatch::patchDataSize() const
 
 unsigned char* APatch::convertData(const unsigned char* incomingData, const APalete& palete, const int bytesOffset)
 {
-    int size = patchDataSize();
-	unsigned char* convertedData = new unsigned char[size];
-    memset(convertedData, 0, size);
-
 	int bytesOffsetPointer = bytesOffset;
-	memcpy(&_patchHeight, &incomingData[bytesOffsetPointer], 4);
+//	memcpy(&_patchHeight, &incomingData[bytesOffsetPointer], 4);
 
     int* columnOffsets = new int[_patchWidth];
     memset(columnOffsets, 0, 4 * _patchWidth);
     for (int i = 0; i < _patchWidth; i++)
     {
 		memcpy(&columnOffsets[i], &incomingData[bytesOffsetPointer], 4);
+//		printf("%i. %i\n", i, columnOffsets[i]);
 		bytesOffsetPointer += 4;
 	}
+	printf("\n");
 
-    unsigned char terminator = 0;
+    int size = patchDataSize();
+	unsigned char* convertedData = new unsigned char[size];
+    memset(convertedData, 0, size);
     for (int i = 0; i < _patchWidth; i++)
     {
+    	int currentColumnDataOffset = columnOffsets[i];
+    	int whilecounter = 1;
+	    unsigned char terminator = 0;
         while(terminator != 0xFF)
         {
             int rowNumber = 0;
-			memcpy(&rowNumber, &incomingData[bytesOffsetPointer], 1);
-			bytesOffsetPointer += 1;
+			memcpy(&rowNumber, &incomingData[currentColumnDataOffset], 1);
+			currentColumnDataOffset += 1;
 
             int rowSize = 0;
-			memcpy(&rowSize, &incomingData[bytesOffsetPointer], 1);
-			bytesOffsetPointer += 1;
+			memcpy(&rowSize, &incomingData[currentColumnDataOffset], 1);
+			currentColumnDataOffset += 1;
 			
 			//	skip reserved byte
-			bytesOffsetPointer += 1;
+			currentColumnDataOffset += 1;
 
             unsigned char* data = new unsigned char[rowSize];
-			memcpy(data, &incomingData[bytesOffsetPointer], rowSize);
-			bytesOffsetPointer += rowSize;
+			memcpy(data, &incomingData[currentColumnDataOffset], rowSize);
+			currentColumnDataOffset += rowSize;
 
+//			printf("%i. rowSize = %i, rowNumber = %i\n", whilecounter, rowSize, rowNumber);
             for (int j = 0; j < rowSize; j++)
             {
                 int index = 3 * ((_patchHeight - (rowNumber + j + 1)) * _patchWidth + i);
@@ -156,16 +160,10 @@ unsigned char* APatch::convertData(const unsigned char* incomingData, const APal
             delete [] data;
 
 			//	skip reserved byte
-			bytesOffsetPointer += 1;
+			currentColumnDataOffset += 1;
 
-			memcpy(&terminator, &incomingData[bytesOffsetPointer], 1);
-			bytesOffsetPointer += 1;
-//            if (terminator == 0xFF)
-//            {
-//                break;
-//			}
-			
-			bytesOffsetPointer--;
+			memcpy(&terminator, &incomingData[currentColumnDataOffset], 1);
+//			currentColumnDataOffset += 1;
         }
     }
 

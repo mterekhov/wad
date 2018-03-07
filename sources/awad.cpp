@@ -34,17 +34,17 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 	if (!readPalete(wadFile))
 		throw;
 	
-	if (!readColorMap(wadFile))
-		throw;
-	
-	if (!readEndDoom(wadFile))
-		throw;
-
-	if (!readDemos(wadFile))
-		throw;
-
-    if (!readFlats(wadFile))
-        throw;
+//	if (!readColorMap(wadFile))
+//		throw;
+//	
+//	if (!readEndDoom(wadFile))
+//		throw;
+//
+//	if (!readDemos(wadFile))
+//		throw;
+//
+//    if (!readFlats(wadFile))
+//        throw;
 
     if (!readPatches(wadFile))
         throw;
@@ -292,6 +292,7 @@ bool AWAD::readPatches(FILE* wadFile)
         return false;
 	}
 
+	patchesCount = 50;
 	unsigned char *patchData = 0;
     for (int i = 0; i < patchesCount; i++)
     {
@@ -303,14 +304,19 @@ bool AWAD::readPatches(FILE* wadFile)
 
 		const ALump& patchLump = AFindHelper::findLump(patchLumpName, _tableOfContents);
 		patchData = new unsigned char[patchLump.lumpSize];
+		printf("alloc \t\t%x\t\tsize %i\n", patchData, patchLump.lumpSize);
 		memset(patchData, 0, patchLump.lumpSize);
 		long patchesPosition = ftell(wadFile);
-		readLumpData(wadFile, patchLump, patchData);
+
+		fseek(wadFile, patchLump.lumpOffset, SEEK_SET);
+		fread(patchData, patchLump.lumpSize, 1, wadFile);
+
 		fseek(wadFile, patchesPosition, SEEK_SET);
 
 		APatch newPatch(patchData, patchLumpName, _palete);
 		_patchesList.push_back(newPatch);
 
+		printf("KILLING \t%x\n", patchData);
 		delete [] patchData;
 		patchData = 0;
     }
