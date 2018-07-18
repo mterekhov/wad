@@ -18,9 +18,21 @@ const ALump& AFindHelper::findLump(const std::string& lumpNameToFind, const TLum
 
 TLumpsListConstIter AFindHelper::findLumpIter(const std::string& lumpNameToFind, const TLumpsList& lumpsList)
 {
+	std::string findLump;
+	findLump.resize(lumpNameToFind.size());
+	std::transform(lumpNameToFind.begin(),
+				   lumpNameToFind.end(),
+				   findLump.begin(),
+				   ::tolower);
 	for (TLumpsListConstIter iter = lumpsList.begin(); iter != lumpsList.end(); iter++)
 	{
-	    if (!strncmp(iter->lumpName.c_str(), lumpNameToFind.c_str(), iter->lumpName.length()))
+		std::string iterLump;
+		iterLump.resize(iter->lumpName.size());
+		std::transform(iter->lumpName.begin(),
+					   iter->lumpName.end(),
+					   iterLump.begin(),
+					   ::tolower);
+	    if (!findLump.compare(iterLump))
 		{
 			return iter;
 		}
