@@ -36,7 +36,7 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 	
 //	if (!readColorMap(wadFile))
 //		throw;
-//	
+//
 //	if (!readEndDoom(wadFile))
 //		throw;
 //
@@ -284,42 +284,90 @@ bool AWAD::readFlatsRange(FILE* wadFile, const std::string& beginLumpName, const
 
 bool AWAD::readPatches(FILE* wadFile)
 {
-	const ALump& pNamesLump = AFindHelper::findLump("PNAMES", _tableOfContents);
+	TLumpsListConstIter pNamesLumpIter = AFindHelper::findLumpIter("PNAMES", _tableOfContents);
+	if (pNamesLumpIter == _tableOfContents.end())
+	{
+		return false;
+	}
+	
+	const ALump& pNamesLump = *pNamesLumpIter;
     fseek(wadFile, pNamesLump.lumpOffset, SEEK_SET);
     int patchesCount = 0;
     if (fread(&patchesCount, 4, 1, wadFile) != 1)
     {
         return false;
 	}
-
-	patchesCount = 50;
-	unsigned char *patchData = 0;
-    for (int i = 0; i < patchesCount; i++)
-    {
-        char patchLumpName[9] = {0};
-        if (fread(patchLumpName, 8, 1, wadFile) != 1)
-        {
-            return false;
+	
+	//	Read all patches lumps names
+	std::list<std::string> patchesLumpsNamesList;
+	for (int i = 0; i < patchesCount; i++)
+	{
+		char patchName[9] = {0};
+		if (fread(patchName, 1, 8, wadFile) != 8)
+		{
+			return false;
 		}
+		patchesLumpsNamesList.push_back(patchName);
+	}
 
-		const ALump& patchLump = AFindHelper::findLump(patchLumpName, _tableOfContents);
-		patchData = new unsigned char[patchLump.lumpSize];
-		printf("alloc \t\t%x\t\tsize %i\n", patchData, patchLump.lumpSize);
+	//	Read all PATCHES pointed in list
+	int ccc;
+	for (std::list<std::string>::iterator iter = patchesLumpsNamesList.begin(); iter != patchesLumpsNamesList.end(); iter++)
+	{
+		std::string patchLumpName = *iter;
+		TLumpsListConstIter patchLumpIter = AFindHelper::findLumpIter(patchLumpName, _tableOfContents);
+		if (patchLumpIter == _tableOfContents.end())
+		{
+			printf("NO CHANCE TO FIND <%s>\n", patchLumpName.c_str());
+			continue;
+		}
+		printf("%ld. <%s>\n", ++ccc, patchLumpName.c_str());
+		const ALump& patchLump = *patchLumpIter;
+		if (!patchLump.lumpSize)
+		{
+			continue;
+		}
+		unsigned char *patchData = new unsigned char[patchLump.lumpSize];
 		memset(patchData, 0, patchLump.lumpSize);
-		long patchesPosition = ftell(wadFile);
 
 		fseek(wadFile, patchLump.lumpOffset, SEEK_SET);
 		fread(patchData, patchLump.lumpSize, 1, wadFile);
 
-		fseek(wadFile, patchesPosition, SEEK_SET);
-
 		APatch newPatch(patchData, patchLumpName, _palete);
 		_patchesList.push_back(newPatch);
 
-		printf("KILLING \t%x\n", patchData);
 		delete [] patchData;
 		patchData = 0;
-    }
+	}
+
+////	patchesCount = 50;
+//	unsigned char *patchData = 0;
+//    for (int i = 0; i < patchesCount; i++)
+//    {
+//        char patchLumpName[9] = {0};
+//        if (fread(patchLumpName, 8, 1, wadFile) != 1)
+//        {
+//            return false;
+//		}
+//
+//		const ALump& patchLump = AFindHelper::findLump(patchLumpName, _tableOfContents);
+//		patchData = new unsigned char[patchLump.lumpSize];
+//		printf("alloc \t\t%x\t\tsize %i\n", patchData, patchLump.lumpSize);
+//		memset(patchData, 0, patchLump.lumpSize);
+//		long patchesPosition = ftell(wadFile);
+//
+//		fseek(wadFile, patchLump.lumpOffset, SEEK_SET);
+//		fread(patchData, patchLump.lumpSize, 1, wadFile);
+//
+//		fseek(wadFile, patchesPosition, SEEK_SET);
+//
+//		APatch newPatch(patchData, patchLumpName, _palete);
+//		_patchesList.push_back(newPatch);
+//
+//		printf("KILLING \t%x\n", patchData);
+//		delete [] patchData;
+//		patchData = 0;
+//    }
 
     return true;
 }
