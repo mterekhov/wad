@@ -15,30 +15,29 @@ namespace spcWAD
 
 ATexture::ATexture(const TPatchesDescriptionList& patchesDescriptionList, const std::string& incomingName, const int incomingWidth, const int incomingHeight) : _textureData(0), _textureWidth(incomingWidth), _textureHeight(incomingHeight), _textureName(incomingName)
 {
-//	int textureSize = incomingHeight * incomingWidth * 3;
-//	if (textureSize == 0)
-//	{
-//		return;
-//	}
-//	
-//	_textureData = new unsigned char[textureSize];
-//    memset(_textureData, 0, textureSize);
-//	for (TPatchesDescriptionListConstIter iter = patchesDescriptionList.begin(); iter < patchesDescriptionList.end(); iter++)
-//	{
-//		const SPatchDescription& patchDescription = *iter;
-//		ALump& lump = patchDescription.patch.patchLump;
-//		
-//		const unsigned char* flatData = flatData();
-//		for (int y = patchDescription.y_offset; y < incomingHeight; y++)
-//		{
-//			for (int x = patchDescription.x_offset; x < incomingWidth; x++)
-//			{
-//				_textureData[3 * (incomingHeight * y + x)] = flatData[3 * (y - patchDescription.y_offset + x - patchDescription.x_offset)];
-//				_textureData[3 * (incomingHeight * y + x) + 1] = flatData[3 * (y - patchDescription.y_offset + x - patchDescription.x_offset) + 1];
-//				_textureData[3 * (incomingHeight * y + x) + 2] = flatData[3 * (y - patchDescription.y_offset + x - patchDescription.x_offset) + 2];
-//			}
-//		}
-//	}
+	int textureSize = _textureWidth * _textureHeight * 3;
+	if (textureSize == 0)
+	{
+		return;
+	}
+	
+	_textureData = new unsigned char[textureSize];
+    memset(_textureData, 0, textureSize);
+	for (TPatchesDescriptionListConstIter iter = patchesDescriptionList.begin(); iter != patchesDescriptionList.end(); iter++)
+	{
+		const SPatchDescription& patchDescription = *iter;
+		
+		const unsigned char* flatData = patchDescription.patch.patchData();
+		for (int y = patchDescription.y_offset; y < _textureHeight; y++)
+		{
+			for (int x = patchDescription.x_offset; x < _textureWidth; x++)
+			{
+				_textureData[3 * (_textureHeight * y + x)] = flatData[3 * (y - patchDescription.y_offset + x - patchDescription.x_offset)];
+				_textureData[3 * (_textureHeight * y + x) + 1] = flatData[3 * (y - patchDescription.y_offset + x - patchDescription.x_offset) + 1];
+				_textureData[3 * (_textureHeight * y + x) + 2] = flatData[3 * (y - patchDescription.y_offset + x - patchDescription.x_offset) + 2];
+			}
+		}
+	}
 }
 
 //=============================================================================
