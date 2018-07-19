@@ -47,7 +47,6 @@ const AFlat& AFindHelper::findFlat(const std::string& flatNameToFind, const TFla
 {
 	for (TFlatsListConstIter iter = flatList.begin(); iter != flatList.end(); iter++)
 	{
-		printf("<%s>\n", iter->flatName().c_str());
 	    if (!strncmp(iter->flatName().c_str(), flatNameToFind.c_str(), iter->flatName().length()))
 		{
 			return (*iter);
@@ -55,36 +54,6 @@ const AFlat& AFindHelper::findFlat(const std::string& flatNameToFind, const TFla
 	}
 
 	return *flatList.end();
-}
-
-//=============================================================================
-
-APatch& AFindHelper::findPatch(const int patchIndex, TPatchesList& patchesList)
-{
-//	for (TPatchesListIter iter = patchesList.begin(); iter < patchesList.end(); iter++)
-//	{
-//	    if (iter->patchIndex == patchIndex)
-//		{
-//			return (*iter);
-//		}
-//	}
-
-	return *patchesList.end();
-}
-
-//=============================================================================
-
-const APatch& AFindHelper::findPatch(const int patchIndex, const TPatchesList& patchesList)
-{
-//	for (TPatchesListConstIter iter = patchesList.begin(); iter < patchesList.end(); iter++)
-//	{
-//	    if (iter->patchIndex == patchIndex)
-//		{
-//			return (*iter);
-//		}
-//	}
-
-	return *patchesList.end();
 }
 
 //=============================================================================
