@@ -59,7 +59,7 @@ private:
 	bool readPatches(FILE* wadFile);
 	
 	bool readTextures(FILE* wadFile);
-	ATexture generateSingleTexture(FILE* wadFile, const int textureOffset);
+	ATexture generateSingleTexture(const int textureOffset, unsigned char *lumpData);
 
 	bool readLumpData(FILE* wadFile, const ALump& lumpToRead, unsigned char *lumpData);
 	TLumpsList findLumpsList(const std::string& lumpsNameMask);

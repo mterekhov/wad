@@ -40,8 +40,8 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
     if (!readPatches(wadFile))
         throw;
 
-//    if (!readTextures(wadFile))
-//        throw;
+    if (!readTextures(wadFile))
+        throw;
 //	if (!readColorMap(wadFile))
 //		throw;
 //
@@ -328,75 +328,84 @@ bool AWAD::readTextures(FILE* wadFile)
 	}
 	
 	const ALump& textureLump = *textureLumpIter;
-    fseek(wadFile, textureLump.lumpOffset, SEEK_SET);
+	unsigned char *lumpData = new unsigned char [textureLump.lumpSize];
+	readLumpData(wadFile, textureLump, lumpData);
+	int bytesOffset = 0;
+
     int texturesCount = 0;
-    if (fread(&texturesCount, 4, 1, wadFile) != 1)
-    {
-        return false;
-	}
+    memcpy(&texturesCount, lumpData, 4);
+	bytesOffset += 4;
 
 	std::vector<int> texturesOffsetsList;
     for (int i = 0; i < texturesCount; i++)
     {
 	    int textureOffset = 0;
-        if (fread(&textureOffset, 4, 1, wadFile) != 1)
-        {
-            return false;
-		}
-        textureOffset += textureLump.lumpOffset;
+		memcpy(&textureOffset, &lumpData[bytesOffset], 4);
+		bytesOffset += 4;
+
 		texturesOffsetsList.push_back(textureOffset);
     }
 
-	for (std::vector<int>::iterator iter = texturesOffsetsList.begin(); iter < texturesOffsetsList.end(); iter++)
+	for (std::vector<int>::iterator iter = texturesOffsetsList.begin(); iter != texturesOffsetsList.end(); iter++)
 	{
-		_texturesList.push_back(generateSingleTexture(wadFile, (*iter)));
-		break;
+		_texturesList.push_back(generateSingleTexture((*iter), lumpData));
 	}
+	
+	delete [] lumpData;
 	
     return true;
 }
 
 //=============================================================================
 
-ATexture AWAD::generateSingleTexture(FILE* wadFile, const int textureOffset)
+ATexture AWAD::generateSingleTexture(const int textureOffset, unsigned char *lumpData)
 {
-	fseek(wadFile, textureOffset, SEEK_SET);
+	int bytesOffset = textureOffset;
 	char textureName[9] = {0};
-	fread(textureName, 8, 1, wadFile);
-	int buffer = 0;
-	fread(&buffer, 4, 1, wadFile);
-	int width = 0;
-	fread(&width, 2, 1, wadFile);
-	int height = 0;
-	fread(&height, 2, 1, wadFile);
-	fread(&buffer, 4, 1, wadFile);
-	int patchNumbers = 0;
-	fread(&patchNumbers, 2, 1, wadFile);
-	printf("<%s> size %ix%i patch numbers %i\n", textureName, width, height, patchNumbers);
+	memcpy(textureName, &lumpData[bytesOffset], 8);
+	bytesOffset += 8;
+	bytesOffset += 4;	//	skiping 4 bytes
+	int textureWidth = 0;
+	memcpy(&textureWidth, &lumpData[bytesOffset], 2);
+	bytesOffset += 2;
+	int textureHeight = 0;
+	memcpy(&textureHeight, &lumpData[bytesOffset], 2);
+	bytesOffset += 2;
+	bytesOffset += 4;	//	skiping 4 bytes
+	int texturePatchNumbers = 0;
+	memcpy(&texturePatchNumbers, &lumpData[bytesOffset], 2);
+	bytesOffset += 2;
+
+	printf("<%s> size %ix%i patch numbers %i\n", textureName, textureWidth, textureHeight, texturePatchNumbers);
 
 	TPatchesDescriptionList patchesDescriptionList;
-	for (int patchIndex = 0; patchIndex < patchNumbers; patchIndex++)
+	for (int patchIndex = 0; patchIndex < texturePatchNumbers; patchIndex++)
 	{
 		int xOffset = 0;
-		fread(&xOffset, 2, 1, wadFile);
+		memcpy(&xOffset, &lumpData[bytesOffset], 2);
+		bytesOffset += 2;
+
 		int yOffset = 0;
-		fread(&yOffset, 2, 1, wadFile);
+		memcpy(&yOffset, &lumpData[bytesOffset], 2);
+		bytesOffset += 2;
+		
 		int patchIndexInPatchDirectory = 0;
-		fread(&patchIndexInPatchDirectory, 2, 1, wadFile);
-		fread(&buffer, 4, 1, wadFile);
+		memcpy(&patchIndexInPatchDirectory, &lumpData[bytesOffset], 2);
+		bytesOffset += 2;
+		bytesOffset += 4;	//	skiping 4 bytes
 
 		if ((patchIndexInPatchDirectory > _patchesList.size()) || (patchIndexInPatchDirectory < 0))
 		{
 			printf("\t\t\t%s can not be created because patch does not exist\n", textureName);
 			continue;
 		}
-		
+
 		SPatchDescription newDescription = {xOffset, yOffset, _patchesList[patchIndexInPatchDirectory]};
 		patchesDescriptionList.push_back(newDescription);
 		printf("\t\t\tx_offset = %i, y_offset = %i, patchIndex = %i\n", xOffset, yOffset, patchIndexInPatchDirectory);
 	}
 	
-	ATexture newTexture(patchesDescriptionList, textureName, width, height);
+	ATexture newTexture(patchesDescriptionList, textureName, textureWidth, textureHeight);
 	return newTexture;
 }
 
