@@ -157,8 +157,6 @@ bool AWAD::readPalete(FILE* wadFile)
 	const ALump& playpalLump = AFindHelper::findLump("PLAYPAL", _tableOfContents);
 
 	unsigned char *lumpData = new unsigned char [playpalLump.lumpSize];
-    memset(lumpData, 0, playpalLump.lumpSize);
-	
 	readLumpData(wadFile, playpalLump, lumpData);
 	_palete = APalete(lumpData, playpalLump.lumpSize);
 	
@@ -174,8 +172,6 @@ bool AWAD::readColorMap(FILE* wadFile)
 	const ALump& colorMapLump = AFindHelper::findLump("COLORMAP", _tableOfContents);
 
 	unsigned char *lumpData = new unsigned char [colorMapLump.lumpSize];
-    memset(lumpData, 0, colorMapLump.lumpSize);
-	
 	readLumpData(wadFile, colorMapLump, lumpData);
 
 	_colorMap = AColorMap(lumpData, colorMapLump.lumpSize);
@@ -192,8 +188,6 @@ bool AWAD::readEndDoom(FILE* wadFile)
 	const ALump& endoomLump = AFindHelper::findLump("ENDOOM", _tableOfContents);
 
 	unsigned char *lumpData = new unsigned char [endoomLump.lumpSize];
-    memset(lumpData, 0, endoomLump.lumpSize);
-	
 	readLumpData(wadFile, endoomLump, lumpData);
 
 	_enDoom = AEnDoom(lumpData, endoomLump.lumpSize);
@@ -212,8 +206,6 @@ bool AWAD::readDemos(FILE* wadFile)
 	{
 		const ALump& demoLump = AFindHelper::findLump(iter->lumpName, _tableOfContents);
 		unsigned char *lumpData = new unsigned char [demoLump.lumpSize];
-		memset(lumpData, 0, demoLump.lumpSize);
-		
 		readLumpData(wadFile, demoLump, lumpData);
 
 		ADemo newDemo(lumpData, demoLump.lumpSize, demoLump.lumpName);
@@ -255,8 +247,6 @@ bool AWAD::readFlatsRange(FILE* wadFile, const std::string& beginLumpName, const
 		{
 			ALump flatLump = (*iter);
 			unsigned char *lumpData = new unsigned char [flatLump.lumpSize];
-			memset(lumpData, 0, flatLump.lumpSize);
-			
 			readLumpData(wadFile, flatLump, lumpData);
 			
 			AFlat newFlat(lumpData, flatLump.lumpName, _palete);
@@ -279,10 +269,9 @@ bool AWAD::readPatches(FILE* wadFile)
 		return false;
 	}
 	
-	const ALump& pNamesLump = *pNamesLumpIter;
-	unsigned char *lumpData = new unsigned char [pNamesLump.lumpSize];
-	memset(lumpData, 0, pNamesLump.lumpSize);
-	readLumpData(wadFile, pNamesLump, lumpData);
+	const ALump& patchesNamesLump = *pNamesLumpIter;
+	unsigned char *lumpData = new unsigned char [patchesNamesLump.lumpSize];
+	readLumpData(wadFile, patchesNamesLump, lumpData);
 	int bytesOffset = 0;
 
     int patchesCount = 0;
@@ -291,14 +280,15 @@ bool AWAD::readPatches(FILE* wadFile)
 
 	//	Read all patches lumps names
 	std::list<std::string> patchesLumpsNamesList;
-	int patchNameSize = 8;
+	int patchNameSizeInBytes = 8;
 	for (int i = 0; i < patchesCount; i++)
 	{
 		char patchName[9] = {0};
-	    memcpy(patchName, &lumpData[bytesOffset], patchNameSize);
-	    bytesOffset += patchNameSize;
+	    memcpy(patchName, &lumpData[bytesOffset], patchNameSizeInBytes);
+	    bytesOffset += patchNameSizeInBytes;
 		patchesLumpsNamesList.push_back(patchName);
 	}
+	delete [] lumpData;
 
 	//	Read all PATCHES pointed in list
 	for (std::list<std::string>::iterator iter = patchesLumpsNamesList.begin(); iter != patchesLumpsNamesList.end(); iter++)
@@ -315,17 +305,13 @@ bool AWAD::readPatches(FILE* wadFile)
 		{
 			continue;
 		}
-		unsigned char *patchData = new unsigned char[patchLump.lumpSize];
-		memset(patchData, 0, patchLump.lumpSize);
+		lumpData = new unsigned char [patchLump.lumpSize];
+		readLumpData(wadFile, patchLump, lumpData);
 
-		fseek(wadFile, patchLump.lumpOffset, SEEK_SET);
-		fread(patchData, patchLump.lumpSize, 1, wadFile);
-
-		APatch newPatch(patchData, patchLumpName, _palete);
+		APatch newPatch(lumpData, patchLumpName, _palete);
 		_patchesList.push_back(newPatch);
 
-		delete [] patchData;
-		patchData = 0;
+		delete [] lumpData;
 	}
 
     return true;
@@ -427,6 +413,7 @@ bool AWAD::readLumpData(FILE* wadFile, const ALump& lumpToRead, unsigned char *l
 		return false;
 	}
 	
+	memset(lumpData, 0, lumpToRead.lumpSize);
 	int read = fread(lumpData, lumpToRead.lumpSize, 1, wadFile);
 	if (read != 1)
 	{
