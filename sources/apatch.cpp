@@ -108,6 +108,20 @@ int APatch::patchDataSize() const
 
 //=============================================================================
 
+int APatch::patchHeightSize() const
+{
+	return _patchHeight;
+}
+
+//=============================================================================
+
+int APatch::patchWidthSize() const
+{
+	return _patchWidth;
+}
+
+//=============================================================================
+
 unsigned char* APatch::convertData(const unsigned char* incomingData, const APalete& palete, const int bytesOffset)
 {
 	int bytesOffsetPointer = bytesOffset;

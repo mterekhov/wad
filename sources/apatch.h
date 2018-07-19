@@ -32,6 +32,8 @@ public:
 
 	const unsigned char* patchData() const;
 	int patchDataSize() const;
+	int patchHeightSize() const;
+	int patchWidthSize() const;
 	const std::string& patchName() const;
 	bool savePatchIntoTga(const std::string& fileName);
 
