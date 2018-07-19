@@ -470,11 +470,23 @@ bool AWAD::readLumpData(FILE* wadFile, const ALump& lumpToRead, unsigned char *l
 
 TLumpsList AWAD::findLumpsList(const std::string& lumpsNameMask)
 {
+	std::string findLump;
+	findLump.resize(lumpsNameMask.size());
+	std::transform(lumpsNameMask.begin(),
+				   lumpsNameMask.end(),
+				   findLump.begin(),
+				   ::tolower);
+
 	TLumpsList founded;
 	for (TLumpsListIter iter = _tableOfContents.begin(); iter != _tableOfContents.end(); iter++)
 	{
-		std::string lumpName = iter->lumpName;
-		if (lumpName.compare(0, lumpsNameMask.length(), lumpsNameMask) == 0)
+		std::string lumpName;
+		lumpName.resize(iter->lumpName.size());
+		std::transform(iter->lumpName.begin(),
+					   iter->lumpName.end(),
+					   iter->lumpName.begin(),
+					   ::tolower);
+		if (lumpName.compare(0, findLump.length(), findLump) == 0)
 		{
 			founded.push_back(*iter);
 		}
