@@ -328,7 +328,7 @@ bool AWAD::readTextures(FILE* wadFile)
 	}
 	
 	const ALump& textureLump = *textureLumpIter;
-	char *lumpData = new char [textureLump.lumpSize];
+	unsigned char *lumpData = new unsigned char [textureLump.lumpSize];
 	if (fseek(wadFile, textureLump.lumpOffset, SEEK_SET))
 	{
 		return false;
@@ -363,7 +363,7 @@ bool AWAD::readTextures(FILE* wadFile)
 
 //=============================================================================
 
-ATexture AWAD::generateSingleTexture(const int textureOffset, char *lumpData)
+ATexture AWAD::generateSingleTexture(const int textureOffset, unsigned char *lumpData)
 {
 	int bytesOffset = textureOffset;
 	char textureName[9] = {0};
@@ -386,11 +386,11 @@ ATexture AWAD::generateSingleTexture(const int textureOffset, char *lumpData)
 	TPatchesDescriptionList patchesDescriptionList;
 	for (int patchIndex = 0; patchIndex < texturePatchNumbers; patchIndex++)
 	{
-		int xOffset = 0;
+		short xOffset = 0;
 		memcpy(&xOffset, &lumpData[bytesOffset], 2);
 		bytesOffset += 2;
 
-		int yOffset = 0;
+		short yOffset = 0;
 		memcpy(&yOffset, &lumpData[bytesOffset], 2);
 		bytesOffset += 2;
 		
