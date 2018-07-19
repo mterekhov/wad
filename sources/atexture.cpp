@@ -28,13 +28,23 @@ ATexture::ATexture(const TPatchesDescriptionList& patchesDescriptionList, const 
 		const SPatchDescription& patchDescription = *iter;
 		
 		const unsigned char* flatData = patchDescription.patch.patchData();
-		for (int y = patchDescription.y_offset; y < _textureHeight; y++)
+		int y_limit = patchDescription.patch.patchHeightSize();
+		if (y_limit > _textureHeight)
 		{
-			for (int x = patchDescription.x_offset; x < _textureWidth; x++)
+			y_limit = _textureHeight;
+		}
+		int x_limit = patchDescription.patch.patchWidthSize();
+		if (x_limit > _textureWidth)
+		{
+			x_limit = _textureWidth;
+		}
+		for (int y = patchDescription.y_offset; y < y_limit; y++)
+		{
+			for (int x = patchDescription.x_offset; x < x_limit; x++)
 			{
-				_textureData[3 * (_textureHeight * y + x)] = flatData[3 * (y - patchDescription.y_offset + x - patchDescription.x_offset)];
-				_textureData[3 * (_textureHeight * y + x) + 1] = flatData[3 * (y - patchDescription.y_offset + x - patchDescription.x_offset) + 1];
-				_textureData[3 * (_textureHeight * y + x) + 2] = flatData[3 * (y - patchDescription.y_offset + x - patchDescription.x_offset) + 2];
+				int texturePixelIndex = 3 * (_textureHeight * y + x);
+				int patchPixelIndex = 3 * ((y - patchDescription.y_offset) * patchDescription.patch.patchWidthSize() + x - patchDescription.x_offset);
+				memcpy(&_textureData[texturePixelIndex], &flatData[patchPixelIndex], 3);
 			}
 		}
 	}

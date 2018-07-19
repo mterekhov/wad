@@ -53,16 +53,16 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 //
 
 
-	for (TPatchesListIter iter = _patchesList.begin(); iter != _patchesList.end(); iter++)
-	{
-		APatch& patch = *iter;
-		std::string path = "/Users/michael/Pictures/saved/";
-		path += patch.patchName();
-		printf("<%s>\n", patch.patchName().c_str());
-		path += ".tga";
-		patch.savePatchIntoTga(path);
-	}
-	
+//	for (TPatchesListIter iter = _patchesList.begin(); iter != _patchesList.end(); iter++)
+//	{
+//		APatch& patch = *iter;
+//		std::string path = "/Users/michael/Pictures/saved/";
+//		path += patch.patchName();
+//		printf("<%s>\n", patch.patchName().c_str());
+//		path += ".tga";
+//		patch.savePatchIntoTga(path);
+//	}
+//	
 //	for (TFlatsListIter iter = _flatsList.begin(); iter != _flatsList.end(); iter++)
 //	{
 //		AFlat& flat = *iter;
@@ -71,14 +71,14 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 //		path += ".tga";
 //		flat.saveFlatIntoTga(path);
 //	}
-//	for (TTexturesListIter iter = _texturesList.begin(); iter != _texturesList.end(); iter++)
-//	{
-//		ATexture& texture = *iter;
-//		std::string path = "/Users/michael/Pictures/saved/";
-//		path += texture.textureName();
-//		path += ".tga";
-//		texture.saveTextureIntoTga(path);
-//	}
+	for (TTexturesListIter iter = _texturesList.begin(); iter != _texturesList.end(); iter++)
+	{
+		ATexture& texture = *iter;
+		std::string path = "/Users/michael/Pictures/saved/";
+		path += texture.textureName();
+		path += ".tga";
+		texture.saveTextureIntoTga(path);
+	}
 
 	fclose(wadFile);
 }
