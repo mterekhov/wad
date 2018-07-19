@@ -42,7 +42,7 @@ typedef std::list<AFlat> TFlatsList;
 typedef TFlatsList::iterator TFlatsListIter;
 typedef TFlatsList::const_iterator TFlatsListConstIter;
 
-typedef std::list<APatch> TPatchesList;
+typedef std::vector<APatch> TPatchesList;
 typedef TPatchesList::iterator TPatchesListIter;
 typedef TPatchesList::const_iterator TPatchesListConstIter;
 
