@@ -1,6 +1,7 @@
 #include "apatch.h"
 #include "apalete.h"
 #include "atgaexporter.h"
+#include "types.h"
 
 //=============================================================================
 
@@ -136,7 +137,7 @@ unsigned char* APatch::convertData(const unsigned char* incomingData, const APal
 
     int size = patchDataSize();
 	unsigned char* convertedData = new unsigned char[size];
-    memset(convertedData, 0, size);
+    memset(convertedData, PIXEL_TRANSPARENCY_MARKER, size);
     for (int i = 0; i < _patchWidth; i++)
     {
     	int currentColumnDataOffset = columnOffsets[i];

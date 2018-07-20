@@ -321,7 +321,7 @@ bool AWAD::readPatches(FILE* wadFile)
 
 bool AWAD::readTextures(FILE* wadFile)
 {
-	TLumpsListConstIter textureLumpIter = AFindHelper::findLumpIter("TEXTURE1", _tableOfContents);
+	TLumpsListConstIter textureLumpIter = AFindHelper::findLumpIter("TEXTURE2", _tableOfContents);
 	if (textureLumpIter == _tableOfContents.end())
 	{
 		return false;
@@ -376,8 +376,6 @@ ATexture AWAD::generateSingleTexture(const int textureOffset, unsigned char *lum
 	memcpy(&texturePatchNumbers, &lumpData[bytesOffset], 2);
 	bytesOffset += 2;
 
-	printf("<%s> size %ix%i patch numbers %i\n", textureName, textureWidth, textureHeight, texturePatchNumbers);
-
 	TPatchesDescriptionList patchesDescriptionList;
 	for (int patchIndex = 0; patchIndex < texturePatchNumbers; patchIndex++)
 	{
@@ -402,7 +400,6 @@ ATexture AWAD::generateSingleTexture(const int textureOffset, unsigned char *lum
 
 		SPatchDescription newDescription = {xOffset, yOffset, _patchesList[patchIndexInPatchDirectory]};
 		patchesDescriptionList.push_back(newDescription);
-		printf("\t\t\tx_offset = %i, y_offset = %i, patchIndex = %i\n", xOffset, yOffset, patchIndexInPatchDirectory);
 	}
 	
 	ATexture newTexture(patchesDescriptionList, textureName, textureWidth, textureHeight);

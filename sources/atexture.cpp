@@ -67,6 +67,10 @@ ATexture::ATexture(const TPatchesDescriptionList& patchesDescriptionList, const 
 				int patchPixelIndexY = patchY + y - injectionY;
 				int patchPixelIndex = patchPixelIndexY * patchDescription.patch.patchWidthSize() + patchPixelIndexX;
 				int texturePixelIndex = _textureWidth * y + x;
+				if (flatData[3 * patchPixelIndex] == PIXEL_TRANSPARENCY_MARKER)
+				{
+					continue;
+				}
 				memcpy(&_textureData[3 * texturePixelIndex], &flatData[3 * patchPixelIndex], 3);
 			}
 		}

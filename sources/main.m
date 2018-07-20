@@ -12,7 +12,7 @@
 
 void launchApplication()
 {
-	NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"doom1" ofType:@"wad"];
+	NSString *bundlePath = [[NSBundle mainBundle] pathForResource:@"doom" ofType:@"wad"];
 	spcWAD::AWAD wad(bundlePath.UTF8String);
 }
 
