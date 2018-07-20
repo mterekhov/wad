@@ -34,24 +34,22 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 	if (!readPalete(wadFile))
 		throw;
 	
-//    if (!readFlats(wadFile))
-//        throw;
+    if (!readFlats(wadFile))
+        throw;
 
     if (!readPatches(wadFile))
         throw;
 
     if (!readTextures(wadFile))
         throw;
-//	if (!readColorMap(wadFile))
-//		throw;
-//
-//	if (!readEndDoom(wadFile))
-//		throw;
-//
-//	if (!readDemos(wadFile))
-//		throw;
-//
+	if (!readColorMap(wadFile))
+		throw;
 
+	if (!readEndDoom(wadFile))
+		throw;
+
+	if (!readDemos(wadFile))
+		throw;
 
 //	for (TPatchesListIter iter = _patchesList.begin(); iter != _patchesList.end(); iter++)
 //	{
@@ -71,6 +69,12 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 //		path += ".tga";
 //		flat.saveFlatIntoTga(path);
 //	}
+	int i = 0;
+	for (TLumpsListIter iter = _tableOfContents.begin(); iter != _tableOfContents.end(); iter++)
+	{
+		printf("%i. <%s>\n", ++i, iter->lumpName.c_str());
+	}
+
 	for (TTexturesListIter iter = _texturesList.begin(); iter != _texturesList.end(); iter++)
 	{
 		ATexture& texture = *iter;
@@ -226,7 +230,7 @@ bool AWAD::readFlats(FILE* wadFile)
 //        return false;
 
     //  read second part of flats
-    if (!readFlatsRange(wadFile, "F_START", "F_END"))
+    if (!readFlatsRange(wadFile, "F1_START", "F1_END"))
         return false;
 
     return true;
@@ -460,255 +464,4 @@ TLumpsList AWAD::findLumpsList(const std::string& lumpsNameMask)
 
 //=============================================================================
 
-#pragma mark - TRASH -
-
-//
-//bool AWAD::awReadMaps(FILE* wadFile)
-//{
-//	amDefineMapLumps(wadFile);
-//	int counter = 1;
-//	for (TLumpsList::iterator iter = _tableOfContents.begin(); iter < _tableOfContents.end(); iter++)
-//	{
-//		ALump* lump = static_cast<ALump *>(*iter);
-//		printf("%i. %s\t\t%i\n", counter, lump->alName().c_str(), lump->alType());
-//		counter++;
-//	}
-//
-//	return true;
-//}
-//
-////=============================================================================
-//
-//bool AWAD::awReadSFX(FILE* wadFile)
-//{
-//    TLumpsListIter it_begin = _tableOfContents.begin();
-//    TLumpsListIter it_end = _tableOfContents.end();
-//
-//    ASFX* newSfx = 0;
-//    for (spcWAD::TLumpsListIter it = it_begin; it < it_end; it++)
-//    {
-//        std::string lumpName = (*it)->alName();
-//        if (lumpName.find("DS") == 0)
-//        {
-//            newSfx = new ASFX(*(*it));
-//            newSfx->asReadData(wadFile);
-//            *it = newSfx;
-//        }
-//    }
-//
-//    return true;
-//}
-//
-////=============================================================================
-//
-//bool AWAD::awReadPCSpeaker(FILE* wadFile)
-//{
-//    TLumpsListIter it_begin = _tableOfContents.begin();
-//    TLumpsListIter it_end = _tableOfContents.end();
-//
-//    APCSpeaker* newSpeaker = 0;
-//    for (spcWAD::TLumpsListIter it = it_begin; it < it_end; it++)
-//    {
-//        std::string lumpName = (*it)->alName();
-//        if (lumpName.find("DP") == 0)
-//        {
-//            newSpeaker = new APCSpeaker(*(*it));
-//            newSpeaker->apReadData(wadFile);
-//            *it = newSpeaker;
-//        }
-//    }
-//
-//    return true;
-//}
-//
-////=============================================================================
-//
-//#pragma mark - Lump routine -
-//
-////=============================================================================
-//
-//TLumpsList AWAD::awFilteredLumps(const ELumpTypes lumpType)
-//{
-//    TLumpsList finalVector;
-//    for (spcWAD::TLumpsListIter it = _tableOfContents.begin(); it <_tableOfContents.end(); it++)
-//    {
-//        spcWAD::ELumpTypes type = (*it)->alType();
-//        if (type == lumpType)
-//            finalVector.push_back(*it);
-//    }
-//
-//    return finalVector;
-//}
-//
-////=============================================================================
-//
-//TLumpsList& AWAD::awLumps()
-//{
-//    return _tableOfContents;
-//}
-//
-////=============================================================================
-//
-//const ALump* AWAD::awGetLump(const std::string& name)
-//{
-//    TLumpsListIter iter = _tableOfContents.begin();
-//    TLumpsListIter iter_end = _tableOfContents.end();
-//    while(iter != iter_end)
-//    {
-//        if ((*iter)->alName() == name)
-//            return *iter;
-//        ++iter;
-//    }
-//
-//    return 0;
-//}
-//
-////=============================================================================
-//
-//TLumpsListIter AWAD::awFindLump(const std::string& name)
-//{
-//	TLumpsListIter iter = _tableOfContents.begin();
-//	TLumpsListIter iter_end = _tableOfContents.end();
-//	while(iter != iter_end)
-//	{
-//		if ((*iter)->alName() == name)
-//			return iter;
-//		++iter;
-//	}
-//
-//	return iter_end;
-//}
-//
-////=============================================================================
-//
-//TLumpsList AWAD::awFindZeroSizeLumps()
-//{
-//	TLumpsList founded;
-//	TLumpsListIter iter = _tableOfContents.begin();
-//	TLumpsListIter iter_end = _tableOfContents.end();
-//	while(iter != iter_end)
-//	{
-//		if ((*iter)->alType() == LUMPTYPES_ZEROSIZE)
-//		{
-//			founded.push_back(*iter);
-//		}
-//
-//		++iter;
-//	}
-//
-//	return founded;
-//}
-//
-////=============================================================================
-//
-//void AWAD::amDefineMapLumps(FILE *wadFile)
-//{
-//	for (TLumpsListIter iter = _tableOfContents.begin(); iter < _tableOfContents.end(); iter++)
-//	{
-//		if ((*iter)->alSize())
-//		{
-//			continue;
-//		}
-//
-//		if (checkLumpIfItIsMap(*iter, wadFile) == true)
-//		{
-//			TLumpsListIter mapLump = awFindLump((*iter)->alName());
-////			(*iter) = new AMap(*mapLump);
-//		}
-//	}
-//}
-//
-////=============================================================================
-//
-//bool AWAD::checkLumpIfItIsMap(ALump* lump, FILE* wadFile)
-//{
-//	if (!lump)
-//	{
-//		return false;
-//	}
-//
-//	std::vector<std::string> mapContentLumpsNames = {"THINGS", "LINEDEFS", "SIDEDEFS", "VERTEXES", "SEGS", "SSECTORS", "NODES", "SECTORS", "REJECT", "BLOCKMAP"};
-//	for (std::vector<std::string>::iterator iter = mapContentLumpsNames.begin(); iter < mapContentLumpsNames.end(); iter++)
-//	{
-//		if (fseek(wadFile, lump->alOffset() + lump->alSize(), SEEK_SET))
-//		{
-//			return false;
-//		}
-//		char buffer[256] = {0};
-//		int read = fread(buffer, 1, iter->length(), wadFile);
-//		std::string bufferString(buffer);
-//		if (bufferString.compare(0, iter->length(), *iter) == 0)
-//		{
-//			return true;
-//		}
-//	}
-//
-//	return false;
-//}
-//
-////=============================================================================
-//
-//
-////=============================================================================
-//
-//#pragma mark - Misc -
-//
-////=============================================================================
-//
-//bool AWAD::awIntoMidi(const std::string& fileName, ASFX* sfx)
-//{
-//    if (!sfx)
-//        return false;
-//
-//    FILE* filo = fopen(fileName.c_str(), "wb");
-//    if (!filo)
-//        return false;
-//
-//    fwrite(sfx->asData(), sfx->alSize(), 1, filo); //  identity length
-//
-//    fclose(filo);
-//
-//    return true;
-//}
-//
-////=============================================================================
-//
-//bool AWAD::awIntoTga(const std::string& fileName, const AFlat* flat)
-//{
-//	if (!flat)
-//		return false;
-//
-//    unsigned char* data = const_cast<unsigned char*>(flat->afData());
-//    if (!awIntoTga(fileName, data, FLAT_WIDTH, FLAT_HEIGHT))
-//        return false;
-//
-//	return true;
-//}
-//
-////=============================================================================
-//
-//bool AWAD::awIntoTga(const std::string& fileName, const APatch* patch)
-//{
-//	if (!patch)
-//		return false;
-//
-//    unsigned char* data = const_cast<unsigned char*>(patch->apData());
-//    if (!awIntoTga(fileName, data, patch->apWidth(), patch->apHeight()))
-//        return false;
-//
-//	return true;
-//}
-//
-////=============================================================================
-//
-//
-////=============================================================================
-//
-//const unsigned int AWAD::awLumpsCount() const
-//{
-//    return _tableOfContents.size();
-//}
-//
-////=============================================================================
-//
 };  //  namespace spcWAD
