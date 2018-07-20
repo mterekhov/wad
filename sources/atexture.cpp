@@ -26,25 +26,48 @@ ATexture::ATexture(const TPatchesDescriptionList& patchesDescriptionList, const 
 	for (TPatchesDescriptionListConstIter iter = patchesDescriptionList.begin(); iter != patchesDescriptionList.end(); iter++)
 	{
 		const SPatchDescription& patchDescription = *iter;
-		
+
+		//	Соотнесем размер патча и размер текстуры в которую суем его
+		//	Ну чтобы не получилось что патч больше текстуры по размерам
+		int patchChunkHeight = patchDescription.patch.patchHeightSize();	//	Это как раз та высота которую мы должны выкусить из патча
+		int patchChunkWidth = patchDescription.patch.patchWidthSize();
+
+		int injectionY = patchDescription.y_offset;	//	это позиция внутри текстуры в которую надо впихать патч
+		int patchY = 0;	//	это позиция внутри патча начиная с которой будем выкусывать кусочек патча
+		if (injectionY < 0)
+		{
+			injectionY = 0;
+			patchY = abs(patchDescription.y_offset);
+			patchChunkHeight = patchDescription.patch.patchHeightSize() - patchY;
+		}
+		if (injectionY + patchChunkHeight > _textureHeight)
+		{
+			patchChunkHeight = _textureHeight - injectionY;
+		}
+
+		int injectionX = patchDescription.x_offset;	//	это позиция внутри текстуры в которую надо впихать патч
+		int patchX = 0;	//	это позиция внутри патча начиная с которой будем выкусывать кусочек патча
+		if (injectionX < 0)
+		{
+			injectionX = 0;
+			patchX = abs(patchDescription.x_offset);
+			patchChunkWidth = patchDescription.patch.patchWidthSize() - patchX;
+		}
+		if (injectionX + patchChunkWidth > _textureWidth)
+		{
+			patchChunkWidth = _textureWidth - injectionX;
+		}
+
 		const unsigned char* flatData = patchDescription.patch.patchData();
-		int y_limit = patchDescription.patch.patchHeightSize();
-		if (y_limit > _textureHeight)
+		for (int y = injectionY; y < injectionY + patchChunkHeight; y++)
 		{
-			y_limit = _textureHeight;
-		}
-		int x_limit = patchDescription.patch.patchWidthSize();
-		if (x_limit > _textureWidth)
-		{
-			x_limit = _textureWidth;
-		}
-		for (int y = patchDescription.y_offset; y < y_limit; y++)
-		{
-			for (int x = patchDescription.x_offset; x < x_limit; x++)
+			for (int x = injectionX; x < injectionX + patchChunkWidth; x++)
 			{
-				int texturePixelIndex = 3 * (_textureHeight * y + x);
-				int patchPixelIndex = 3 * ((y - patchDescription.y_offset) * patchDescription.patch.patchWidthSize() + x - patchDescription.x_offset);
-				memcpy(&_textureData[texturePixelIndex], &flatData[patchPixelIndex], 3);
+				int patchPixelIndexX = patchX + x - injectionX;
+				int patchPixelIndexY = patchY + y - injectionY;
+				int patchPixelIndex = patchPixelIndexY * patchDescription.patch.patchWidthSize() + patchPixelIndexX;
+				int texturePixelIndex = _textureWidth * y + x;
+				memcpy(&_textureData[3 * texturePixelIndex], &flatData[3 * patchPixelIndex], 3);
 			}
 		}
 	}
@@ -52,7 +75,7 @@ ATexture::ATexture(const TPatchesDescriptionList& patchesDescriptionList, const 
 
 //=============================================================================
 
-ATexture::ATexture(const ATexture& texture) : _textureData(0), _textureWidth(texture._textureWidth), _textureHeight(texture._textureHeight)
+ATexture::ATexture(const ATexture& texture) : _textureData(0), _textureWidth(texture._textureWidth), _textureHeight(texture._textureHeight), _textureName(texture.textureName())
 {
 	if (texture.textureDataSize())
 	{
