@@ -1,8 +1,8 @@
 #include "atexture.h"
-#include "apatch.h"
-#include "afindhelper.h"
+#include "autilities.h"
 #include "aflat.h"
 #include "atgaexporter.h"
+#include "apatch.h"
 
 #include <stdlib.h>
 

@@ -141,7 +141,6 @@ unsigned char* APatch::convertData(const unsigned char* incomingData, const APal
     for (int i = 0; i < _patchWidth; i++)
     {
     	int currentColumnDataOffset = columnOffsets[i];
-    	int whilecounter = 1;
 	    unsigned char terminator = 0;
         while(terminator != 0xFF)
         {
