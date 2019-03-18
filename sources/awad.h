@@ -13,6 +13,7 @@
 #include "acolormap.h"
 #include "aendoom.h"
 #include "ademo.h"
+#include "apicture.h"
 #include "atexture.h"
 
 //=============================================================================
@@ -37,7 +38,7 @@ private:
 	AEnDoom _enDoom;
 	TDemosList _demosList;
 	TFlatsList _flatsList;
-    TPicturesList _patchesList;
+	TIndexedPicturesList _patchesList;
 	TTexturesList _texturesList;
 
     EWadType _type;
@@ -59,35 +60,8 @@ private:
 	
 	bool readTextures(FILE* wadFile);
 	ATexture generateSingleTexture(const int textureOffset, unsigned char *lumpData);
-
-//=========================================
-//    std::map<int, APatch*> _patchesIndexes;
-//
-//
-//	bool checkLumpIfItIsMap(ALump* lump, FILE* wadFile);
-//
-//	//  read flats
-//    bool awReadFlats(FILE* wadFile);
-//    bool awReadFlatRange(FILE* wadFile, TLumpsListIter iter, TLumpsListIter iter_end);
-//    //  read patches
-//    bool awReadPatches(FILE* wadFile);
-//    //  read textures
-//    bool awReadTextures(FILE* wadFile);
-//    //  read digital sounds
-//    bool awReadSFX(FILE* wadFile);
-//    //  read ps speaker sounds
-//	bool awReadPCSpeaker(FILE* wadFile);
-//
-//	bool awReadMaps(FILE* wadFile);
-//
-//	void amDefineMapLumps(FILE *wadFile);
-//	TLumpsList awFindZeroSizeLumps();
-//	TLumpsList awFindLumpsList(const std::string& lumpsNameMask);
-//    TLumpsListIter awFindLump(const std::string& name);
-//
-//    bool awIntoTga(const std::string& fileName, unsigned char* data, const int width, const int height);
-//    bool RGB2BGR(unsigned char* data, int width, int height);
-//    bool FlipOver(unsigned char* data, int width, int height);
+	
+	bool readLevel(FILE* wadFile);
 };
 
 //=============================================================================

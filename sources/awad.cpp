@@ -6,7 +6,7 @@
 #include "aflat.h"
 #include "atexture.h"
 #include "autilities.h"
-#include "apicture.h"
+#include "alevel.h"
 
 //=============================================================================
 
@@ -52,6 +52,10 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 
 	if (!readDemos(wadFile))
 		throw;
+	
+	if (!readLevel(wadFile))
+		throw;
+
 
     for (TPicturesListIter iter = _patchesList.begin(); iter != _patchesList.end(); iter++)
     {
@@ -70,23 +74,23 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
         path += ".tga";
         flat.saveFlatIntoTga(path);
     }
+    
+    for (TTexturesListIter iter = _texturesList.begin(); iter != _texturesList.end(); iter++)
+    {
+        ATexture& texture = *iter;
+        std::string path = "/Users/michael/Pictures/texture/";
+        path += texture.textureName();
+        path += ".tga";
+        texture.saveTextureIntoTga(path);
+    }
+    
+    int i = 0;
+    for (TLumpsListIter iter = _tableOfContents.begin(); iter != _tableOfContents.end(); iter++)
+    {
+        printf("%i. <%s>\n", ++i, iter->lumpName.c_str());
+    }
 
-	for (TTexturesListIter iter = _texturesList.begin(); iter != _texturesList.end(); iter++)
-	{
-		ATexture& texture = *iter;
-		std::string path = "/Users/michael/Pictures/texture/";
-		path += texture.textureName();
-		path += ".tga";
-		texture.saveTextureIntoTga(path);
-	}
-
-        int i = 0;
-        for (TLumpsListIter iter = _tableOfContents.begin(); iter != _tableOfContents.end(); iter++)
-        {
-            printf("%i. <%s>\n", ++i, iter->lumpName.c_str());
-        }
-
-    fclose(wadFile);
+	fclose(wadFile);
 }
 
 //=============================================================================
@@ -103,7 +107,7 @@ bool AWAD::checkSignature(FILE* wadFile)
     int read = fread(magic, 1, 4, wadFile);
     if (read != 4)
         return false;
-    
+
     if (!strncmp(magic, "IWAD", 4))
         _type = WADTYPE_INTERNAL_WAD;
 
@@ -160,10 +164,15 @@ bool AWAD::readTableOfContents(FILE* wadFile)
 
 bool AWAD::readPalete(FILE* wadFile)
 {
-	const ALump& playpalLump = *AUtilities::findLumpIter("PLAYPAL", _tableOfContents);
-
+	TLumpsListConstIter playpalLumpIter = AUtilities::findLumpIter("PLAYPAL", _tableOfContents);
+	if (playpalLumpIter == _tableOfContents.end())
+	{
+		return false;
+	}
+	
+	const ALump& playpalLump = *playpalLumpIter;
 	unsigned char *lumpData = new unsigned char [playpalLump.lumpSize];
-    AUtilities::readLumpData(wadFile, playpalLump, lumpData);
+	AUtilities::readLumpData(wadFile, playpalLump, lumpData);
 	_palete = APalete(lumpData, playpalLump.lumpSize);
 	
 	delete [] lumpData;
@@ -175,7 +184,12 @@ bool AWAD::readPalete(FILE* wadFile)
 
 bool AWAD::readColorMap(FILE* wadFile)
 {
-	const ALump& colorMapLump = *AUtilities::findLumpIter("COLORMAP", _tableOfContents);
+	TLumpsListConstIter colorMapLumpIter = AUtilities::findLumpIter("COLORMAP", _tableOfContents);
+	if (colorMapLumpIter == _tableOfContents.end())
+	{
+		return false;
+	}
+	const ALump& colorMapLump = *colorMapLumpIter;
 
 	unsigned char *lumpData = new unsigned char [colorMapLump.lumpSize];
 	AUtilities::readLumpData(wadFile, colorMapLump, lumpData);
@@ -191,7 +205,12 @@ bool AWAD::readColorMap(FILE* wadFile)
 
 bool AWAD::readEndDoom(FILE* wadFile)
 {
-	const ALump& endoomLump = *AUtilities::findLumpIter("ENDOOM", _tableOfContents);
+	TLumpsListConstIter endoomLumpIter = AUtilities::findLumpIter("ENDOOM", _tableOfContents);
+	if (endoomLumpIter == _tableOfContents.end())
+	{
+		return false;
+	}
+	const ALump& endoomLump = *endoomLumpIter;
 
 	unsigned char *lumpData = new unsigned char [endoomLump.lumpSize];
 	AUtilities::readLumpData(wadFile, endoomLump, lumpData);
@@ -210,7 +229,13 @@ bool AWAD::readDemos(FILE* wadFile)
 	TLumpsList demosList = AUtilities::findLumpsList("DEMO", _tableOfContents);
 	for (TLumpsListIter iter = demosList.begin(); iter != demosList.end(); iter++)
 	{
-		const ALump& demoLump = *AUtilities::findLumpIter(iter->lumpName, _tableOfContents);
+		TLumpsListConstIter demoLumpIter = AUtilities::findLumpIter(iter->lumpName, _tableOfContents);
+		if (demoLumpIter == _tableOfContents.end())
+		{
+			continue;
+		}
+		const ALump& demoLump = *demoLumpIter;
+
 		unsigned char *lumpData = new unsigned char [demoLump.lumpSize];
 		AUtilities::readLumpData(wadFile, demoLump, lumpData);
 
@@ -327,7 +352,7 @@ bool AWAD::readPatches(FILE* wadFile)
 
 bool AWAD::readTextures(FILE* wadFile)
 {
-	TLumpsListConstIter textureLumpIter = AUtilities::findLumpIter("TEXTURE2", _tableOfContents);
+	TLumpsListConstIter textureLumpIter = AUtilities::findLumpIter("TEXTURE1", _tableOfContents);
 	if (textureLumpIter == _tableOfContents.end())
 	{
 		return false;
@@ -410,6 +435,21 @@ ATexture AWAD::generateSingleTexture(const int textureOffset, unsigned char *lum
 	
 	ATexture newTexture(patchesDescriptionList, textureName, textureWidth, textureHeight);
 	return newTexture;
+}
+
+//=============================================================================
+
+bool AWAD::readLevel(FILE* wadFile)
+{
+	TLumpsListConstIter levelLumpIter = AUtilities::findLumpIter("e1m1", _tableOfContents);
+	if (levelLumpIter == _tableOfContents.end())
+	{
+		return false;
+	}
+	
+	ALevel level(wadFile, levelLumpIter, _tableOfContents, _palete);
+	
+    return true;
 }
 
 //=============================================================================
