@@ -6,6 +6,7 @@
 #include "aflat.h"
 #include "atexture.h"
 #include "autilities.h"
+#include "apicture.h"
 
 //=============================================================================
 
@@ -52,9 +53,9 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 	if (!readDemos(wadFile))
 		throw;
 
-    for (TPatchesListIter iter = _patchesList.begin(); iter != _patchesList.end(); iter++)
+    for (TPicturesListIter iter = _patchesList.begin(); iter != _patchesList.end(); iter++)
     {
-        APatch& patch = *iter;
+        APicture& patch = *iter;
         std::string path = "/Users/michael/Pictures/patch/";
         path += patch.patchName();
         path += ".tga";
@@ -313,7 +314,7 @@ bool AWAD::readPatches(FILE* wadFile)
 		lumpData = new unsigned char [patchLump.lumpSize];
 		AUtilities::readLumpData(wadFile, patchLump, lumpData);
 
-		APatch newPatch(lumpData, patchLumpName, _palete);
+		APicture newPatch(lumpData, patchLumpName, _palete);
 		_patchesList.push_back(newPatch);
 
 		delete [] lumpData;

@@ -13,7 +13,6 @@
 #include "acolormap.h"
 #include "aendoom.h"
 #include "ademo.h"
-#include "apatch.h"
 #include "atexture.h"
 
 //=============================================================================
@@ -38,7 +37,7 @@ private:
 	AEnDoom _enDoom;
 	TDemosList _demosList;
 	TFlatsList _flatsList;
-	TPatchesList _patchesList;
+    TPicturesList _patchesList;
 	TTexturesList _texturesList;
 
     EWadType _type;
