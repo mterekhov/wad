@@ -97,7 +97,7 @@ ASprite ALevel::readThingSprite(FILE* wadFile, const AThing& thing, const TLumps
 		APicture newSpritePicture(spriteData, spriteLump.lumpName, palete);
 		newSprite.picturesList.push_back(newSpritePicture);
 		std::string path = "/Users/michael/Pictures/level/";
-		path += newSprite.name;
+        path += spriteLump.lumpName;
 		path += ".tga";
 		newSpritePicture.savePatchIntoTga(path);
 
