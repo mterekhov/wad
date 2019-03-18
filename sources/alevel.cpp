@@ -52,15 +52,13 @@ ALevel& ALevel::operator=(const ALevel& rv)
 
 bool ALevel::readLevelData(FILE* wadFile, const TLumpsListConstIter& levelLumpIter, const TLumpsList& tableOfContents, const APalete& palete)
 {
-	TLumpsList levelContent = levelLumpsList(levelLumpIter, tableOfContents);
-    int integr = 0;
-
+    int integrityMarker = 0;
     ALevelIntegrity integrity;
-    for (TLumpsListConstIter iter = levelContent.begin(); iter != levelContent.end(); iter++)
+    for (TLumpsListConstIter iter = levelLumpIter; iter != tableOfContents.end(); iter++)
 	{
         printf("%s\n", iter->lumpName.c_str());
-        integr = integrity.appendIntegrity(integr, iter->lumpName);
-        if (integrity.checkIntegrity(integr))
+        integrityMarker = integrity.appendIntegrity(integrityMarker, iter->lumpName);
+        if (integrity.checkIntegrity(integrityMarker))
         {
             break;
         }
@@ -139,49 +137,6 @@ TThingList ALevel::readThings(FILE *wadFile, const ALump& lump)
 	
 	delete [] thingsData;
 	return AThing::checkThingUnique(thingsList);
-}
-
-//=============================================================================
-
-TLumpsList ALevel::levelLumpsList(const TLumpsListConstIter& levelLumpIter, const TLumpsList& tableOfContents)
-{
-	TLumpsList levelContent;
-
-	TLumpsListConstIter levelEndIter = findEndLevelLump(levelLumpIter, tableOfContents);
-	if (levelEndIter == tableOfContents.end())
-	{
-		return levelContent;
-	}
-
-	TLumpsListConstIter iter = levelLumpIter;
-	while (++iter != levelEndIter)
-	{
-		levelContent.push_back(*iter);
-	}
-	
-	return levelContent;
-}
-
-//=============================================================================
-
-TLumpsListConstIter ALevel::findEndLevelLump(const TLumpsListConstIter& levelLumpIter, const TLumpsList& tableOfContents)
-{
-	std::list<std::string> endMarkerList = {"e1m2", "texture1"};
-	
-	TLumpsListConstIter iter = levelLumpIter;
-	TLumpsListConstIter endIter;
-	while (++iter != tableOfContents.end())
-	{
-		for (std::list<std::string>::iterator markerIter = endMarkerList.begin(); markerIter != endMarkerList.end(); markerIter++)
-		{
-			if (AUtilities::stringCompare(*markerIter, iter->lumpName))
-			{
-				return iter;
-			}
-		}
-	}
-	
-	return tableOfContents.end();
 }
 
 //=============================================================================
