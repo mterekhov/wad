@@ -17,7 +17,6 @@ ALevel::ALevel(FILE* wadFile, const TLumpsListConstIter& levelLumpIter, const TL
 		return;
 	}
     
-    _levelIntegrity = 0;
 	readLevelData(wadFile, levelLumpIter, tableOfContents, palete);
 }
 

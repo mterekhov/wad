@@ -30,7 +30,6 @@ public:
 	ALevel& operator=(const ALevel& rv);
 
 private:
-    int _levelIntegrity;
 	TThingList _thingsList;
 	TSpriteList _spritesList;
 
