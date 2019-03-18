@@ -34,9 +34,6 @@ private:
 	TThingList _thingsList;
 	TSpriteList _spritesList;
 
-    int completeIntegrity();
-    int integrityEnum(const std::string& integrityString);
-    int appendIntegrity(int currentIntegrity, const std::string& levelLumpName);
 	ASprite readThingSprite(FILE* wadFile, const AThing& thing, const TLumpsList& tableOfContents, const APalete& palete);
 	TThingList readThings(FILE *wadFile, const ALump& lump);
 	void destroy();
