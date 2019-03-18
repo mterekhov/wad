@@ -5,15 +5,6 @@
 
 #include <string>
 
-#include "alump.h"
-#include "apalete.h"
-#include "types.h"
-#include "athing.h"
-
-//=============================================================================
-
-class ALump;
-
 //=============================================================================
 
 namespace spcWAD
