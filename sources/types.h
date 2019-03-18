@@ -52,10 +52,6 @@ typedef std::vector<APicture> TIndexedPicturesList;
 typedef TIndexedPicturesList::iterator TIndexedPicturesListIter;
 typedef TIndexedPicturesList::const_iterator TIndexedPicturesListConstIter;
 
-typedef std::vector<APicture> TPicturesList;
-typedef TPicturesList::iterator TPicturesListIter;
-typedef TPicturesList::const_iterator TPicturesListConstIter;
-
 typedef std::list<ATexture> TTexturesList;
 typedef TTexturesList::iterator TTexturesListIter;
 

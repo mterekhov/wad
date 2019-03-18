@@ -57,7 +57,7 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 		throw;
 
 
-    for (TPicturesListIter iter = _patchesList.begin(); iter != _patchesList.end(); iter++)
+    for (TIndexedPicturesListIter iter = _patchesList.begin(); iter != _patchesList.end(); iter++)
     {
         APicture& patch = *iter;
         std::string path = "/Users/michael/Pictures/patch/";
@@ -84,11 +84,11 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
         texture.saveTextureIntoTga(path);
     }
     
-    int i = 0;
-    for (TLumpsListIter iter = _tableOfContents.begin(); iter != _tableOfContents.end(); iter++)
-    {
-        printf("%i. <%s>\n", ++i, iter->lumpName.c_str());
-    }
+//    int i = 0;
+//    for (TLumpsListIter iter = _tableOfContents.begin(); iter != _tableOfContents.end(); iter++)
+//    {
+//        printf("%i. <%s>\n", ++i, iter->lumpName.c_str());
+//    }
 
 	fclose(wadFile);
 }

@@ -28,7 +28,7 @@ public:
 	ASprite& operator=(const ASprite& rv);
 
 	std::string name;
-	TPicturesList picturesList;
+	TIndexedPicturesList picturesList;
 };
 
 //=============================================================================
