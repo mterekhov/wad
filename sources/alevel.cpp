@@ -8,6 +8,56 @@ namespace spcWAD
 {
 
 //=============================================================================
+    
+std::vector<std::string> LevelIntegrityLumps =
+{
+    "THINGS",
+    "LINEDEFS",
+    "SIDEDEFS",
+    "VERTEXES",
+    "SEGS",
+    "SSECTORS",
+    "NODES",
+    "SECTORS",
+    "REJECT",
+    "BLOCKMAP",
+};
+//THINGS
+//LINEDEFS
+//SIDEDEFS
+//VERTEXES
+//SEGS
+//SSECTORS
+//NODES
+//SECTORS
+//REJECT
+//BLOCKMAP
+enum ALevelIntegrity
+{
+    ALEVELINTEGRITY_THINGS = 1,
+    ALEVELINTEGRITY_LINEDEFS = 1 << 1,
+    ALEVELINTEGRITY_SIDEDEFS = 1 << 2,
+    ALEVELINTEGRITY_VERTEXES = 1 << 3,
+    ALEVELINTEGRITY_SEGS = 1 << 4,
+    ALEVELINTEGRITY_SSECTORS = 1 << 5,
+    ALEVELINTEGRITY_NODES = 1 << 6,
+    ALEVELINTEGRITY_SECTORS = 1 << 7,
+    ALEVELINTEGRITY_REJECT = 1 << 8,
+    ALEVELINTEGRITY_BLOCKMAP = 1 << 9,
+    
+    ALEVELINTEGRITY_COMPLETE = ALEVELINTEGRITY_THINGS\
+    | ALEVELINTEGRITY_LINEDEFS\
+    | ALEVELINTEGRITY_SIDEDEFS\
+    | ALEVELINTEGRITY_VERTEXES\
+    | ALEVELINTEGRITY_SEGS\
+    | ALEVELINTEGRITY_SSECTORS\
+    | ALEVELINTEGRITY_NODES\
+    | ALEVELINTEGRITY_SECTORS\
+    | ALEVELINTEGRITY_REJECT\
+    | ALEVELINTEGRITY_BLOCKMAP
+};
+    
+//=============================================================================
 
 ALevel::ALevel(FILE* wadFile, const TLumpsListConstIter& levelLumpIter, const TLumpsList& tableOfContents, const APalete& palete)
 {
@@ -15,7 +65,8 @@ ALevel::ALevel(FILE* wadFile, const TLumpsListConstIter& levelLumpIter, const TL
 	{
 		return;
 	}
-	
+    
+    _levelIntegrity = 0;
 	readLevelData(wadFile, levelLumpIter, tableOfContents, palete);
 }
 
@@ -48,19 +99,146 @@ ALevel& ALevel::operator=(const ALevel& rv)
 
 //=============================================================================
 
+    //THINGS
+    //LINEDEFS
+    //SIDEDEFS
+    //VERTEXES
+    //SEGS
+    //SSECTORS
+    //NODES
+    //SECTORS
+    //REJECT
+    //BLOCKMAP
+
+//        ALEVELINTEGRITY_THINGS = 1,
+//        ALEVELINTEGRITY_LINEDEFS = 1 << 1,
+//        ALEVELINTEGRITY_SIDEDEFS = 1 << 2,
+//        ALEVELINTEGRITY_VERTEXES = 1 << 3,
+//        ALEVELINTEGRITY_SEGS = 1 << 4,
+//        ALEVELINTEGRITY_SSECTORS = 1 << 5,
+//        ALEVELINTEGRITY_NODES = 1 << 6,
+//        ALEVELINTEGRITY_SECTORS = 1 << 7,
+//        ALEVELINTEGRITY_REJECT = 1 << 8,
+//        ALEVELINTEGRITY_BLOCKMAP = 1 << 9,
+    
+int ALevel::integrityEnum(const std::string& integrityString)
+{
+    int shifter = 1;
+    for (std::vector<std::string>::iterator integrityItem = LevelIntegrityLumps.begin(); integrityItem != LevelIntegrityLumps.end(); integrityItem++)
+    {
+        if (AUtilities::stringCompare(integrityString, *integrityItem))
+        {
+            return shifter;
+        }
+        shifter = shifter << 1;
+    }
+    
+    return 0;
+//    if (AUtilities::stringCompare(integrityString, "things"))
+//    {
+//        integrityEnum = ALEVELINTEGRITY_THINGS;
+//    }
+//
+//    if (AUtilities::stringCompare(integrityString, "LINEDEFS"))
+//    {
+//        integrityEnum = ALEVELINTEGRITY_LINEDEFS;
+//    }
+//
+//    if (AUtilities::stringCompare(integrityString, "SIDEDEFS"))
+//    {
+//        integrityEnum = ALEVELINTEGRITY_SIDEDEFS;
+//    }
+//
+//    if (AUtilities::stringCompare(integrityString, "VERTEXES"))
+//    {
+//        integrityEnum = ALEVELINTEGRITY_VERTEXES;
+//    }
+//
+//    if (AUtilities::stringCompare(integrityString, "SEGS"))
+//    {
+//        integrityEnum = ALEVELINTEGRITY_SEGS;
+//    }
+//
+//    if (AUtilities::stringCompare(integrityString, "SSECTORS"))
+//    {
+//        integrityEnum = ALEVELINTEGRITY_SSECTORS;
+//    }
+//
+//    if (AUtilities::stringCompare(integrityString, "NODES"))
+//    {
+//        integrityEnum = ALEVELINTEGRITY_NODES;
+//    }
+//
+//    if (AUtilities::stringCompare(integrityString, "SECTORS"))
+//    {
+//        integrityEnum = ALEVELINTEGRITY_SECTORS;
+//    }
+//
+//    if (AUtilities::stringCompare(integrityString, "REJECT"))
+//    {
+//        integrityEnum = ALEVELINTEGRITY_REJECT;
+//    }
+//
+//    if (AUtilities::stringCompare(integrityString, "BLOCKMAP"))
+//    {
+//        integrityEnum = ALEVELINTEGRITY_BLOCKMAP;
+//    }
+//
+//    return integrityEnum;
+}
+    
+int ALevel::appendIntegrity(int currentIntegrity, const std::string& levelLumpName)
+{
+    int lumpIntegrity = integrityEnum(levelLumpName);
+    
+    if (currentIntegrity == 0)
+    {
+        return lumpIntegrity;
+    }
+    
+    return lumpIntegrity | currentIntegrity;
+}
+
+//=============================================================================
+
+int ALevel::completeIntegrity()
+{
+    int shifter = 1;
+    std::vector<std::string>::iterator integrityItem = LevelIntegrityLumps.begin();
+    integrityItem++;
+    for (;integrityItem != LevelIntegrityLumps.end(); integrityItem++)
+    {
+        shifter |= shifter << 1;
+    }
+    
+    return shifter;
+}
+
+//=============================================================================
+    
 bool ALevel::readLevelData(FILE* wadFile, const TLumpsListConstIter& levelLumpIter, const TLumpsList& tableOfContents, const APalete& palete)
 {
 	TLumpsList levelContent = levelLumpsList(levelLumpIter, tableOfContents);
+    int integr = 0;
+    int integrityFull = completeIntegrity();
 	for (TLumpsListConstIter iter = levelContent.begin(); iter != levelContent.end(); iter++)
 	{
-		//	This section describes all the things which are positioned on level
-		if (AUtilities::stringCompare(iter->lumpName, "things"))
-		{
-			_thingsList = readThings(wadFile, *iter);
-			break;
-		}
+        printf("%s\n", iter->lumpName.c_str());
+        integr = appendIntegrity(integr, iter->lumpName);
+        if (integr == integrityFull)
+        {
+            break;
+        }
+
+        //	This section describes all the things which are positioned on level
+//        if (AUtilities::stringCompare(iter->lumpName, "things"))
+//        {
+//            _thingsList = readThings(wadFile, *iter);
+//            break;
+//        }
 	}
-	
+    printf("=======================================================\n");
+
 	for (TThingList::iterator iter = _thingsList.begin(); iter != _thingsList.end(); iter++)
 	{
 		if (iter->name().length() == 0)
