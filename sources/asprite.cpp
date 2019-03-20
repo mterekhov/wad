@@ -10,13 +10,13 @@ namespace spcWAD
 
 //=============================================================================
 
-ASprite::ASprite(const std::string& spriteName) : name(spriteName)
+ASprite::ASprite(const std::string& prefix) : spritesPrefix(prefix)
 {
 }
 
 //=============================================================================
 
-ASprite::ASprite(const ASprite& sprite) : picturesList(sprite.picturesList), name(sprite.name)
+ASprite::ASprite(const ASprite& sprite) : picturesList(sprite.picturesList), spritesPrefix(sprite.spritesPrefix)
 {
 
 }
@@ -36,7 +36,7 @@ ASprite& ASprite::operator=(const ASprite& rv)
 		return *this;
 	}
 
-	name = rv.name;
+	spritesPrefix = rv.spritesPrefix;
 	picturesList = rv.picturesList;
 
 	return *this;

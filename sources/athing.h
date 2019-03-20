@@ -4,14 +4,14 @@
 //=============================================================================
 
 #include <string>
+#include <map>
 
-#include "alump.h"
-#include "apalete.h"
 #include "types.h"
+#include "asprite.h"
 
 //=============================================================================
 
-class ALump;
+class ASprite;
 
 //=============================================================================
 
@@ -20,10 +20,13 @@ namespace spcWAD
 
 //=============================================================================
 
+extern std::map<int, std::string> ThingsMap;
+
 class AThing
 {
 public:
 	AThing(unsigned char *thingData);
+    AThing(const AThing& thing);
     ~AThing();
 
 	short xPosition;
@@ -31,13 +34,13 @@ public:
 	short angle;
 	short type;
 	short options;
-	
-	std::string name() const;
-	
+    ASprite sprite;
+
 	static TThingList checkThingUnique(const TThingList& thingsList);
 	
 	bool operator ==(const AThing & obj) const;
 	bool operator <(const AThing & obj) const;
+    AThing& operator=(const AThing& rv);
 };
 
 //=============================================================================

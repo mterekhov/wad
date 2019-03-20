@@ -31,10 +31,9 @@ public:
 
 private:
 	TThingList _thingsList;
-	TSpriteList _spritesList;
 
-	ASprite readThingSprite(FILE* wadFile, const AThing& thing, const TLumpsList& tableOfContents, const APalete& palete);
-	TThingList readThings(FILE *wadFile, const ALump& lump);
+    ASprite readThingSpritesList(FILE* wadFile, const AThing& thing, const TLumpsList& tableOfContents, const APalete& palete);
+	TThingList readThings(FILE *wadFile, const ALump& lump, const TLumpsList& tableOfContents, const APalete& palete);
 	void destroy();
 	bool readLevelData(FILE* wadFile, const TLumpsListConstIter& levelLumpIter, const TLumpsList& tableOfContents, const APalete& palete);
 	TLumpsListConstIter findEndLevelLump(const TLumpsListConstIter& levelLumpIter, const TLumpsList& tableOfContents);

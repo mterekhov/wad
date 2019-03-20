@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <list>
+#include <map>
 
 //=============================================================================
 
@@ -66,6 +67,10 @@ typedef TThingList::const_iterator TThingListConstIter;
 typedef std::list<ASprite> TSpriteList;
 typedef TSpriteList::iterator TSpriteListIter;
 typedef TSpriteList::const_iterator TSpriteListConstIter;
+
+typedef std::map<std::string, APicture> TPicturesMap;
+typedef TPicturesMap::iterator TPicturesMapIter;
+typedef TPicturesMap::const_iterator TPicturesMapConstIter;
 
 //=============================================================================
 

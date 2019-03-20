@@ -1,6 +1,6 @@
 #include "athing.h"
 #include "autilities.h"
-#include <string>
+#include "asprite.h"
 #include <map>
 
 //=============================================================================
@@ -62,7 +62,7 @@ std::map<int, std::string> ThingsMap =
 
 //=============================================================================
 
-AThing::AThing(unsigned char *thingData)
+AThing::AThing(unsigned char *thingData) : sprite(ASprite(""))
 {
 	if (!thingData)
 	{
@@ -83,15 +83,34 @@ AThing::AThing(unsigned char *thingData)
 
 //=============================================================================
 
-AThing::~AThing()
+AThing::AThing(const AThing& thing) : xPosition(thing.xPosition), yPosition(thing.yPosition), type(thing.type), angle(thing.angle), options(thing.options), sprite(thing.sprite)
 {
+    
+}
+    
+//=============================================================================
+
+AThing& AThing::operator=(const AThing& rv)
+{
+    if (this == &rv)
+    {
+        return *this;
+    }
+    
+    xPosition = rv.xPosition;
+    yPosition = rv.yPosition;
+    type = rv.type;
+    angle = rv.angle;
+    options = rv.options;
+    sprite = rv.sprite;
+
+    return *this;
 }
 
 //=============================================================================
-
-std::string AThing::name() const
+    
+AThing::~AThing()
 {
-	return ThingsMap[type];
 }
 
 //=============================================================================

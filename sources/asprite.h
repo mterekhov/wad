@@ -22,13 +22,13 @@ namespace spcWAD
 class ASprite
 {
 public:
-	ASprite(const std::string& spriteName);
+	ASprite(const std::string& prefix);
 	ASprite(const ASprite& sprite);
     ~ASprite();
 	ASprite& operator=(const ASprite& rv);
 
-	std::string name;
-	TIndexedPicturesList picturesList;
+	std::string spritesPrefix;
+	TPicturesMap picturesList;
 };
 
 //=============================================================================

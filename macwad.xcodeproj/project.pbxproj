@@ -143,8 +143,8 @@
 				4CB28601223FDD7100E234E7 /* alevel.cpp */,
 				4CB285FE223FDD7100E234E7 /* asprite.cpp */,
 				4CB285FF223FDD7100E234E7 /* asprite.h */,
-				4CB285FC223FDD7100E234E7 /* athing.cpp */,
 				4CB285FB223FDD7000E234E7 /* athing.h */,
+				4CB285FC223FDD7100E234E7 /* athing.cpp */,
 			);
 			name = level;
 			sourceTree = "<group>";
@@ -152,8 +152,8 @@
 		4CCB4DA420483D7400F660F0 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				4CB285FA223FDD7000E234E7 /* apicture.cpp */,
 				4CB28600223FDD7100E234E7 /* apicture.h */,
+				4CB285FA223FDD7000E234E7 /* apicture.cpp */,
 				4CAB6C042046F8EC00D23585 /* atexture.h */,
 				4CAB6C1F2046F8EE00D23585 /* atexture.cpp */,
 				4CAB6C192046F8ED00D23585 /* aflat.h */,

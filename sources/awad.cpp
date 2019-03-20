@@ -441,7 +441,7 @@ ATexture AWAD::generateSingleTexture(const int textureOffset, unsigned char *lum
 
 bool AWAD::readLevel(FILE* wadFile)
 {
-	TLumpsListConstIter levelLumpIter = AUtilities::findLumpIter("e1m1", _tableOfContents);
+	TLumpsListConstIter levelLumpIter = AUtilities::findLumpIter("e1m8", _tableOfContents);
 	if (levelLumpIter == _tableOfContents.end())
 	{
 		return false;

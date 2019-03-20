@@ -25,6 +25,7 @@ namespace spcWAD
 class APicture
 {
 public:
+    APicture();
 	APicture(const unsigned char* incomingData, const std::string& incomingName, const APalete& palete);
 	APicture(const APicture& patch);
     ~APicture();

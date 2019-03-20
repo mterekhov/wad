@@ -10,6 +10,13 @@ namespace spcWAD
 
 //=============================================================================
 
+APicture::APicture() : _patchData(0), _patchName(""), _patchWidth(0), _patchHeight(0)
+{
+    
+}
+
+//=============================================================================
+
 APicture::APicture(const unsigned char* incomingData, const std::string& incomingName, const APalete& palete) : _patchData(0), _patchName(incomingName), _patchHeight(0), _patchWidth(0)
 {
 	if (incomingData)

@@ -55,7 +55,6 @@ bool ALevel::readLevelData(FILE* wadFile, const TLumpsListConstIter& levelLumpIt
     ALevelIntegrity integrity;
     for (TLumpsListConstIter iter = levelLumpIter; iter != tableOfContents.end(); iter++)
 	{
-        printf("%s\n", iter->lumpName.c_str());
         integrityMarker = integrity.appendIntegrity(integrityMarker, iter->lumpName);
         if (integrity.checkIntegrity(integrityMarker))
         {
@@ -65,32 +64,48 @@ bool ALevel::readLevelData(FILE* wadFile, const TLumpsListConstIter& levelLumpIt
         //	This section describes all the things which are positioned on level
         if (AUtilities::stringCompare(iter->lumpName, "things"))
         {
-            _thingsList = readThings(wadFile, *iter);
+            _thingsList = readThings(wadFile, *iter, tableOfContents, palete);
         }
 	}
-    printf("=======================================================\n");
 
-	for (TThingList::iterator iter = _thingsList.begin(); iter != _thingsList.end(); iter++)
-	{
-		if (iter->name().length() == 0)
-		{
-			continue;
-		}
-		printf("<<<<<<<%s>>>>>>>\n", iter->name().c_str());
-		_spritesList.push_back(readThingSprite(wadFile, *iter, tableOfContents, palete));
-		printf("=======================================================\n");
-	}
-	
 	return true;
 }
 
 //=============================================================================
 
-ASprite ALevel::readThingSprite(FILE* wadFile, const AThing& thing, const TLumpsList& tableOfContents, const APalete& palete)
+TThingList ALevel::readThings(FILE *wadFile, const ALump& lump, const TLumpsList& tableOfContents, const APalete& palete)
 {
-	TLumpsList spriteslumpList = AUtilities::findLumpsList(thing.name(), tableOfContents);
-	int c = 0;
-	ASprite newSprite(thing.name());
+    unsigned char *thingsData = new unsigned char[lump.lumpSize];
+    AUtilities::readLumpData(wadFile, lump, thingsData);
+    
+    int byteOffset = 0;
+    TThingList thingsList;
+    while (byteOffset < lump.lumpSize)
+    {
+        AThing newThing(&thingsData[byteOffset]);
+        if (std::find(thingsList.begin(), thingsList.end(), newThing) == thingsList.end())
+        {
+            if (ThingsMap[newThing.type].length() != 0)
+            {
+                newThing.sprite = readThingSpritesList(wadFile, newThing, tableOfContents, palete);
+            }
+            thingsList.push_back(newThing);
+        }
+        byteOffset += 10;
+    }
+    
+    delete [] thingsData;
+    
+    return thingsList;
+}
+
+//=============================================================================
+
+ASprite ALevel::readThingSpritesList(FILE* wadFile, const AThing& thing, const TLumpsList& tableOfContents, const APalete& palete)
+{
+    std::string spriteLumpsPrefix = ThingsMap[thing.type];
+	TLumpsList spriteslumpList = AUtilities::findLumpsList(spriteLumpsPrefix, tableOfContents);
+	ASprite newSprite(spriteLumpsPrefix);
 	for (TLumpsListIter iter = spriteslumpList.begin(); iter != spriteslumpList.end(); iter++)
 	{
 		TLumpsListConstIter spriteLumpIter = AUtilities::findLumpIter(iter->lumpName, tableOfContents);
@@ -98,44 +113,21 @@ ASprite ALevel::readThingSprite(FILE* wadFile, const AThing& thing, const TLumps
 		{
 			continue;
 		}
-		const ALump& spriteLump = *spriteLumpIter;
+        const ALump& spriteLump = *spriteLumpIter;
+        unsigned char *spriteData = new unsigned char [spriteLump.lumpSize];
+        AUtilities::readLumpData(wadFile, spriteLump, spriteData);
 
-		unsigned char *spriteData = new unsigned char [spriteLump.lumpSize];
-		AUtilities::readLumpData(wadFile, spriteLump, spriteData);
-		
-		APicture newSpritePicture(spriteData, spriteLump.lumpName, palete);
-		newSprite.picturesList.push_back(newSpritePicture);
-		std::string path = "/Users/michael/Pictures/level/";
+        APicture newSpritePicture(spriteData, spriteLump.lumpName, palete);
+        newSprite.picturesList[spriteLump.lumpName] = newSpritePicture;
+        std::string path = "/Users/michael/Pictures/level/";
         path += spriteLump.lumpName;
-		path += ".tga";
-		newSpritePicture.savePatchIntoTga(path);
+        path += ".tga";
+        newSpritePicture.savePatchIntoTga(path);
 
-		delete [] spriteData;
-		
-		printf("\t\t\t\t%i. sprite <%s>\n", ++c, spriteLump.lumpName.c_str());
+        delete [] spriteData;
 	}
 
 	return newSprite;
-}
-
-//=============================================================================
-
-TThingList ALevel::readThings(FILE *wadFile, const ALump& lump)
-{
-	unsigned char *thingsData = new unsigned char[lump.lumpSize];
-	AUtilities::readLumpData(wadFile, lump, thingsData);
-	
-	int byteOffset = 0;
-	TThingList thingsList;
-	while (byteOffset < lump.lumpSize)
-	{
-		AThing newThing(&thingsData[byteOffset]);
-		thingsList.push_back(newThing);
-		byteOffset += 10;
-	}
-	
-	delete [] thingsData;
-	return AThing::checkThingUnique(thingsList);
 }
 
 //=============================================================================
