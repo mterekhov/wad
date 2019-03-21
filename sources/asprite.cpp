@@ -2,6 +2,7 @@
 
 #include "asprite.h"
 #include "apalete.h"
+#include "autilities.h"
 
 //=============================================================================
 
@@ -25,6 +26,18 @@ ASprite::ASprite(const ASprite& sprite) : picturesList(sprite.picturesList), spr
 
 ASprite::~ASprite()
 {
+}
+
+//=============================================================================
+
+bool ASprite::operator ==(const ASprite & obj) const
+{
+    if (AUtilities::stringCompare(spritesPrefix, obj.spritesPrefix))
+    {
+        return true;
+    }
+    
+    return false;
 }
 
 //=============================================================================

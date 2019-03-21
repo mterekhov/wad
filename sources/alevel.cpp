@@ -67,7 +67,21 @@ bool ALevel::readLevelData(FILE* wadFile, const TLumpsListConstIter& levelLumpIt
             _thingsList = readThings(wadFile, *iter, tableOfContents, palete);
         }
 	}
-
+    
+    int c = 0;
+    printf("THINGS\n");
+    for (TThingListIter iter = _thingsList.begin(); iter != _thingsList.end(); iter++)
+    {
+        printf("%i. <%s>\n", ++c, iter->spritePrefix().c_str());
+    }
+    
+    c = 0;
+    printf("SPRITES\n");
+    for (TSpriteListIter iter = _spritesList.begin(); iter != _spritesList.end(); iter++)
+    {
+        printf("%i. <%s>\n", ++c, iter->spritesPrefix.c_str());
+    }
+    
 	return true;
 }
 
@@ -83,14 +97,16 @@ TThingList ALevel::readThings(FILE *wadFile, const ALump& lump, const TLumpsList
     while (byteOffset < lump.lumpSize)
     {
         AThing newThing(&thingsData[byteOffset]);
-        if (std::find(thingsList.begin(), thingsList.end(), newThing) == thingsList.end())
+        if (newThing.hasSprite())
         {
-            if (ThingsMap[newThing.type].length() != 0)
+            TSpriteListIter existingSprite = std::find(_spritesList.begin(), _spritesList.end(), ASprite(newThing.spritePrefix()));
+            if (existingSprite == _spritesList.end())
             {
                 newThing.sprite = readThingSpritesList(wadFile, newThing, tableOfContents, palete);
+                _spritesList.push_back(newThing.sprite);
             }
-            thingsList.push_back(newThing);
         }
+        thingsList.push_back(newThing);
         byteOffset += 10;
     }
     
@@ -103,7 +119,7 @@ TThingList ALevel::readThings(FILE *wadFile, const ALump& lump, const TLumpsList
 
 ASprite ALevel::readThingSpritesList(FILE* wadFile, const AThing& thing, const TLumpsList& tableOfContents, const APalete& palete)
 {
-    std::string spriteLumpsPrefix = ThingsMap[thing.type];
+    std::string spriteLumpsPrefix = thing.spritePrefix();
 	TLumpsList spriteslumpList = AUtilities::findLumpsList(spriteLumpsPrefix, tableOfContents);
 	ASprite newSprite(spriteLumpsPrefix);
 	for (TLumpsListIter iter = spriteslumpList.begin(); iter != spriteslumpList.end(); iter++)

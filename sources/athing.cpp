@@ -115,6 +115,30 @@ AThing::~AThing()
 
 //=============================================================================
 
+bool AThing::hasSprite() const
+{
+    if (ThingsMap[type].length() != 0)
+    {
+        return true;
+    }
+    
+    return false;
+}
+
+//=============================================================================
+
+std::string AThing::spritePrefix() const
+{
+    if (!hasSprite())
+    {
+        return "";
+    }
+    
+    return ThingsMap[type];
+}
+
+//=============================================================================
+
 TThingList AThing::checkThingUnique(const TThingList& thingsList)
 {
 	TThingList thingsListSorted(thingsList);

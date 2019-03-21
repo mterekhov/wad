@@ -26,6 +26,7 @@ public:
 	ASprite(const ASprite& sprite);
     ~ASprite();
 	ASprite& operator=(const ASprite& rv);
+    bool operator ==(const ASprite & obj) const;
 
 	std::string spritesPrefix;
 	TPicturesMap picturesList;

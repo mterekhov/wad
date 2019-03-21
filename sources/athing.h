@@ -37,6 +37,9 @@ public:
     ASprite sprite;
 
 	static TThingList checkThingUnique(const TThingList& thingsList);
+    
+    bool hasSprite() const;
+    std::string spritePrefix() const;
 	
 	bool operator ==(const AThing & obj) const;
 	bool operator <(const AThing & obj) const;

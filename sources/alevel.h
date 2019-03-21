@@ -31,6 +31,7 @@ public:
 
 private:
 	TThingList _thingsList;
+    TSpriteList _spritesList;
 
     ASprite readThingSpritesList(FILE* wadFile, const AThing& thing, const TLumpsList& tableOfContents, const APalete& palete);
 	TThingList readThings(FILE *wadFile, const ALump& lump, const TLumpsList& tableOfContents, const APalete& palete);
