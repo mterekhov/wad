@@ -34,7 +34,6 @@ public:
 	short angle;
 	short type;
 	short options;
-    ASprite sprite;
 
 	static TThingList checkThingUnique(const TThingList& thingsList);
     

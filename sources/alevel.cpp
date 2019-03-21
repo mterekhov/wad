@@ -102,8 +102,7 @@ TThingList ALevel::readThings(FILE *wadFile, const ALump& lump, const TLumpsList
             TSpriteListIter existingSprite = std::find(_spritesList.begin(), _spritesList.end(), ASprite(newThing.spritePrefix()));
             if (existingSprite == _spritesList.end())
             {
-                newThing.sprite = readThingSpritesList(wadFile, newThing, tableOfContents, palete);
-                _spritesList.push_back(newThing.sprite);
+                _spritesList.push_back(readThingSpritesList(wadFile, newThing, tableOfContents, palete));
             }
         }
         thingsList.push_back(newThing);

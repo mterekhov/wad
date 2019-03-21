@@ -62,7 +62,7 @@ std::map<int, std::string> ThingsMap =
 
 //=============================================================================
 
-AThing::AThing(unsigned char *thingData) : sprite(ASprite(""))
+AThing::AThing(unsigned char *thingData)
 {
 	if (!thingData)
 	{
@@ -83,7 +83,7 @@ AThing::AThing(unsigned char *thingData) : sprite(ASprite(""))
 
 //=============================================================================
 
-AThing::AThing(const AThing& thing) : xPosition(thing.xPosition), yPosition(thing.yPosition), type(thing.type), angle(thing.angle), options(thing.options), sprite(thing.sprite)
+AThing::AThing(const AThing& thing) : xPosition(thing.xPosition), yPosition(thing.yPosition), type(thing.type), angle(thing.angle), options(thing.options)
 {
     
 }
@@ -102,7 +102,6 @@ AThing& AThing::operator=(const AThing& rv)
     type = rv.type;
     angle = rv.angle;
     options = rv.options;
-    sprite = rv.sprite;
 
     return *this;
 }
