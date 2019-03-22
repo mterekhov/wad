@@ -8,6 +8,13 @@ namespace spcWAD
 
 //=============================================================================
 
+AImageData::AImageData() : _data(0), _width(0), _height(0)
+{
+    
+}
+
+//=============================================================================
+
 AImageData::AImageData(const int imageWidth, const int imageHeight) : _data(0), _width(imageWidth), _height(imageHeight)
 {
     if (dataSize() == 0)
@@ -81,7 +88,7 @@ bool AImageData::exportIntoTga(const std::string& fileName)
 
 //=============================================================================
 
-const unsigned char* AImageData::data() const
+unsigned char* AImageData::data()
 {
     return _data;
 }

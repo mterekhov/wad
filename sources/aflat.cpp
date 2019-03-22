@@ -9,42 +9,21 @@ namespace spcWAD
 
 //=============================================================================
 
-AFlat::AFlat(unsigned char* incomingData, const std::string& incomingName, const APalete& palete) : _flatData(0), _flatName(incomingName)
+AFlat::AFlat(unsigned char* incomingData, const std::string& incomingName, const APalete& palete) : _imageData(64, 64), _flatName(incomingName)
 {
-	if (incomingData)
-	{
-		_flatData = convertData(incomingData, palete);
-    }
+    convertData(incomingData, palete);
 }
 
 //=============================================================================
 
-AFlat::AFlat(const AFlat& flat) : _flatData(0), _flatName(flat._flatName)
+AFlat::AFlat(const AFlat& flat) : _imageData(flat._imageData), _flatName(flat._flatName)
 {
-	if (flat.flatDataSize())
-	{
-		_flatData = new unsigned char[flat.flatDataSize()];
-		memcpy(_flatData, flat._flatData, flat.flatDataSize());
-    }
 }
 
 //=============================================================================
 
 AFlat::~AFlat()
 {
-	destroy();
-}
-
-//=============================================================================
-
-void AFlat::destroy()
-{
-	if (_flatData)
-	{
-		delete [] _flatData;
-		_flatData = 0;
-		_flatName = "";
-	}
 }
 
 //=============================================================================
@@ -55,13 +34,10 @@ AFlat& AFlat::operator=(const AFlat& rv)
 	{
 		return *this;
 	}
-	
-	destroy();
 
-	_flatName = rv._flatName;
-	_flatData = new unsigned char[rv.flatDataSize()];
-	memcpy(_flatData, rv._flatData, rv.flatDataSize());
-	
+    _flatName = rv._flatName;
+    _imageData = rv._imageData;
+    
 	return *this;
 }
 
@@ -74,17 +50,10 @@ const std::string& AFlat::flatName() const
 
 //=============================================================================
 
-const unsigned char* AFlat::flatData() const
-{
-	return _flatData;
-}
-
-//=============================================================================
-
 bool AFlat::saveFlatIntoTga(const std::string& fileName)
 {
 	ATGAExporter tgaExporter;
-	return tgaExporter.exportData(fileName, _flatData, flatWidthSize(), flatHeightSize());
+	return tgaExporter.exportData(fileName, _imageData.data(), _imageData.width(), _imageData.height());
 }
 
 //=============================================================================
@@ -93,16 +62,12 @@ bool AFlat::saveFlatIntoTga(const std::string& fileName)
 
 //=============================================================================
 
-unsigned char* AFlat::convertData(unsigned char* incomingData, const APalete& palete)
+void AFlat::convertData(unsigned char* incomingData, const APalete& palete)
 {
-	const int flatWidth = flatWidthSize();
-	const int flatHeight = flatHeightSize();
+	const int flatWidth = _imageData.width();
+	const int flatHeight = _imageData.height();
 	
-    //  convert paleted data into usual 24-bit image
-    int size = flatWidth * flatHeight * 3;
-    unsigned char* outgoindData = new unsigned char[size];
-    memset(outgoindData, 0, size);
-	
+    unsigned char* outgoindData = _imageData.data();
     for (int i = 0; i < flatHeight; i++)
     {
         for (int j = 0; j < flatWidth; j++)
@@ -113,29 +78,6 @@ unsigned char* AFlat::convertData(unsigned char* incomingData, const APalete& pa
             outgoindData[3 * flatWidth * i + 3 * j + 2] = palete.blue(index);
         }
     }
-
-    return outgoindData;
-}
-
-//=============================================================================
-
-int AFlat::flatDataSize() const
-{
-	return 3 * flatWidthSize() * flatHeightSize();
-}
-
-//=============================================================================
-
-int AFlat::flatWidthSize() const
-{
-	return 64;
-}
-
-//=============================================================================
-
-int AFlat::flatHeightSize() const
-{
-	return 64;
 }
 
 //=============================================================================

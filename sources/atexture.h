@@ -30,12 +30,13 @@ public:
 	std::string textureName() const;
 
 private:
-    unsigned char* _textureData;
     std::string _textureName;
-    int _textureWidth;
-    int _textureHeight;
 	
 	int textureDataSize() const;
+    
+    unsigned char* _textureData;
+    int _textureWidth;
+    int _textureHeight;
 };
 
 //=============================================================================

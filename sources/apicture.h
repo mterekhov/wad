@@ -31,21 +31,23 @@ public:
     ~APicture();
 	APicture& operator=(const APicture& rv);
 
-	const unsigned char* patchData() const;
-	int patchDataSize() const;
-	int patchHeightSize() const;
-	int patchWidthSize() const;
 	const std::string& patchName() const;
+    
+    const unsigned char* patchData() const;
+    int patchDataSize() const;
+    int patchHeightSize() const;
+    int patchWidthSize() const;
 	bool savePatchIntoTga(const std::string& fileName);
 
 private:
 	void destroy();
 	unsigned char* convertData(const unsigned char* incomingData, const APalete& palete, const int bytesOffset);
 
-    unsigned char* _patchData;
-	short _patchWidth;
-	short _patchHeight;
     std::string _patchName;
+
+    unsigned char* _patchData;
+    short _patchWidth;
+    short _patchHeight;
 };
 
 //=============================================================================

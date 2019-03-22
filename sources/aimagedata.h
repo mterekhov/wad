@@ -31,7 +31,7 @@ public:
     AImageData(const AImageData& image);
     AImageData& operator=(const AImageData& rv);
     
-    const unsigned char* data() const;
+    unsigned char* data();
     int height() const;
     int width() const;
     int dataSize() const;

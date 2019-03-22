@@ -5,6 +5,8 @@
 
 #include <string>
 
+#include "aimagedata.h"
+
 //=============================================================================
 
 namespace spcWAD
@@ -29,17 +31,12 @@ public:
 
 	bool saveFlatIntoTga(const std::string& fileName);
 	const std::string& flatName() const;
-	const unsigned char* flatData() const;
-	int flatHeightSize() const;
-	int flatWidthSize() const;
-	int flatDataSize() const;
-
+    
 private:
-    unsigned char* _flatData;
     std::string _flatName;
+    AImageData _imageData;
 
-	void destroy();
-	unsigned char* convertData(unsigned char* incomingData, const APalete& palete);
+	void convertData(unsigned char* incomingData, const APalete& palete);
 };
 
 //=============================================================================

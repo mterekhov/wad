@@ -162,12 +162,12 @@
 			children = (
 				4CD920692244DD60005EC745 /* aimagedata.h */,
 				4CD920682244DD60005EC745 /* aimagedata.cpp */,
+				4CAB6C192046F8ED00D23585 /* aflat.h */,
+				4CAB6C0A2046F8EC00D23585 /* aflat.cpp */,
 				4CB28600223FDD7100E234E7 /* apicture.h */,
 				4CB285FA223FDD7000E234E7 /* apicture.cpp */,
 				4CAB6C042046F8EC00D23585 /* atexture.h */,
 				4CAB6C1F2046F8EE00D23585 /* atexture.cpp */,
-				4CAB6C192046F8ED00D23585 /* aflat.h */,
-				4CAB6C0A2046F8EC00D23585 /* aflat.cpp */,
 			);
 			name = images;
 			sourceTree = "<group>";
