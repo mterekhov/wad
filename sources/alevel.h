@@ -27,10 +27,13 @@ namespace spcWAD
 class ALevel
 {
 public:
+    ALevel();
 	ALevel(FILE* wadFile, const TLumpsListConstIter& levelLumpIter, const TLumpsList& tableOfContents, const APalete& palete);
 	ALevel(const ALevel& level);
     ~ALevel();
 	ALevel& operator=(const ALevel& rv);
+    const TThingList& levelItemsList() const;
+    const ASprite& findSprite(const AThing& thing);
 
 private:
 	TThingList _thingsList;
@@ -40,7 +43,6 @@ private:
     void readLineDefs(FILE *wadFile, const ALump& lump, const TLumpsList& tableOfContents, const APalete& palete);
 
     ASprite readThingSpritesList(FILE* wadFile, const AThing& thing, const TLumpsList& tableOfContents, const APalete& palete);
-	void destroy();
 	bool readLevelData(FILE* wadFile, const TLumpsListConstIter& levelLumpIter, const TLumpsList& tableOfContents, const APalete& palete);
 	TLumpsListConstIter findEndLevelLump(const TLumpsListConstIter& levelLumpIter, const TLumpsList& tableOfContents);
 	TLumpsList levelLumpsList(const TLumpsListConstIter& levelLumpIter, const TLumpsList& tableOfContents);

@@ -438,16 +438,34 @@ ATexture AWAD::generateSingleTexture(const int textureOffset, unsigned char *lum
 }
 
 //=============================================================================
+    
+ALevel AWAD::readLevel(const std::string& levelName)
+{
+    TLumpsListConstIter levelLumpIter = AUtilities::findLumpIter(levelName, _tableOfContents);
+    if (levelLumpIter == _tableOfContents.end())
+    {
+        return ALevel();
+    }
+    
+    FILE* wadFile = 0;
+    wadFile = fopen(_fileName.c_str(), "rb");
+    ALevel level(wadFile, levelLumpIter, _tableOfContents, _palete);
+    fclose(wadFile);
+
+    return level;
+}
+    
+//=============================================================================
 
 bool AWAD::readLevel(FILE* wadFile)
 {
-	TLumpsListConstIter levelLumpIter = AUtilities::findLumpIter("e1m8", _tableOfContents);
-	if (levelLumpIter == _tableOfContents.end())
-	{
-		return false;
-	}
-	
-	ALevel level(wadFile, levelLumpIter, _tableOfContents, _palete);
+//    TLumpsListConstIter levelLumpIter = AUtilities::findLumpIter("e1m8", _tableOfContents);
+//    if (levelLumpIter == _tableOfContents.end())
+//    {
+//        return false;
+//    }
+//    
+//    ALevel level(wadFile, levelLumpIter, _tableOfContents, _palete);
 	
     return true;
 }

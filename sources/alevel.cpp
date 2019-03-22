@@ -10,6 +10,13 @@ namespace spcWAD
 
 //=============================================================================
     
+ALevel::ALevel()
+{
+    
+}
+    
+//=============================================================================
+    
 ALevel::ALevel(FILE* wadFile, const TLumpsListConstIter& levelLumpIter, const TLumpsList& tableOfContents, const APalete& palete)
 {
 	if (levelLumpIter == tableOfContents.end())
@@ -22,7 +29,7 @@ ALevel::ALevel(FILE* wadFile, const TLumpsListConstIter& levelLumpIter, const TL
 
 //=============================================================================
 
-ALevel::ALevel(const ALevel& level)
+ALevel::ALevel(const ALevel& level) : _thingsList(level._thingsList), _spritesList(level._spritesList)
 {
 }
 
@@ -30,7 +37,6 @@ ALevel::ALevel(const ALevel& level)
 
 ALevel::~ALevel()
 {
-	destroy();
 }
 
 //=============================================================================
@@ -42,9 +48,24 @@ ALevel& ALevel::operator=(const ALevel& rv)
 		return *this;
 	}
 
-	destroy();
-	
+    _thingsList = rv._thingsList;
+    _spritesList = rv._spritesList;
+    
 	return *this;
+}
+
+//=============================================================================
+
+const ASprite& ALevel::findSprite(const AThing& thing)
+{
+    return *std::find(_spritesList.begin(), _spritesList.end(), ASprite(thing.spritePrefix()));
+}
+
+//=============================================================================
+
+const TThingList& ALevel::levelItemsList() const
+{
+    return _thingsList;
 }
 
 //=============================================================================
@@ -70,23 +91,7 @@ bool ALevel::readLevelData(FILE* wadFile, const TLumpsListConstIter& levelLumpIt
         if (AUtilities::stringCompare(iter->lumpName, "linedefs"))
         {
             readLineDefs(wadFile, *iter, tableOfContents, palete);
-        }
-        
-        printf("<%s>\n", iter->lumpName.c_str());
-    }
-    
-    int c = 0;
-    printf("THINGS\n");
-    for (TThingListIter iter = _thingsList.begin(); iter != _thingsList.end(); iter++)
-    {
-        printf("%i. <%s>\n", ++c, iter->spritePrefix().c_str());
-    }
-    
-    c = 0;
-    printf("SPRITES\n");
-    for (TSpriteListIter iter = _spritesList.begin(); iter != _spritesList.end(); iter++)
-    {
-        printf("%i. <%s>\n", ++c, iter->spritesPrefix.c_str());
+        }        
     }
     
 	return true;
@@ -167,12 +172,6 @@ ASprite ALevel::readThingSpritesList(FILE* wadFile, const AThing& thing, const T
 	}
 
 	return newSprite;
-}
-
-//=============================================================================
-
-void ALevel::destroy()
-{
 }
 
 //=============================================================================

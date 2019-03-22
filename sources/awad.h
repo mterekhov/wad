@@ -23,6 +23,10 @@ namespace spcWAD
 
 //=============================================================================
 
+class ALevel;
+    
+//=============================================================================
+
 /**
 	This class reads all the content from the wad file format
 */
@@ -31,6 +35,7 @@ class AWAD
 public:
     AWAD(const std::string& fileName);
     ~AWAD();
+    ALevel readLevel(const std::string& levelName);
 
 private:
 	APalete _palete;    //  palete for every image resource
