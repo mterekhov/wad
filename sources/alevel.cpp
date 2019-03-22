@@ -61,12 +61,19 @@ bool ALevel::readLevelData(FILE* wadFile, const TLumpsListConstIter& levelLumpIt
             break;
         }
 
-        //	This section describes all the things which are positioned on level
+        //    This section describes all the things which are positioned on level
         if (AUtilities::stringCompare(iter->lumpName, "things"))
         {
             _thingsList = readThings(wadFile, *iter, tableOfContents, palete);
         }
-	}
+
+        if (AUtilities::stringCompare(iter->lumpName, "linedefs"))
+        {
+            readLineDefs(wadFile, *iter, tableOfContents, palete);
+        }
+        
+        printf("<%s>\n", iter->lumpName.c_str());
+    }
     
     int c = 0;
     printf("THINGS\n");
@@ -112,6 +119,23 @@ TThingList ALevel::readThings(FILE *wadFile, const ALump& lump, const TLumpsList
     delete [] thingsData;
     
     return thingsList;
+}
+
+//=============================================================================
+
+void ALevel::readLineDefs(FILE *wadFile, const ALump& lump, const TLumpsList& tableOfContents, const APalete& palete)
+{
+    unsigned char *linedefsData = new unsigned char[lump.lumpSize];
+    AUtilities::readLumpData(wadFile, lump, linedefsData);
+
+    int byteOffset = 0;
+    while (byteOffset < lump.lumpSize)
+    {
+        AThing newThing(&linedefsData[byteOffset]);
+        byteOffset += 14;
+    }
+
+    delete [] linedefsData;
 }
 
 //=============================================================================
