@@ -19,6 +19,9 @@ namespace spcWAD
 
 //=============================================================================
 
+/**
+ Sprite is the image of thing. Not every thing has Sprite. Every sprite consists out of sequence of images which are creating the animation
+ */
 class ASprite
 {
 public:

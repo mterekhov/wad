@@ -28,6 +28,9 @@ class ASprite;
 
 //=============================================================================
 
+/**
+ Description of patch, so you can create the texture for walls.
+ */
 struct SPatchDescription
 {
 	int x_offset;

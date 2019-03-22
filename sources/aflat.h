@@ -17,7 +17,7 @@ class APalete;
 //=============================================================================
 
 /**
-	This class is the base image
+	This class is used to describe the texture of floor and ceiling only. For walls should be used ATexture class.
 */
 class AFlat
 {

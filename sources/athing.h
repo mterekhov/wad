@@ -22,6 +22,9 @@ namespace spcWAD
 
 extern std::map<int, std::string> ThingsMap;
 
+/**
+ Thing is the items you can see and can not see on map
+ */
 class AThing
 {
 public:

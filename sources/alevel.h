@@ -21,6 +21,9 @@ namespace spcWAD
 
 //=============================================================================
 
+/**
+ This class reads all the content of level and converts it in proper and modern formats
+ */
 class ALevel
 {
 public:
@@ -33,8 +36,10 @@ private:
 	TThingList _thingsList;
     TSpriteList _spritesList;
 
+    TThingList readThings(FILE *wadFile, const ALump& lump, const TLumpsList& tableOfContents, const APalete& palete);
+    void readLineDefs(FILE *wadFile, const ALump& lump, const TLumpsList& tableOfContents, const APalete& palete);
+
     ASprite readThingSpritesList(FILE* wadFile, const AThing& thing, const TLumpsList& tableOfContents, const APalete& palete);
-	TThingList readThings(FILE *wadFile, const ALump& lump, const TLumpsList& tableOfContents, const APalete& palete);
 	void destroy();
 	bool readLevelData(FILE* wadFile, const TLumpsListConstIter& levelLumpIter, const TLumpsList& tableOfContents, const APalete& palete);
 	TLumpsListConstIter findEndLevelLump(const TLumpsListConstIter& levelLumpIter, const TLumpsList& tableOfContents);

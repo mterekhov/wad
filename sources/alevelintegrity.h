@@ -12,6 +12,9 @@ namespace spcWAD
     
 //=============================================================================
 
+/**
+ Thye main purpose of this class is to check the integrity of level in terms of lumps. Every level must have a critical number of lumps so the engine can render the level. This class check that the level has all the lumps it needs
+ */
 class ALevelIntegrity
 {
 private:
