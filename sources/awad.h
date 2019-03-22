@@ -13,7 +13,7 @@
 #include "acolormap.h"
 #include "aendoom.h"
 #include "ademo.h"
-#include "apatch.h"
+#include "apicture.h"
 #include "atexture.h"
 
 //=============================================================================
@@ -21,6 +21,10 @@
 namespace spcWAD
 {
 
+//=============================================================================
+
+class ALevel;
+    
 //=============================================================================
 
 /**
@@ -31,66 +35,34 @@ class AWAD
 public:
     AWAD(const std::string& fileName);
     ~AWAD();
+    ALevel readLevel(const std::string& levelName);
 
 private:
-	APalete _palete;
-	AColorMap _colorMap;
-	AEnDoom _enDoom;
-	TDemosList _demosList;
-	TFlatsList _flatsList;
-	TPatchesList _patchesList;
-	TTexturesList _texturesList;
+	APalete _palete;    //  palete for every image resource
+	AColorMap _colorMap;    //  map of colors for different light areas
+	AEnDoom _enDoom;    //  texts which are shown when the game finished
+    TDemosList _demosList;  //  list of demos which are playing at games start
+	TFlatsList _flatsList;  //  textures for floor and ceiling
 
-    EWadType _type;
-    std::string _fileName;
-    TLumpsList _tableOfContents;
+	TIndexedPicturesList _patchesList;  //  list of patches out of which wall textures are created
+	TTexturesList _texturesList;    //  list of textures for walls
+    EWadType _type; //  type of wad file - IWAD or PWAD
+    std::string _fileName;  //  name of wad file which was parsed
+    TLumpsList _tableOfContents;    //  list of all lumps in wad file
 
-    void destroy();
     bool checkSignature(FILE* wadFile);
 	bool readTableOfContents(FILE* wadFile);
 	bool readPalete(FILE* wadFile);
 	bool readColorMap(FILE* wadFile);
 	bool readEndDoom(FILE* wadFile);
 	bool readDemos(FILE* wadFile);
-
 	bool readFlats(FILE* wadFile);
 	bool readFlatsRange(FILE* wadFile, const std::string& beginLumpName, const std::string& endLumpName);
-
 	bool readPatches(FILE* wadFile);
-	
 	bool readTextures(FILE* wadFile);
 	ATexture generateSingleTexture(const int textureOffset, unsigned char *lumpData);
-
-	bool readLumpData(FILE* wadFile, const ALump& lumpToRead, unsigned char *lumpData);
-	TLumpsList findLumpsList(const std::string& lumpsNameMask);
-//=========================================
-//    std::map<int, APatch*> _patchesIndexes;
-//
-//
-//	bool checkLumpIfItIsMap(ALump* lump, FILE* wadFile);
-//
-//	//  read flats
-//    bool awReadFlats(FILE* wadFile);
-//    bool awReadFlatRange(FILE* wadFile, TLumpsListIter iter, TLumpsListIter iter_end);
-//    //  read patches
-//    bool awReadPatches(FILE* wadFile);
-//    //  read textures
-//    bool awReadTextures(FILE* wadFile);
-//    //  read digital sounds
-//    bool awReadSFX(FILE* wadFile);
-//    //  read ps speaker sounds
-//	bool awReadPCSpeaker(FILE* wadFile);
-//
-//	bool awReadMaps(FILE* wadFile);
-//
-//	void amDefineMapLumps(FILE *wadFile);
-//	TLumpsList awFindZeroSizeLumps();
-//	TLumpsList awFindLumpsList(const std::string& lumpsNameMask);
-//    TLumpsListIter awFindLump(const std::string& name);
-//
-//    bool awIntoTga(const std::string& fileName, unsigned char* data, const int width, const int height);
-//    bool RGB2BGR(unsigned char* data, int width, int height);
-//    bool FlipOver(unsigned char* data, int width, int height);
+	
+	bool readLevel(FILE* wadFile);
 };
 
 //=============================================================================

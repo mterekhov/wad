@@ -15,7 +15,7 @@ namespace spcWAD
 //=============================================================================
 
 /**
-	This class is the description of everything in wad file
+	This class is the description of lump in wad file. This class doesn't store any data, it describes where in wad file the data stores, what is the size of data and by what name it is in use.
 */
 class ALump
 {

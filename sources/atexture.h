@@ -7,6 +7,7 @@
 #include <string>
 
 #include "types.h"
+#include "aimagedata.h"
 
 //=============================================================================
 
@@ -15,6 +16,9 @@ namespace spcWAD
 
 //=============================================================================
 
+/**
+ Texture is used for walls only, for vertical surfaces only. Every texture is made of list of patches. But the texture does not contains all the patch, only it's chunk. So patchesDescriptionList is the description of what chunk of patch and where should be places
+ */
 class ATexture
 {
 public:
@@ -27,12 +31,8 @@ public:
 	std::string textureName() const;
 
 private:
-    unsigned char* _textureData;
     std::string _textureName;
-    int _textureWidth;
-    int _textureHeight;
-	
-	int textureDataSize() const;
+    AImageData _imageData;
 };
 
 //=============================================================================

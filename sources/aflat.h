@@ -5,6 +5,8 @@
 
 #include <string>
 
+#include "aimagedata.h"
+
 //=============================================================================
 
 namespace spcWAD
@@ -17,7 +19,7 @@ class APalete;
 //=============================================================================
 
 /**
-	This class is the base image
+	This class is used to describe the texture of floor and ceiling only. It is size is always 64x64 pixel. For walls should be used ATexture class.
 */
 class AFlat
 {
@@ -29,17 +31,12 @@ public:
 
 	bool saveFlatIntoTga(const std::string& fileName);
 	const std::string& flatName() const;
-	const unsigned char* flatData() const;
-	int flatHeightSize() const;
-	int flatWidthSize() const;
-	int flatDataSize() const;
-
+    
 private:
-    unsigned char* _flatData;
     std::string _flatName;
+    AImageData _imageData;
 
-	void destroy();
-	unsigned char* convertData(unsigned char* incomingData, const APalete& palete);
+	void convertData(unsigned char* incomingData, const APalete& palete);
 };
 
 //=============================================================================

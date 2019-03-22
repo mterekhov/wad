@@ -5,7 +5,8 @@
 #include "apalete.h"
 #include "aflat.h"
 #include "atexture.h"
-#include "afindhelper.h"
+#include "autilities.h"
+#include "alevel.h"
 
 //=============================================================================
 
@@ -42,6 +43,7 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 
     if (!readTextures(wadFile))
         throw;
+    
 	if (!readColorMap(wadFile))
 		throw;
 
@@ -50,39 +52,43 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
 
 	if (!readDemos(wadFile))
 		throw;
+	
+	if (!readLevel(wadFile))
+		throw;
 
-//	for (TPatchesListIter iter = _patchesList.begin(); iter != _patchesList.end(); iter++)
-//	{
-//		APatch& patch = *iter;
-//		std::string path = "/Users/michael/Pictures/saved/";
-//		path += patch.patchName();
-//		printf("<%s>\n", patch.patchName().c_str());
-//		path += ".tga";
-//		patch.savePatchIntoTga(path);
-//	}
-//	
-//	for (TFlatsListIter iter = _flatsList.begin(); iter != _flatsList.end(); iter++)
-//	{
-//		AFlat& flat = *iter;
-//		std::string path = "/Users/michael/Pictures/saved/";
-//		path += flat.flatName();
-//		path += ".tga";
-//		flat.saveFlatIntoTga(path);
-//	}
-	int i = 0;
-	for (TLumpsListIter iter = _tableOfContents.begin(); iter != _tableOfContents.end(); iter++)
-	{
-		printf("%i. <%s>\n", ++i, iter->lumpName.c_str());
-	}
 
-	for (TTexturesListIter iter = _texturesList.begin(); iter != _texturesList.end(); iter++)
-	{
-		ATexture& texture = *iter;
-		std::string path = "/Users/michael/Pictures/saved/";
-		path += texture.textureName();
-		path += ".tga";
-		texture.saveTextureIntoTga(path);
-	}
+    for (TIndexedPicturesListIter iter = _patchesList.begin(); iter != _patchesList.end(); iter++)
+    {
+        APicture& patch = *iter;
+        std::string path = "/Users/michael/Pictures/patch/";
+        path += patch.patchName();
+        path += ".tga";
+        patch.savePatchIntoTga(path);
+    }
+    
+    for (TFlatsListIter iter = _flatsList.begin(); iter != _flatsList.end(); iter++)
+    {
+        AFlat& flat = *iter;
+        std::string path = "/Users/michael/Pictures/flat/";
+        path += flat.flatName();
+        path += ".tga";
+        flat.saveFlatIntoTga(path);
+    }
+    
+    for (TTexturesListIter iter = _texturesList.begin(); iter != _texturesList.end(); iter++)
+    {
+        ATexture& texture = *iter;
+        std::string path = "/Users/michael/Pictures/texture/";
+        path += texture.textureName();
+        path += ".tga";
+        texture.saveTextureIntoTga(path);
+    }
+    
+//    int i = 0;
+//    for (TLumpsListIter iter = _tableOfContents.begin(); iter != _tableOfContents.end(); iter++)
+//    {
+//        printf("%i. <%s>\n", ++i, iter->lumpName.c_str());
+//    }
 
 	fclose(wadFile);
 }
@@ -158,10 +164,15 @@ bool AWAD::readTableOfContents(FILE* wadFile)
 
 bool AWAD::readPalete(FILE* wadFile)
 {
-	const ALump& playpalLump = AFindHelper::findLump("PLAYPAL", _tableOfContents);
-
+	TLumpsListConstIter playpalLumpIter = AUtilities::findLumpIter("PLAYPAL", _tableOfContents);
+	if (playpalLumpIter == _tableOfContents.end())
+	{
+		return false;
+	}
+	
+	const ALump& playpalLump = *playpalLumpIter;
 	unsigned char *lumpData = new unsigned char [playpalLump.lumpSize];
-	readLumpData(wadFile, playpalLump, lumpData);
+	AUtilities::readLumpData(wadFile, playpalLump, lumpData);
 	_palete = APalete(lumpData, playpalLump.lumpSize);
 	
 	delete [] lumpData;
@@ -173,10 +184,15 @@ bool AWAD::readPalete(FILE* wadFile)
 
 bool AWAD::readColorMap(FILE* wadFile)
 {
-	const ALump& colorMapLump = AFindHelper::findLump("COLORMAP", _tableOfContents);
+	TLumpsListConstIter colorMapLumpIter = AUtilities::findLumpIter("COLORMAP", _tableOfContents);
+	if (colorMapLumpIter == _tableOfContents.end())
+	{
+		return false;
+	}
+	const ALump& colorMapLump = *colorMapLumpIter;
 
 	unsigned char *lumpData = new unsigned char [colorMapLump.lumpSize];
-	readLumpData(wadFile, colorMapLump, lumpData);
+	AUtilities::readLumpData(wadFile, colorMapLump, lumpData);
 
 	_colorMap = AColorMap(lumpData, colorMapLump.lumpSize);
 
@@ -189,10 +205,15 @@ bool AWAD::readColorMap(FILE* wadFile)
 
 bool AWAD::readEndDoom(FILE* wadFile)
 {
-	const ALump& endoomLump = AFindHelper::findLump("ENDOOM", _tableOfContents);
+	TLumpsListConstIter endoomLumpIter = AUtilities::findLumpIter("ENDOOM", _tableOfContents);
+	if (endoomLumpIter == _tableOfContents.end())
+	{
+		return false;
+	}
+	const ALump& endoomLump = *endoomLumpIter;
 
 	unsigned char *lumpData = new unsigned char [endoomLump.lumpSize];
-	readLumpData(wadFile, endoomLump, lumpData);
+	AUtilities::readLumpData(wadFile, endoomLump, lumpData);
 
 	_enDoom = AEnDoom(lumpData, endoomLump.lumpSize);
 
@@ -205,12 +226,18 @@ bool AWAD::readEndDoom(FILE* wadFile)
 
 bool AWAD::readDemos(FILE* wadFile)
 {
-	TLumpsList demosList = findLumpsList("DEMO");
+	TLumpsList demosList = AUtilities::findLumpsList("DEMO", _tableOfContents);
 	for (TLumpsListIter iter = demosList.begin(); iter != demosList.end(); iter++)
 	{
-		const ALump& demoLump = AFindHelper::findLump(iter->lumpName, _tableOfContents);
+		TLumpsListConstIter demoLumpIter = AUtilities::findLumpIter(iter->lumpName, _tableOfContents);
+		if (demoLumpIter == _tableOfContents.end())
+		{
+			continue;
+		}
+		const ALump& demoLump = *demoLumpIter;
+
 		unsigned char *lumpData = new unsigned char [demoLump.lumpSize];
-		readLumpData(wadFile, demoLump, lumpData);
+		AUtilities::readLumpData(wadFile, demoLump, lumpData);
 
 		ADemo newDemo(lumpData, demoLump.lumpSize, demoLump.lumpName);
 		_demosList.push_back(newDemo);
@@ -240,8 +267,8 @@ bool AWAD::readFlats(FILE* wadFile)
 
 bool AWAD::readFlatsRange(FILE* wadFile, const std::string& beginLumpName, const std::string& endLumpName)
 {
-	TLumpsListConstIter beginLump = AFindHelper::findLumpIter(beginLumpName, _tableOfContents);
-	TLumpsListConstIter endLump = AFindHelper::findLumpIter(endLumpName, _tableOfContents);
+	TLumpsListConstIter beginLump = AUtilities::findLumpIter(beginLumpName, _tableOfContents);
+	TLumpsListConstIter endLump = AUtilities::findLumpIter(endLumpName, _tableOfContents);
     TLumpsListIter lumpListEnd = _tableOfContents.end();
 	
     if ((beginLump != lumpListEnd) && (endLump != lumpListEnd))
@@ -251,7 +278,7 @@ bool AWAD::readFlatsRange(FILE* wadFile, const std::string& beginLumpName, const
 		{
 			ALump flatLump = (*iter);
 			unsigned char *lumpData = new unsigned char [flatLump.lumpSize];
-			readLumpData(wadFile, flatLump, lumpData);
+			AUtilities::readLumpData(wadFile, flatLump, lumpData);
 			
 			AFlat newFlat(lumpData, flatLump.lumpName, _palete);
 			_flatsList.push_back(newFlat);
@@ -267,7 +294,7 @@ bool AWAD::readFlatsRange(FILE* wadFile, const std::string& beginLumpName, const
 
 bool AWAD::readPatches(FILE* wadFile)
 {
-	TLumpsListConstIter pNamesLumpIter = AFindHelper::findLumpIter("PNAMES", _tableOfContents);
+	TLumpsListConstIter pNamesLumpIter = AUtilities::findLumpIter("PNAMES", _tableOfContents);
 	if (pNamesLumpIter == _tableOfContents.end())
 	{
 		return false;
@@ -275,7 +302,7 @@ bool AWAD::readPatches(FILE* wadFile)
 	
 	const ALump& patchesNamesLump = *pNamesLumpIter;
 	unsigned char *lumpData = new unsigned char [patchesNamesLump.lumpSize];
-	readLumpData(wadFile, patchesNamesLump, lumpData);
+	AUtilities::readLumpData(wadFile, patchesNamesLump, lumpData);
 	int bytesOffset = 0;
 
     int patchesCount = 0;
@@ -298,7 +325,7 @@ bool AWAD::readPatches(FILE* wadFile)
 	for (std::list<std::string>::iterator iter = patchesLumpsNamesList.begin(); iter != patchesLumpsNamesList.end(); iter++)
 	{
 		std::string patchLumpName = *iter;
-		TLumpsListConstIter patchLumpIter = AFindHelper::findLumpIter(patchLumpName, _tableOfContents);
+		TLumpsListConstIter patchLumpIter = AUtilities::findLumpIter(patchLumpName, _tableOfContents);
 		if (patchLumpIter == _tableOfContents.end())
 		{
 			printf("NO CHANCE TO FIND <%s>\n", patchLumpName.c_str());
@@ -310,9 +337,9 @@ bool AWAD::readPatches(FILE* wadFile)
 			continue;
 		}
 		lumpData = new unsigned char [patchLump.lumpSize];
-		readLumpData(wadFile, patchLump, lumpData);
+		AUtilities::readLumpData(wadFile, patchLump, lumpData);
 
-		APatch newPatch(lumpData, patchLumpName, _palete);
+		APicture newPatch(lumpData, patchLumpName, _palete);
 		_patchesList.push_back(newPatch);
 
 		delete [] lumpData;
@@ -325,7 +352,7 @@ bool AWAD::readPatches(FILE* wadFile)
 
 bool AWAD::readTextures(FILE* wadFile)
 {
-	TLumpsListConstIter textureLumpIter = AFindHelper::findLumpIter("TEXTURE2", _tableOfContents);
+	TLumpsListConstIter textureLumpIter = AUtilities::findLumpIter("TEXTURE1", _tableOfContents);
 	if (textureLumpIter == _tableOfContents.end())
 	{
 		return false;
@@ -333,7 +360,7 @@ bool AWAD::readTextures(FILE* wadFile)
 	
 	const ALump& textureLump = *textureLumpIter;
 	unsigned char *lumpData = new unsigned char [textureLump.lumpSize];
-	readLumpData(wadFile, textureLump, lumpData);
+	AUtilities::readLumpData(wadFile, textureLump, lumpData);
 	int bytesOffset = 0;
 
     int texturesCount = 0;
@@ -411,55 +438,36 @@ ATexture AWAD::generateSingleTexture(const int textureOffset, unsigned char *lum
 }
 
 //=============================================================================
-
-#pragma mark - Lump operations -
-
-//=============================================================================
-
-bool AWAD::readLumpData(FILE* wadFile, const ALump& lumpToRead, unsigned char *lumpData)
+    
+ALevel AWAD::readLevel(const std::string& levelName)
 {
-	if (fseek(wadFile, lumpToRead.lumpOffset, SEEK_SET))
-	{
-		return false;
-	}
-	
-	memset(lumpData, 0, lumpToRead.lumpSize);
-	int read = fread(lumpData, lumpToRead.lumpSize, 1, wadFile);
-	if (read != 1)
-	{
-		return false;
-	}
-	
-	return true;
+    TLumpsListConstIter levelLumpIter = AUtilities::findLumpIter(levelName, _tableOfContents);
+    if (levelLumpIter == _tableOfContents.end())
+    {
+        return ALevel();
+    }
+    
+    FILE* wadFile = 0;
+    wadFile = fopen(_fileName.c_str(), "rb");
+    ALevel level(wadFile, levelLumpIter, _tableOfContents, _palete);
+    fclose(wadFile);
+
+    return level;
 }
-
+    
 //=============================================================================
 
-TLumpsList AWAD::findLumpsList(const std::string& lumpsNameMask)
+bool AWAD::readLevel(FILE* wadFile)
 {
-	std::string findLump;
-	findLump.resize(lumpsNameMask.size());
-	std::transform(lumpsNameMask.begin(),
-				   lumpsNameMask.end(),
-				   findLump.begin(),
-				   ::tolower);
-
-	TLumpsList founded;
-	for (TLumpsListIter iter = _tableOfContents.begin(); iter != _tableOfContents.end(); iter++)
-	{
-		std::string lumpName;
-		lumpName.resize(iter->lumpName.size());
-		std::transform(iter->lumpName.begin(),
-					   iter->lumpName.end(),
-					   iter->lumpName.begin(),
-					   ::tolower);
-		if (lumpName.compare(0, findLump.length(), findLump) == 0)
-		{
-			founded.push_back(*iter);
-		}
-	}
-
-	return founded;
+//    TLumpsListConstIter levelLumpIter = AUtilities::findLumpIter("e1m8", _tableOfContents);
+//    if (levelLumpIter == _tableOfContents.end())
+//    {
+//        return false;
+//    }
+//    
+//    ALevel level(wadFile, levelLumpIter, _tableOfContents, _palete);
+	
+    return true;
 }
 
 //=============================================================================
