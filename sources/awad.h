@@ -45,7 +45,6 @@ private:
     std::string _fileName;  //  name of wad file which was parsed
     TLumpsList _tableOfContents;    //  list of all lumps in wad file
 
-    void destroy();
     bool checkSignature(FILE* wadFile);
 	bool readTableOfContents(FILE* wadFile);
 	bool readPalete(FILE* wadFile);
