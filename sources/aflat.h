@@ -17,7 +17,7 @@ class APalete;
 //=============================================================================
 
 /**
-	This class is used to describe the texture of floor and ceiling only. For walls should be used ATexture class.
+	This class is used to describe the texture of floor and ceiling only. It is size is always 64x64 pixel. For walls should be used ATexture class.
 */
 class AFlat
 {

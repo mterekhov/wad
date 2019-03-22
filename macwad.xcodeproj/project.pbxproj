@@ -26,6 +26,7 @@
 		4CB28608223FF96600E234E7 /* alevelintegrity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CB28606223FF96600E234E7 /* alevelintegrity.cpp */; };
 		4CCB4DA6204841CB00F660F0 /* aflat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CAB6C0A2046F8EC00D23585 /* aflat.cpp */; };
 		4CD920672243FA52005EC745 /* ageometryreadservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD920652243FA52005EC745 /* ageometryreadservice.cpp */; };
+		4CD9206A2244DD60005EC745 /* aimagedata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4CD920682244DD60005EC745 /* aimagedata.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -81,6 +82,8 @@
 		4CB28607223FF96600E234E7 /* alevelintegrity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = alevelintegrity.h; path = sources/alevelintegrity.h; sourceTree = "<group>"; };
 		4CD920652243FA52005EC745 /* ageometryreadservice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ageometryreadservice.cpp; path = sources/ageometryreadservice.cpp; sourceTree = "<group>"; };
 		4CD920662243FA52005EC745 /* ageometryreadservice.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ageometryreadservice.h; path = sources/ageometryreadservice.h; sourceTree = "<group>"; };
+		4CD920682244DD60005EC745 /* aimagedata.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = aimagedata.cpp; path = sources/aimagedata.cpp; sourceTree = "<group>"; };
+		4CD920692244DD60005EC745 /* aimagedata.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = aimagedata.h; path = sources/aimagedata.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +160,8 @@
 		4CCB4DA420483D7400F660F0 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				4CD920692244DD60005EC745 /* aimagedata.h */,
+				4CD920682244DD60005EC745 /* aimagedata.cpp */,
 				4CB28600223FDD7100E234E7 /* apicture.h */,
 				4CB285FA223FDD7000E234E7 /* apicture.cpp */,
 				4CAB6C042046F8EC00D23585 /* atexture.h */,
@@ -256,6 +261,7 @@
 				4CAB6C372047F5E900D23585 /* acolormap.cpp in Sources */,
 				4CAB6C202046F8EE00D23585 /* awad.cpp in Sources */,
 				4CB28608223FF96600E234E7 /* alevelintegrity.cpp in Sources */,
+				4CD9206A2244DD60005EC745 /* aimagedata.cpp in Sources */,
 				4C21659720485F3E00DBF275 /* atgaexporter.cpp in Sources */,
 				4CB28604223FDD7100E234E7 /* asprite.cpp in Sources */,
 				4CD920672243FA52005EC745 /* ageometryreadservice.cpp in Sources */,
