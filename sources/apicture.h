@@ -7,6 +7,7 @@
 
 #include "alump.h"
 #include "apalete.h"
+#include "aimagedata.h"
 
 //=============================================================================
 
@@ -32,22 +33,13 @@ public:
 	APicture& operator=(const APicture& rv);
 
 	const std::string& patchName() const;
-    
-    const unsigned char* patchData() const;
-    int patchDataSize() const;
-    int patchHeightSize() const;
-    int patchWidthSize() const;
 	bool savePatchIntoTga(const std::string& fileName);
+    AImageData imageData;
 
 private:
-	void destroy();
-	unsigned char* convertData(const unsigned char* incomingData, const APalete& palete, const int bytesOffset);
+	void convertData(const unsigned char* incomingData, const APalete& palete, const int bytesOffset);
 
     std::string _patchName;
-
-    unsigned char* _patchData;
-    short _patchWidth;
-    short _patchHeight;
 };
 
 //=============================================================================

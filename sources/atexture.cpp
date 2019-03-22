@@ -29,8 +29,8 @@ ATexture::ATexture(const TPatchesDescriptionList& patchesDescriptionList, const 
 
 		//	Соотнесем размер патча и размер текстуры в которую суем его
 		//	Ну чтобы не получилось что патч больше текстуры по размерам
-		int patchChunkHeight = patchDescription.patch.patchHeightSize();	//	Это как раз та высота которую мы должны выкусить из патча
-		int patchChunkWidth = patchDescription.patch.patchWidthSize();
+		int patchChunkHeight = patchDescription.patch.imageData.height();	//	Это как раз та высота которую мы должны выкусить из патча
+		int patchChunkWidth = patchDescription.patch.imageData.width();
 
 		int injectionY = patchDescription.y_offset;	//	это позиция внутри текстуры в которую надо впихать патч
 		int patchY = 0;	//	это позиция внутри патча начиная с которой будем выкусывать кусочек патча
@@ -38,7 +38,7 @@ ATexture::ATexture(const TPatchesDescriptionList& patchesDescriptionList, const 
 		{
 			injectionY = 0;
 			patchY = abs(patchDescription.y_offset);
-			patchChunkHeight = patchDescription.patch.patchHeightSize() - patchY;
+			patchChunkHeight = patchDescription.patch.imageData.height() - patchY;
 		}
 		if (injectionY + patchChunkHeight > _textureHeight)
 		{
@@ -51,21 +51,21 @@ ATexture::ATexture(const TPatchesDescriptionList& patchesDescriptionList, const 
 		{
 			injectionX = 0;
 			patchX = abs(patchDescription.x_offset);
-			patchChunkWidth = patchDescription.patch.patchWidthSize() - patchX;
+			patchChunkWidth = patchDescription.patch.imageData.width() - patchX;
 		}
 		if (injectionX + patchChunkWidth > _textureWidth)
 		{
 			patchChunkWidth = _textureWidth - injectionX;
 		}
 
-		const unsigned char* flatData = patchDescription.patch.patchData();
+		const unsigned char* flatData = patchDescription.patch.imageData.data();
 		for (int y = injectionY; y < injectionY + patchChunkHeight; y++)
 		{
 			for (int x = injectionX; x < injectionX + patchChunkWidth; x++)
 			{
 				int patchPixelIndexX = patchX + x - injectionX;
 				int patchPixelIndexY = patchY + y - injectionY;
-				int patchPixelIndex = patchPixelIndexY * patchDescription.patch.patchWidthSize() + patchPixelIndexX;
+				int patchPixelIndex = patchPixelIndexY * patchDescription.patch.imageData.width() + patchPixelIndexX;
 				int texturePixelIndex = _textureWidth * y + x;
 				if (flatData[3 * patchPixelIndex] == PIXEL_TRANSPARENCY_MARKER)
 				{
