@@ -108,8 +108,7 @@ std::string ATexture::textureName() const
 
 bool ATexture::saveTextureIntoTga(const std::string& fileName)
 {
-	ATGAExporter tgaExporter;
-	return tgaExporter.exportData(fileName, _imageData.data(), _imageData.width(), _imageData.height());
+    return _imageData.exportIntoTga(fileName);
 }
 
 //=============================================================================

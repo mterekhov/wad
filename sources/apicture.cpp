@@ -73,8 +73,7 @@ const std::string& APicture::patchName() const
 
 bool APicture::savePatchIntoTga(const std::string& fileName)
 {
-	ATGAExporter tgaExporter;
-	return tgaExporter.exportData(fileName, imageData.data(), imageData.width(), imageData.height());
+    return imageData.exportIntoTga(fileName);
 }
 
 //=============================================================================

@@ -52,8 +52,7 @@ const std::string& AFlat::flatName() const
 
 bool AFlat::saveFlatIntoTga(const std::string& fileName)
 {
-	ATGAExporter tgaExporter;
-	return tgaExporter.exportData(fileName, _imageData.data(), _imageData.width(), _imageData.height());
+    return _imageData.exportIntoTga(fileName);
 }
 
 //=============================================================================
