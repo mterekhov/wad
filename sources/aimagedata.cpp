@@ -23,6 +23,7 @@ AImageData::AImageData(const int imageWidth, const int imageHeight) : _data(0), 
     }
     
     _data = new unsigned char[dataSize()];
+    memset(_data, 0, dataSize());
 }
 
 //=============================================================================

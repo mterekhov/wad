@@ -7,6 +7,7 @@
 #include <string>
 
 #include "types.h"
+#include "aimagedata.h"
 
 //=============================================================================
 
@@ -31,12 +32,7 @@ public:
 
 private:
     std::string _textureName;
-	
-	int textureDataSize() const;
-    
-    unsigned char* _textureData;
-    int _textureWidth;
-    int _textureHeight;
+    AImageData _imageData;
 };
 
 //=============================================================================
