@@ -7,12 +7,12 @@ namespace spcWAD
 
 //=============================================================================
 
-bool ATGAExporter::exportData(const std::string& fileName, unsigned char *data, const int width, const int height)
+bool ATGAExporter::exportData(const std::string& fileName, unsigned char *data, const int width, const int height, const int bytesPerPixel)
 {
-	if (!data)
-	{
-		return false;
-	}
+    if (!data)
+    {
+        return false;
+    }
 
     unsigned char byte_1 = 0;
     unsigned short byte_2 = 0;
@@ -36,28 +36,28 @@ bool ATGAExporter::exportData(const std::string& fileName, unsigned char *data, 
     byte_2 = height;
     fwrite(&byte_2, 2, 1, tgaFile); //  image height
 
-    byte_1 = 24;
+    byte_1 = 8 * bytesPerPixel;
     fwrite(&byte_1, 1, 1, tgaFile); //  byte per pixel
     byte_1 = 0;
     fwrite(&byte_1, 1, 1, tgaFile); //  image property
 
-    RGB2BGR(data, width, height);
-    flipOver(data, width, height);
-    if (fwrite(data, 3 * width * height, 1, tgaFile) != 1) //  image data
+    RGB2BGR(data, width, height, bytesPerPixel);
+    flipOver(data, width, height, bytesPerPixel);
+    if (fwrite(data, bytesPerPixel * width * height, 1, tgaFile) != 1) //  image data
     {
         return false;
-	}
-    flipOver(data, width, height);
-    RGB2BGR(data, width, height);
+    }
+    flipOver(data, width, height, bytesPerPixel);
+    RGB2BGR(data, width, height, bytesPerPixel);
 
     fclose(tgaFile);
 
-	return true;
+    return true;
 }
 
 //=============================================================================
 
-bool ATGAExporter::RGB2BGR(unsigned char* data, int width, int height)
+bool ATGAExporter::RGB2BGR(unsigned char* data, int width, int height, const int bytesPerPixel)
 {
     if (!data)
         return true;
@@ -66,7 +66,7 @@ bool ATGAExporter::RGB2BGR(unsigned char* data, int width, int height)
     {
         for (int j = 0; j < width; j++)
         {
-            int index = 3 * (i * width + j);
+            int index =  bytesPerPixel * (i * width + j);
             unsigned char tmp = data[index];
             data[index] = data[index + 2];
             data[index + 2] = tmp;
@@ -78,20 +78,20 @@ bool ATGAExporter::RGB2BGR(unsigned char* data, int width, int height)
 
 //=============================================================================
 
-bool ATGAExporter::flipOver(unsigned char* data, int width, int height)
+bool ATGAExporter::flipOver(unsigned char* data, int width, int height, const int bytesPerPixel)
 {
     if (!data)
         return true;
 
-    unsigned char* tmp = new unsigned char[3 * width];
+    unsigned char* tmp = new unsigned char[bytesPerPixel * width];
     for (int i = 0; i < height / 2; i++)
     {
-        memcpy(tmp, &data[3 * i * width], 3 * width);
-        memcpy(&data[3 * i * width], &data[3 * (height - i - 1) * width], 3 * width);
-        memcpy(&data[3 * (height - i - 1) * width], tmp, 3 * width);
+        memcpy(tmp, &data[bytesPerPixel * i * width], bytesPerPixel * width);
+        memcpy(&data[bytesPerPixel * i * width], &data[bytesPerPixel * (height - i - 1) * width], bytesPerPixel * width);
+        memcpy(&data[bytesPerPixel * (height - i - 1) * width], tmp, bytesPerPixel * width);
     }
 
-	delete [] tmp;
+    delete [] tmp;
 
     return true;
 }

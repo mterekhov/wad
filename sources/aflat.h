@@ -19,24 +19,25 @@ class APalete;
 //=============================================================================
 
 /**
-	This class is used to describe the texture of floor and ceiling only. It is size is always 64x64 pixel. For walls should be used ATexture class.
+    This class is used to describe the texture of floor and ceiling only. It is size is always 64x64 pixel. For walls should be used ATexture class.
 */
 class AFlat
 {
 public:
-	AFlat(unsigned char* incomingData, const std::string& incomingName, const APalete& palete);
-	AFlat(const AFlat& flat);
+    AFlat(unsigned char* incomingData, const std::string& incomingName, const APalete& palete);
+    AFlat(const AFlat& flat);
     ~AFlat();
-	AFlat& operator=(const AFlat& rv);
+    AFlat& operator=(const AFlat& rv);
 
-	bool saveFlatIntoTga(const std::string& fileName);
-	const std::string& flatName() const;
+    bool saveFlatIntoTga(const std::string& fileName);
+    const std::string& flatName() const;
+    const AImageData& imageData() const;
     
 private:
     std::string _flatName;
     AImageData _imageData;
 
-	void convertData(unsigned char* incomingData, const APalete& palete);
+    void convertData(unsigned char* incomingData, const APalete& palete);
 };
 
 //=============================================================================

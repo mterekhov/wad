@@ -13,7 +13,7 @@ namespace spcWAD
 //=============================================================================
 
 /**
-	This class saves the images into tga file
+    This class saves the images into tga file
 */
 class ATGAExporter
 {
@@ -28,7 +28,7 @@ public:
      @param height height of image
      @return true in case of success, or false in case of error
      */
-    bool exportData(const std::string& fileName, unsigned char *data, const int width, const int height);
+    bool exportData(const std::string& fileName, unsigned char *data, const int width, const int height, const int bytesPerPixel);
 
 private:
     /**
@@ -39,7 +39,7 @@ private:
      @param height height of  image
      @return true in case of success, or false in case of error
      */
-	bool RGB2BGR(unsigned char* data, int width, int height);
+    bool RGB2BGR(unsigned char* data, int width, int height, const int bytesPerPixel);
     
     /**
      rotates the image so the bottom becomes the top and the top becomes the bottom
@@ -49,7 +49,7 @@ private:
      @param height height of  image
      @return true in case of success, or false in case of error
      */
-	bool flipOver(unsigned char* data, int width, int height);
+    bool flipOver(unsigned char* data, int width, int height, const int bytesPerPixel);
 };
 
 //=============================================================================

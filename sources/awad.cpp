@@ -60,7 +60,7 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
     for (TIndexedPicturesListIter iter = _patchesList.begin(); iter != _patchesList.end(); iter++)
     {
         APicture& patch = *iter;
-        std::string path = "/Users/michael/Pictures/patch/";
+        std::string path = "/Users/cipher/Pictures/patch/";
         path += patch.patchName();
         path += ".tga";
         patch.savePatchIntoTga(path);
@@ -69,7 +69,7 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
     for (TFlatsListIter iter = _flatsList.begin(); iter != _flatsList.end(); iter++)
     {
         AFlat& flat = *iter;
-        std::string path = "/Users/michael/Pictures/flat/";
+        std::string path = "/Users/cipher/Pictures/flat/";
         path += flat.flatName();
         path += ".tga";
         flat.saveFlatIntoTga(path);
@@ -78,7 +78,7 @@ AWAD::AWAD(const std::string& fileName) : _type(WADTYPE_UNKNOWN), _fileName(file
     for (TTexturesListIter iter = _texturesList.begin(); iter != _texturesList.end(); iter++)
     {
         ATexture& texture = *iter;
-        std::string path = "/Users/michael/Pictures/texture/";
+        std::string path = "/Users/cipher/Pictures/texture/";
         path += texture.textureName();
         path += ".tga";
         texture.saveTextureIntoTga(path);

@@ -23,12 +23,12 @@ class ATexture
 {
 public:
     ATexture(const TPatchesDescriptionList& patchesDescriptionList, const std::string& incomingName, const int incomingWidth, const int incomingHeight);
-	ATexture(const ATexture& texture);
+    ATexture(const ATexture& texture);
     ~ATexture();
-	ATexture& operator=(const ATexture& rv);
+    ATexture& operator=(const ATexture& rv);
 
-	bool saveTextureIntoTga(const std::string& fileName);
-	std::string textureName() const;
+    bool saveTextureIntoTga(const std::string& fileName);
+    std::string textureName() const;
 
 private:
     std::string _textureName;
