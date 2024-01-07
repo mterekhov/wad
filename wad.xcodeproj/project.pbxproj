@@ -1,0 +1,485 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DEB9BBEF2B4B3D1200A138D5 /* apicture.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBC92B4B3D1100A138D5 /* apicture.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BBF02B4B3D1200A138D5 /* awad.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBCA2B4B3D1100A138D5 /* awad.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BBF12B4B3D1200A138D5 /* alump.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBCB2B4B3D1100A138D5 /* alump.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BBF22B4B3D1200A138D5 /* ademo.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBCC2B4B3D1100A138D5 /* ademo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BBF32B4B3D1200A138D5 /* acolormap.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBCD2B4B3D1100A138D5 /* acolormap.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BBF42B4B3D1200A138D5 /* ageometryreadservice.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBCE2B4B3D1100A138D5 /* ageometryreadservice.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BBF52B4B3D1200A138D5 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBCF2B4B3D1100A138D5 /* types.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BBF62B4B3D1200A138D5 /* aendoom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBD02B4B3D1100A138D5 /* aendoom.cpp */; };
+		DEB9BBF72B4B3D1200A138D5 /* autilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBD12B4B3D1200A138D5 /* autilities.cpp */; };
+		DEB9BBF82B4B3D1200A138D5 /* athing.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBD22B4B3D1200A138D5 /* athing.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BBF92B4B3D1200A138D5 /* apicture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBD32B4B3D1200A138D5 /* apicture.cpp */; };
+		DEB9BBFA2B4B3D1200A138D5 /* enums.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBD42B4B3D1200A138D5 /* enums.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BBFB2B4B3D1200A138D5 /* athing.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBD52B4B3D1200A138D5 /* athing.cpp */; };
+		DEB9BBFC2B4B3D1200A138D5 /* apalete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBD62B4B3D1200A138D5 /* apalete.cpp */; };
+		DEB9BBFD2B4B3D1200A138D5 /* alevel.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBD72B4B3D1200A138D5 /* alevel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BBFE2B4B3D1200A138D5 /* atgaexporter.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBD82B4B3D1200A138D5 /* atgaexporter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BBFF2B4B3D1200A138D5 /* alevel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBD92B4B3D1200A138D5 /* alevel.cpp */; };
+		DEB9BC002B4B3D1200A138D5 /* asprite.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBDA2B4B3D1200A138D5 /* asprite.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BC012B4B3D1200A138D5 /* alevelintegrity.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBDB2B4B3D1200A138D5 /* alevelintegrity.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BC022B4B3D1200A138D5 /* aflat.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBDC2B4B3D1200A138D5 /* aflat.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BC032B4B3D1200A138D5 /* atexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBDD2B4B3D1200A138D5 /* atexture.cpp */; };
+		DEB9BC042B4B3D1200A138D5 /* ademo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBDE2B4B3D1200A138D5 /* ademo.cpp */; };
+		DEB9BC052B4B3D1200A138D5 /* aendoom.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBDF2B4B3D1200A138D5 /* aendoom.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BC062B4B3D1200A138D5 /* awad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBE02B4B3D1200A138D5 /* awad.cpp */; };
+		DEB9BC072B4B3D1200A138D5 /* wad.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBE12B4B3D1200A138D5 /* wad.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BC082B4B3D1200A138D5 /* aimagedata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBE22B4B3D1200A138D5 /* aimagedata.cpp */; };
+		DEB9BC092B4B3D1200A138D5 /* aimagedata.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBE32B4B3D1200A138D5 /* aimagedata.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BC0A2B4B3D1200A138D5 /* ageometryreadservice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBE42B4B3D1200A138D5 /* ageometryreadservice.cpp */; };
+		DEB9BC0B2B4B3D1200A138D5 /* asprite.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBE52B4B3D1200A138D5 /* asprite.cpp */; };
+		DEB9BC0D2B4B3D1200A138D5 /* autilities.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBE72B4B3D1200A138D5 /* autilities.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BC0E2B4B3D1200A138D5 /* aflat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBE82B4B3D1200A138D5 /* aflat.cpp */; };
+		DEB9BC0F2B4B3D1200A138D5 /* atexture.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBE92B4B3D1200A138D5 /* atexture.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BC102B4B3D1200A138D5 /* atgaexporter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBEA2B4B3D1200A138D5 /* atgaexporter.cpp */; };
+		DEB9BC112B4B3D1200A138D5 /* alevelintegrity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBEB2B4B3D1200A138D5 /* alevelintegrity.cpp */; };
+		DEB9BC122B4B3D1200A138D5 /* alump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBEC2B4B3D1200A138D5 /* alump.cpp */; };
+		DEB9BC132B4B3D1200A138D5 /* apalete.h in Headers */ = {isa = PBXBuildFile; fileRef = DEB9BBED2B4B3D1200A138D5 /* apalete.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DEB9BC142B4B3D1200A138D5 /* acolormap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DEB9BBEE2B4B3D1200A138D5 /* acolormap.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		DEA534D02B4B3CAF00BFADB1 /* wad.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = wad.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DEB9BBC92B4B3D1100A138D5 /* apicture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = apicture.h; path = wad/apicture.h; sourceTree = "<group>"; };
+		DEB9BBCA2B4B3D1100A138D5 /* awad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = awad.h; path = wad/awad.h; sourceTree = "<group>"; };
+		DEB9BBCB2B4B3D1100A138D5 /* alump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = alump.h; path = wad/alump.h; sourceTree = "<group>"; };
+		DEB9BBCC2B4B3D1100A138D5 /* ademo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ademo.h; path = wad/ademo.h; sourceTree = "<group>"; };
+		DEB9BBCD2B4B3D1100A138D5 /* acolormap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = acolormap.h; path = wad/acolormap.h; sourceTree = "<group>"; };
+		DEB9BBCE2B4B3D1100A138D5 /* ageometryreadservice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ageometryreadservice.h; path = wad/ageometryreadservice.h; sourceTree = "<group>"; };
+		DEB9BBCF2B4B3D1100A138D5 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = types.h; path = wad/types.h; sourceTree = "<group>"; };
+		DEB9BBD02B4B3D1100A138D5 /* aendoom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aendoom.cpp; path = wad/aendoom.cpp; sourceTree = "<group>"; };
+		DEB9BBD12B4B3D1200A138D5 /* autilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = autilities.cpp; path = wad/autilities.cpp; sourceTree = "<group>"; };
+		DEB9BBD22B4B3D1200A138D5 /* athing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = athing.h; path = wad/athing.h; sourceTree = "<group>"; };
+		DEB9BBD32B4B3D1200A138D5 /* apicture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = apicture.cpp; path = wad/apicture.cpp; sourceTree = "<group>"; };
+		DEB9BBD42B4B3D1200A138D5 /* enums.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = enums.h; path = wad/enums.h; sourceTree = "<group>"; };
+		DEB9BBD52B4B3D1200A138D5 /* athing.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = athing.cpp; path = wad/athing.cpp; sourceTree = "<group>"; };
+		DEB9BBD62B4B3D1200A138D5 /* apalete.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = apalete.cpp; path = wad/apalete.cpp; sourceTree = "<group>"; };
+		DEB9BBD72B4B3D1200A138D5 /* alevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = alevel.h; path = wad/alevel.h; sourceTree = "<group>"; };
+		DEB9BBD82B4B3D1200A138D5 /* atgaexporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = atgaexporter.h; path = wad/atgaexporter.h; sourceTree = "<group>"; };
+		DEB9BBD92B4B3D1200A138D5 /* alevel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = alevel.cpp; path = wad/alevel.cpp; sourceTree = "<group>"; };
+		DEB9BBDA2B4B3D1200A138D5 /* asprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = asprite.h; path = wad/asprite.h; sourceTree = "<group>"; };
+		DEB9BBDB2B4B3D1200A138D5 /* alevelintegrity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = alevelintegrity.h; path = wad/alevelintegrity.h; sourceTree = "<group>"; };
+		DEB9BBDC2B4B3D1200A138D5 /* aflat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aflat.h; path = wad/aflat.h; sourceTree = "<group>"; };
+		DEB9BBDD2B4B3D1200A138D5 /* atexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = atexture.cpp; path = wad/atexture.cpp; sourceTree = "<group>"; };
+		DEB9BBDE2B4B3D1200A138D5 /* ademo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ademo.cpp; path = wad/ademo.cpp; sourceTree = "<group>"; };
+		DEB9BBDF2B4B3D1200A138D5 /* aendoom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aendoom.h; path = wad/aendoom.h; sourceTree = "<group>"; };
+		DEB9BBE02B4B3D1200A138D5 /* awad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = awad.cpp; path = wad/awad.cpp; sourceTree = "<group>"; };
+		DEB9BBE12B4B3D1200A138D5 /* wad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wad.h; path = wad/wad.h; sourceTree = "<group>"; };
+		DEB9BBE22B4B3D1200A138D5 /* aimagedata.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aimagedata.cpp; path = wad/aimagedata.cpp; sourceTree = "<group>"; };
+		DEB9BBE32B4B3D1200A138D5 /* aimagedata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aimagedata.h; path = wad/aimagedata.h; sourceTree = "<group>"; };
+		DEB9BBE42B4B3D1200A138D5 /* ageometryreadservice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ageometryreadservice.cpp; path = wad/ageometryreadservice.cpp; sourceTree = "<group>"; };
+		DEB9BBE52B4B3D1200A138D5 /* asprite.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = asprite.cpp; path = wad/asprite.cpp; sourceTree = "<group>"; };
+		DEB9BBE72B4B3D1200A138D5 /* autilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = autilities.h; path = wad/autilities.h; sourceTree = "<group>"; };
+		DEB9BBE82B4B3D1200A138D5 /* aflat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aflat.cpp; path = wad/aflat.cpp; sourceTree = "<group>"; };
+		DEB9BBE92B4B3D1200A138D5 /* atexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = atexture.h; path = wad/atexture.h; sourceTree = "<group>"; };
+		DEB9BBEA2B4B3D1200A138D5 /* atgaexporter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = atgaexporter.cpp; path = wad/atgaexporter.cpp; sourceTree = "<group>"; };
+		DEB9BBEB2B4B3D1200A138D5 /* alevelintegrity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = alevelintegrity.cpp; path = wad/alevelintegrity.cpp; sourceTree = "<group>"; };
+		DEB9BBEC2B4B3D1200A138D5 /* alump.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = alump.cpp; path = wad/alump.cpp; sourceTree = "<group>"; };
+		DEB9BBED2B4B3D1200A138D5 /* apalete.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = apalete.h; path = wad/apalete.h; sourceTree = "<group>"; };
+		DEB9BBEE2B4B3D1200A138D5 /* acolormap.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = acolormap.cpp; path = wad/acolormap.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DEA534CD2B4B3CAF00BFADB1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DEA534C62B4B3CAF00BFADB1 = {
+			isa = PBXGroup;
+			children = (
+				DEA534D22B4B3CAF00BFADB1 /* wad */,
+				DEA534D12B4B3CAF00BFADB1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DEA534D12B4B3CAF00BFADB1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DEA534D02B4B3CAF00BFADB1 /* wad.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DEA534D22B4B3CAF00BFADB1 /* wad */ = {
+			isa = PBXGroup;
+			children = (
+				DEB9BBEE2B4B3D1200A138D5 /* acolormap.cpp */,
+				DEB9BBCD2B4B3D1100A138D5 /* acolormap.h */,
+				DEB9BBDE2B4B3D1200A138D5 /* ademo.cpp */,
+				DEB9BBCC2B4B3D1100A138D5 /* ademo.h */,
+				DEB9BBD02B4B3D1100A138D5 /* aendoom.cpp */,
+				DEB9BBDF2B4B3D1200A138D5 /* aendoom.h */,
+				DEB9BBE82B4B3D1200A138D5 /* aflat.cpp */,
+				DEB9BBDC2B4B3D1200A138D5 /* aflat.h */,
+				DEB9BBE42B4B3D1200A138D5 /* ageometryreadservice.cpp */,
+				DEB9BBCE2B4B3D1100A138D5 /* ageometryreadservice.h */,
+				DEB9BBE22B4B3D1200A138D5 /* aimagedata.cpp */,
+				DEB9BBE32B4B3D1200A138D5 /* aimagedata.h */,
+				DEB9BBD92B4B3D1200A138D5 /* alevel.cpp */,
+				DEB9BBD72B4B3D1200A138D5 /* alevel.h */,
+				DEB9BBEB2B4B3D1200A138D5 /* alevelintegrity.cpp */,
+				DEB9BBDB2B4B3D1200A138D5 /* alevelintegrity.h */,
+				DEB9BBEC2B4B3D1200A138D5 /* alump.cpp */,
+				DEB9BBCB2B4B3D1100A138D5 /* alump.h */,
+				DEB9BBD62B4B3D1200A138D5 /* apalete.cpp */,
+				DEB9BBED2B4B3D1200A138D5 /* apalete.h */,
+				DEB9BBD32B4B3D1200A138D5 /* apicture.cpp */,
+				DEB9BBC92B4B3D1100A138D5 /* apicture.h */,
+				DEB9BBE52B4B3D1200A138D5 /* asprite.cpp */,
+				DEB9BBDA2B4B3D1200A138D5 /* asprite.h */,
+				DEB9BBDD2B4B3D1200A138D5 /* atexture.cpp */,
+				DEB9BBE92B4B3D1200A138D5 /* atexture.h */,
+				DEB9BBEA2B4B3D1200A138D5 /* atgaexporter.cpp */,
+				DEB9BBD82B4B3D1200A138D5 /* atgaexporter.h */,
+				DEB9BBD52B4B3D1200A138D5 /* athing.cpp */,
+				DEB9BBD22B4B3D1200A138D5 /* athing.h */,
+				DEB9BBD12B4B3D1200A138D5 /* autilities.cpp */,
+				DEB9BBE72B4B3D1200A138D5 /* autilities.h */,
+				DEB9BBE02B4B3D1200A138D5 /* awad.cpp */,
+				DEB9BBCA2B4B3D1100A138D5 /* awad.h */,
+				DEB9BBD42B4B3D1200A138D5 /* enums.h */,
+				DEB9BBCF2B4B3D1100A138D5 /* types.h */,
+				DEB9BBE12B4B3D1200A138D5 /* wad.h */,
+			);
+			name = wad;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		DEA534CB2B4B3CAF00BFADB1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DEB9BBF42B4B3D1200A138D5 /* ageometryreadservice.h in Headers */,
+				DEB9BBF82B4B3D1200A138D5 /* athing.h in Headers */,
+				DEB9BBF12B4B3D1200A138D5 /* alump.h in Headers */,
+				DEB9BC0F2B4B3D1200A138D5 /* atexture.h in Headers */,
+				DEB9BBFE2B4B3D1200A138D5 /* atgaexporter.h in Headers */,
+				DEB9BC092B4B3D1200A138D5 /* aimagedata.h in Headers */,
+				DEB9BBFA2B4B3D1200A138D5 /* enums.h in Headers */,
+				DEB9BC022B4B3D1200A138D5 /* aflat.h in Headers */,
+				DEB9BBF52B4B3D1200A138D5 /* types.h in Headers */,
+				DEB9BC072B4B3D1200A138D5 /* wad.h in Headers */,
+				DEB9BBFD2B4B3D1200A138D5 /* alevel.h in Headers */,
+				DEB9BC132B4B3D1200A138D5 /* apalete.h in Headers */,
+				DEB9BC052B4B3D1200A138D5 /* aendoom.h in Headers */,
+				DEB9BC002B4B3D1200A138D5 /* asprite.h in Headers */,
+				DEB9BBF32B4B3D1200A138D5 /* acolormap.h in Headers */,
+				DEB9BBEF2B4B3D1200A138D5 /* apicture.h in Headers */,
+				DEB9BC012B4B3D1200A138D5 /* alevelintegrity.h in Headers */,
+				DEB9BC0D2B4B3D1200A138D5 /* autilities.h in Headers */,
+				DEB9BBF02B4B3D1200A138D5 /* awad.h in Headers */,
+				DEB9BBF22B4B3D1200A138D5 /* ademo.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		DEA534CF2B4B3CAF00BFADB1 /* wad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DEA534D72B4B3CAF00BFADB1 /* Build configuration list for PBXNativeTarget "wad" */;
+			buildPhases = (
+				DEA534CB2B4B3CAF00BFADB1 /* Headers */,
+				DEA534CC2B4B3CAF00BFADB1 /* Sources */,
+				DEA534CD2B4B3CAF00BFADB1 /* Frameworks */,
+				DEA534CE2B4B3CAF00BFADB1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = wad;
+			productName = wad;
+			productReference = DEA534D02B4B3CAF00BFADB1 /* wad.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DEA534C72B4B3CAF00BFADB1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1510;
+				TargetAttributes = {
+					DEA534CF2B4B3CAF00BFADB1 = {
+						CreatedOnToolsVersion = 15.1;
+					};
+				};
+			};
+			buildConfigurationList = DEA534CA2B4B3CAF00BFADB1 /* Build configuration list for PBXProject "wad" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DEA534C62B4B3CAF00BFADB1;
+			productRefGroup = DEA534D12B4B3CAF00BFADB1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DEA534CF2B4B3CAF00BFADB1 /* wad */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DEA534CE2B4B3CAF00BFADB1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DEA534CC2B4B3CAF00BFADB1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DEB9BC042B4B3D1200A138D5 /* ademo.cpp in Sources */,
+				DEB9BC122B4B3D1200A138D5 /* alump.cpp in Sources */,
+				DEB9BC0A2B4B3D1200A138D5 /* ageometryreadservice.cpp in Sources */,
+				DEB9BC082B4B3D1200A138D5 /* aimagedata.cpp in Sources */,
+				DEB9BBFF2B4B3D1200A138D5 /* alevel.cpp in Sources */,
+				DEB9BC0B2B4B3D1200A138D5 /* asprite.cpp in Sources */,
+				DEB9BC062B4B3D1200A138D5 /* awad.cpp in Sources */,
+				DEB9BBFC2B4B3D1200A138D5 /* apalete.cpp in Sources */,
+				DEB9BBF72B4B3D1200A138D5 /* autilities.cpp in Sources */,
+				DEB9BC032B4B3D1200A138D5 /* atexture.cpp in Sources */,
+				DEB9BBF92B4B3D1200A138D5 /* apicture.cpp in Sources */,
+				DEB9BBFB2B4B3D1200A138D5 /* athing.cpp in Sources */,
+				DEB9BC112B4B3D1200A138D5 /* alevelintegrity.cpp in Sources */,
+				DEB9BC102B4B3D1200A138D5 /* atgaexporter.cpp in Sources */,
+				DEB9BC0E2B4B3D1200A138D5 /* aflat.cpp in Sources */,
+				DEB9BC142B4B3D1200A138D5 /* acolormap.cpp in Sources */,
+				DEB9BBF62B4B3D1200A138D5 /* aendoom.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		DEA534D52B4B3CAF00BFADB1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		DEA534D62B4B3CAF00BFADB1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		DEA534D82B4B3CAF00BFADB1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = UAVM255T7W;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.icgsmartcosmetics.wad;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Debug;
+		};
+		DEA534D92B4B3CAF00BFADB1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = UAVM255T7W;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.icgsmartcosmetics.wad;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DEA534CA2B4B3CAF00BFADB1 /* Build configuration list for PBXProject "wad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DEA534D52B4B3CAF00BFADB1 /* Debug */,
+				DEA534D62B4B3CAF00BFADB1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DEA534D72B4B3CAF00BFADB1 /* Build configuration list for PBXNativeTarget "wad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DEA534D82B4B3CAF00BFADB1 /* Debug */,
+				DEA534D92B4B3CAF00BFADB1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DEA534C72B4B3CAF00BFADB1 /* Project object */;
+}
